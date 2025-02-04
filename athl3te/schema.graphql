@@ -1,0 +1,26 @@
+type ActivityAdded @entity(immutable: true) {
+  id: Bytes!
+  user: Bytes! # address
+  activityDetails: String! # string
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type CommunityRoomCreated @entity(immutable: true) {
+  id: Bytes!
+  roomAddress: Bytes! # address
+  createdBy: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type UserRegistered @entity(immutable: true) {
+  id: Bytes!
+  user: Bytes! # address
+  name: String! # string
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
