@@ -1,101 +1,100 @@
-import Image from "next/image";
+"use client";
+
+import { useState, useEffect } from "react";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.js
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    const [authData, setAuthData] = useState(null);
+    const [activities, setActivities] = useState([]);
+    const [stats, setStats] = useState({ totalDistance: 0, totalRuns: 0 });
+    const [userName, setUserName] = useState('');
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    const handleLogin = () => {
+        const clientId = process.env.NEXT_PUBLIC_STRAVA_CLIENT_ID;
+        const redirectUri = process.env.NEXT_PUBLIC_STRAVA_REDIRECT_URI;
+        const authUrl = `https://www.strava.com/oauth/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&scope=read,activity:read`;
+
+        window.location.href = authUrl;
+    };
+
+    const handleCallback = async (code) => {
+        const res = await fetch(`/api/strava/auth?code=${code}`);
+        const data = await res.json();
+        console.log('Auth Response:', data);
+        if (data.access_token) {
+            setAuthData({ access_token: data.access_token });
+            fetchAthlete(data.access_token);
+        }
+    };
+
+    const fetchAthlete = async (accessToken) => {
+        const res = await fetch(`https://www.strava.com/api/v3/athlete`, {
+            headers: { Authorization: `Bearer ${accessToken}` },
+        });
+        const data = await res.json();
+        setUserName(data.firstname + ' ' + data.lastname);
+    };
+
+    useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get("code");
+
+        if (code) {
+            handleCallback(code);
+        }
+    }, []);
+
+    const fetchActivities = async () => {
+        if (!authData) return;
+
+        const res = await fetch(`/api/strava/activities?access_token=${authData.access_token}`);
+        const data = await res.json();
+        console.log('Activities Response:', data);
+        setActivities(data.slice(0, 12)); // Limit to 12 activities
+
+        const totalDistance = data.reduce((acc, activity) => acc + activity.distance, 0);
+        const totalRuns = data.filter(activity => activity.type === 'Run').length;
+        setStats({ totalDistance, totalRuns });
+    };
+
+    return (
+        <div className="flex flex-col items-center justify-center min-h-screen bg-black-100 p-6">
+            <h1 className="text-3xl font-bold mb-4">Strava Integration</h1>
+            
+            {!authData ? (
+                <button onClick={handleLogin} className="bg-orange-500 text-white px-4 py-2 rounded">
+                    Login with Strava
+                </button>
+            ) : (
+                <>
+                    <p className="text-blue mb-4">Welcome, {userName}!</p>
+                    <button onClick={fetchActivities} className="bg-green-500 text-white px-4 py-2 rounded">
+                        Fetch Activities
+                    </button>
+                </>
+            )}
+
+            {stats.totalRuns > 0 && (
+                <div className="mt-6 w-full max-w-md text-white">
+                    <p>Total Runs: {stats.totalRuns}</p>
+                    <p>Total Distance: {stats.totalDistance} meters</p>
+                </div>
+            )}
+
+            {activities.length > 0 && (
+                <div className="mt-6 w-full max-w-4xl">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                        {activities.map((activity) => (
+                            <div key={activity.id} className="bg-gray-800 text-white p-4 rounded shadow">
+                                <p className="font-bold">{activity.name}</p>
+                                <p>Type: {activity.type}</p>
+                                <p>Distance: {activity.distance} meters</p>
+                                <p>Duration: {activity.moving_time} seconds</p>
+                                <p>Date: {new Date(activity.start_date).toLocaleDateString()}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+    );
 }
