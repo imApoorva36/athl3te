@@ -2,7 +2,7 @@ import {
   ActivityAdded as ActivityAddedEvent,
   CommunityRoomCreated as CommunityRoomCreatedEvent,
   UserRegistered as UserRegisteredEvent
-} from "../generated/Athl3te.sol/Athl3te.sol"
+} from "../generated/Athl3te.sol/Athl3te_sol"
 import {
   ActivityAdded,
   CommunityRoomCreated,
