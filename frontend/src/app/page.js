@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import ActivityCard from "../components/ActivityCard";
 import { WalletComponents } from "@/components/WalletComponents";
+import NavBar from "../components/NavBar";
 
 export default function Home() {
     const [authData, setAuthData] = useState(null);
@@ -79,9 +80,10 @@ export default function Home() {
         content="This is a layered card component with a colored background card creating a stacked effect."
         backgroundColor="#94a3b8"
       /> */}
-      <ActivityCard activity={sampleActivity}>
+      {/* <ActivityCard activity={sampleActivity}> */}
 
-      </ActivityCard>
+      {/* </ActivityCard> */}
+      <NavBar></NavBar>
     </div>
       </div>
         // <div className="flex flex-col items-center justify-center min-h-screen bg-black-100 p-6">
