@@ -8,7 +8,7 @@ const NavBar = () => {
   const navItems = [
     { id: 'activities', label: 'Activities', iconBase: 'activities' },
     { id: 'goals', label: 'Goals', iconBase: 'goals' },
-    { id: 'nutritionist', label: 'Nutritionist', iconBase: 'nutritionist' },
+    { id: 'personal_trainer', label: 'Personal Trainer', iconBase: 'personal_trainer_agent' },
     { id: 'communities', label: 'Communities', iconBase: 'communities' },
   ];
 
