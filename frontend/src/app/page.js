@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import ActivityCard from "../components/ActivityCard";
+import { WalletComponents } from "@/components/WalletComponents";
 
 export default function Home() {
     const [authData, setAuthData] = useState(null);

@@ -12,57 +12,78 @@ h1, h2, h3, h4, h5, h6, p, li, button {
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.9%;
+    --background: #ffffff;
+    --foreground: #0a0a0a;
+    --card: #ffffff;
+    --card-foreground: #0a0a0a;
+    --popover: #ffffff;
+    --popover-foreground: #0a0a0a;
     --primary: #FC4C02;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
-    --accent: 0 0% 96.1%;
-    --accent-foreground: 0 0% 9%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 0 0% 3.9%;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
+    --primary-foreground: #fafafa;
+    --secondary: #f5f5f5;
+    --secondary-foreground: #171717;
+    --muted: #f5f5f5;
+    --muted-foreground: #737373;
+    --accent: #f5f5f5;
+    --accent-foreground: #171717;
+    --destructive: #ef4444;
+    --destructive-foreground: #fafafa;
+    --border: #e5e5e5;
+    --input: #e5e5e5;
+    --ring: #0a0a0a;
+    --chart-1: #e85d2e;
+    --chart-2: #2d8f8a;
+    --chart-3: #2d4049;
+    --chart-4: #eab308;
+    --chart-5: #f97316;
     --radius: 0.5rem;
-  }
-  .dark {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
+
+    --ock-font-family: Arial, sans-serif;
+    --ock-border-radius: 4px;
+    --ock-border-radius-inner: 2px;
+    --ock-text-inverse: #ffffff;
+    --ock-text-foreground: #000000;
+    --ock-text-foreground-muted: #666666;
+    --ock-text-error: #ff3b30;
+    --ock-text-primary: #FC4C02;
+    --ock-text-success: #34c759;
+    --ock-text-warning: #ff9500;
+    --ock-text-disabled: #999999;
+   
+    --ock-bg-default: #ffffff;
+    --ock-bg-default-hover: #f5f5f5;
+    --ock-bg-default-active: #e8e8e8;
+    --ock-bg-alternate: #f8f8f8;
+    --ock-bg-alternate-hover: #eeeeee;
+    --ock-bg-alternate-active: #e0e0e0;
+    --ock-bg-inverse: #000000;
+    --ock-bg-inverse-hover: #1a1a1a;
+    --ock-bg-inverse-active: #333333;
+    --ock-bg-primary: #FC4C02;
+    --ock-bg-primary-hover: #e44400;
+    --ock-bg-primary-active: #cc3d00;
+    --ock-bg-primary-washed: #fff1ec;
+    --ock-bg-primary-disabled: #ffad8f;
+    --ock-bg-secondary: #666666;
+    --ock-bg-secondary-hover: #444444;
+    --ock-bg-secondary-active: #555555;
+    --ock-bg-error: #ffebeb;
+    --ock-bg-warning: #fff4e6;
+    --ock-bg-success: #edfcf2;
+    --ock-bg-default-reverse: #000000;
+   
+    --ock-icon-color-primary: #FC4C02;
+    --ock-icon-color-foreground: #000000;
+    --ock-icon-color-foreground-muted: #666666;
+    --ock-icon-color-inverse: #ffffff;
+    --ock-icon-color-error: #ff3b30;
+    --ock-icon-color-success: #34c759;
+    --ock-icon-color-warning: #ff9500;
+   
+    --ock-line-primary: #FC4C02;
+    --ock-line-default: #e0e0e0;
+    --ock-line-heavy: #333333;
+    --ock-line-inverse: #ffffff;
   }
 }
 
