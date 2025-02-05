@@ -13,15 +13,15 @@ function ActivityCard({ activity }) {
             <Image
               src={getActivityImagePath(activity.activityType)}
               alt="Activity Image"
-              width={50}
-              height={50}
+              width={40}
+              height={40}
             />
             <h1 className="text-xl font-bold text-black">{activity.title}</h1>
           </div>
           <Image src="/ai.png" alt="Activity Image" width={40} height={40} />
         </div>
 
-        <div className="flex flex-row justify-between mt-8 mb-2">
+        <div className="flex flex-row justify-between mt-8 mb-2 gap-12">
           {activity.distance && <Metric metricName="distance" value={activity.distance} />}
           {activity.time && <Metric metricName="time" value={activity.time} />}
           {activity.speed && <Metric metricName="speed" value={activity.speed} />}
