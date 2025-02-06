@@ -75,7 +75,8 @@ export default function Home() {
         <div>
             <NavBar />
             <div className="p-8">
-                {/* <ActivityCard title="Morning Run" activity={sampleActivity} /> */}
+
+                <ActivityCard title="Morning Run" activity={sampleActivity} />
                 {/* <LayeredCard 
                     title="Welcome Back"
                     content="This is a layered card component with a colored background card creating a stacked effect."

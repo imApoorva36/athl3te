@@ -1,5 +1,5 @@
 function getActivityImagePath(sportType) {
-  return `/sports/${sportType.toLowerCase()}.png`;
+  return `/sports/orange/${sportType.toLowerCase()}.png`;
 }
 
 function getMetricImagePath(metricName) {

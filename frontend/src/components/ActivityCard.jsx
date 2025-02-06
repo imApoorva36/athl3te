@@ -18,7 +18,7 @@ function ActivityCard({ activity }) {
             />
             <h1 className="text-xl font-bold text-black">{activity.title}</h1>
           </div>
-          <Image src="/ai.png" alt="AI Image" width={40} height={40} />
+          <Image color='blue' src="/ai.png" alt="AI Image" width={40} height={40} />
         </div>
 
         <div className="flex flex-row justify-between mt-8 mb-2 gap-12">
