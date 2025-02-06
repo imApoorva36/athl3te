@@ -1,19 +1,21 @@
-const hre = require("hardhat");
+const { ethers } = require("hardhat");
+require("dotenv").config();
 
 async function main() {
-  // Get the contract factory
-  const Athl3te = await hre.ethers.getContractFactory("Athl3te");
+    const [deployer] = await ethers.getSigners();
+    console.log(`Deploying contract with account: ${deployer.address}`);
 
-  // Deploy the factory contract (Athl3te)
-  const athl3te = await Athl3te.deploy();
+    // Deploy the contract
+    const SimpleNFT = await ethers.getContractFactory("SimpleNFT");
+    const simpleNFT = await SimpleNFT.deploy("SimpleNFT", "SNFT");
 
-  // Wait for deployment confirmation
-  await athl3te.deployed();
-
-  console.log(`Athl3te contract deployed to: ${athl3te.address}`);
+    await simpleNFT.deployed();
+    console.log(`SimpleNFT deployed to: ${simpleNFT.address}`);
 }
 
-main().catch((error) => {
-  console.error(error);
-  process.exitCode = 1;
-});
+main()
+    .then(() => process.exit(0))
+    .catch((error) => {
+        console.error(error);
+        process.exit(1);
+    });

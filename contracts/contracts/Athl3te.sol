@@ -1,93 +1,276 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
-
-import "./CommunityRoom.sol";
+pragma solidity ^0.8.20;
 
 contract Athl3te {
-    struct Activity {
-        string activityDetails;
+    struct nft {
+        string nftName;
+        string nftImage;
+        string description;
+    }
+
+    struct Bot {
+        string botName;
+        string botImage;
+        string systemPrompt;
+        string botDescription;
+        string deploymentURL;
+        uint256 unlockCostInGWei;
     }
 
     struct User {
+        string metadata; // Nillion - age, gender, name, weight, height
+        string[] activityIds; //Nillion
+        string[] sportGoalIds; //Nillion
+        string[] nutritionGoalIds; //Nillion
+        PeronsalAssistant[] purchasedAssistants;
+        string injuriesDescriptionId; //Nillion
+        nft[] nfts;
         bool isRegistered;
-        uint age;
-        string gender;
-        string name;
-        uint weight;
-        uint height;
-        Activity[] activities;
+        string[] joinedCommunities; // Array of community names the user has joined
+    }
+
+    struct CommunityRoom {
+        string communityName;
+        string communityImage;
+        Bot bot;
+        address createdBy;
+        string[] messageIds; // Messages are stored on Nillion
+        string[] communitySportGoalIds; //Nillion
+        address[] members; // Array of member addresses
+    }
+
+    struct PeronsalAssistant {
+        Bot bot;
+        string[] messageIds; // Messages are stored on Nillion
     }
 
     mapping(address => User) private users;
-    address[] public deployedCommunityRooms;
+    mapping(string => Bot) private bots;
+    mapping(string => CommunityRoom) private communityRooms;
 
-    event CommunityRoomCreated(address indexed roomAddress, address indexed createdBy);
-    event ActivityAdded(address indexed user, string activityDetails);
-    event UserRegistered(address indexed user, string name);
+    User[] private allUsers;
+    Bot[] private allBots;
+    CommunityRoom[] private allCommunityRooms;
 
-    function registerUser(string memory _name, uint256 _age, string memory _gender, uint256 _weight, uint256 _height) public {
+    function registerUser(string memory _metadata) public {
         require(!users[msg.sender].isRegistered, "User already registered!");
-        require(_age > 0, "Age must be greater than zero!");
-        require(_weight > 0, "Weight must be greater than zero!");
-        require(_height > 0, "Height must be greater than zero!");
-        require(bytes(_name).length > 0, "Name cannot be empty!");
-        require(bytes(_gender).length > 0, "Gender cannot be empty!");
+        require(bytes(_metadata).length > 0, "Metadata cannot be empty!");
 
         User storage newUser = users[msg.sender];
         newUser.isRegistered = true;
-        newUser.age = _age;
-        newUser.gender = _gender;
-        newUser.name = _name;
-        newUser.weight = _weight;
-        newUser.height = _height;
+        newUser.metadata = _metadata;
+        newUser.activityIds = new string[](0);
+        newUser.sportGoalIds = new string[](0);
+        newUser.nutritionGoalIds = new string[](0);
+        newUser.injuriesDescriptionId = "";
 
-        emit UserRegistered(msg.sender, _name);
+        allUsers.push(newUser);
     }
 
-    function addActivity(string memory _activityDetails) public {
+    function addActivity(string memory _activityId) public {
         require(users[msg.sender].isRegistered, "User not registered!");
-        require(bytes(_activityDetails).length > 0, "Activity details cannot be empty!");
+        require(bytes(_activityId).length > 0, "Activity ID cannot be empty!");
 
-        users[msg.sender].activities.push(Activity(_activityDetails));
-        emit ActivityAdded(msg.sender, _activityDetails);
+        users[msg.sender].activityIds.push(_activityId);
     }
 
-    function getUserDetails() public view returns (string memory, uint, string memory, uint, uint, string[] memory) {
+    function addSportGoal(string memory _goalId) public {
+        require(users[msg.sender].isRegistered, "User not registered!");
+        require(bytes(_goalId).length > 0, "Goal ID cannot be empty!");
+
+        users[msg.sender].sportGoalIds.push(_goalId);
+    }
+
+    function addNutritionGoal(string memory _goalId) public {
+        require(users[msg.sender].isRegistered, "User not registered!");
+        require(bytes(_goalId).length > 0, "Goal ID cannot be empty!");
+
+        users[msg.sender].nutritionGoalIds.push(_goalId);
+    }
+
+    function getUserActivities() public view returns (string[] memory) {
+        require(users[msg.sender].isRegistered, "User not registered!");
+        return users[msg.sender].activityIds;
+    }
+
+    function getUserSportGoals() public view returns (string[] memory) {
+        require(users[msg.sender].isRegistered, "User not registered!");
+        return users[msg.sender].sportGoalIds;
+    }
+
+    function getUserNutritionGoals() public view returns (string[] memory) {
+        require(users[msg.sender].isRegistered, "User not registered!");
+        return users[msg.sender].nutritionGoalIds;
+    }
+
+    function buyBot(string memory _botName) public payable {
+        require(users[msg.sender].isRegistered, "User not registered!");
+        require(bytes(_botName).length > 0, "Bot name cannot be empty!");
+
+        Bot storage bot = bots[_botName];
+        require(bytes(bot.botName).length > 0, "Bot does not exist!");
+        require(
+            msg.value >= bot.unlockCostInGWei * 1 gwei,
+            "Insufficient payment"
+        );
+
+        PeronsalAssistant memory newAssistant = PeronsalAssistant({
+            bot: bot,
+            messageIds: new string[](0)
+        });
+
+        users[msg.sender].purchasedAssistants.push(newAssistant);
+    }
+
+    function updateInjury(string memory _injuryId) public {
+        require(users[msg.sender].isRegistered, "User not registered!");
+        require(bytes(_injuryId).length > 0, "Injury ID cannot be empty!");
+
+        users[msg.sender].injuriesDescriptionId = _injuryId;
+    }
+
+    function getUserMetadata() public view returns (string memory) {
+        require(users[msg.sender].isRegistered, "User not registered!");
+        return users[msg.sender].metadata;
+    }
+
+    function getInjuryDescription() public view returns (string memory) {
+        require(users[msg.sender].isRegistered, "User not registered!");
+        return users[msg.sender].injuriesDescriptionId;
+    }
+
+    function getUserNfts() public view returns (nft[] memory) {
+        require(users[msg.sender].isRegistered, "User not registered!");
+        return users[msg.sender].nfts;
+    }
+
+    function getUserDetails()
+        public
+        view
+        returns (
+            string memory metadata,
+            string[] memory activityIds,
+            string[] memory sportGoalIds,
+            string[] memory nutritionGoalIds,
+            string memory injuriesDescriptionId,
+            uint256 nftCount,
+            uint256 assistantCount
+        )
+    {
+        require(users[msg.sender].isRegistered, "User not registered!");
+
+        User storage user = users[msg.sender];
+        return (
+            user.metadata,
+            user.activityIds,
+            user.sportGoalIds,
+            user.nutritionGoalIds,
+            user.injuriesDescriptionId,
+            user.nfts.length,
+            user.purchasedAssistants.length
+        );
+    }
+
+    function createCommunityRoom(
+        string memory _communityName,
+        string memory _communityImage,
+        string memory _botName
+    ) public {
+        require(bytes(_communityName).length > 0, "Community name cannot be empty!");
+        require(bytes(_communityImage).length > 0, "Community image cannot be empty!");
+        require(bytes(_botName).length > 0, "Bot name cannot be empty!");
+
+        Bot storage bot = bots[_botName];
+        require(bytes(bot.botName).length > 0, "Bot does not exist!");
+
+        CommunityRoom storage newRoom = communityRooms[_communityName];
+        newRoom.communityName = _communityName;
+        newRoom.communityImage = _communityImage;
+        newRoom.bot = bot;
+        newRoom.createdBy = msg.sender;
+        newRoom.messageIds = new string[](0);
+        newRoom.members = new address[](0);
+        newRoom.communitySportGoalIds = new string[](0);
+
+        // Add creator as first member
+        newRoom.members.push(msg.sender);
+        users[msg.sender].joinedCommunities.push(_communityName);
+
+        allCommunityRooms.push(newRoom);
+    }
+
+    function joinCommunityRoom(string memory _communityName) public {
         require(users[msg.sender].isRegistered, "User not registered!");
         
-        User storage user = users[msg.sender];
-        uint activityCount = user.activities.length;
-        string[] memory activities = new string[](activityCount);
-
-        for (uint i = 0; i < activityCount; i++) {
-            activities[i] = user.activities[i].activityDetails;
+        CommunityRoom storage room = communityRooms[_communityName];
+        require(bytes(room.communityName).length > 0, "Community room does not exist!");
+        
+        for (uint i = 0; i < room.members.length; i++) {
+            require(room.members[i] != msg.sender, "Already a member of this community!");
         }
 
-        return (user.name, user.age, user.gender, user.weight, user.height, activities);
+        room.members.push(msg.sender);
+        
+        users[msg.sender].joinedCommunities.push(_communityName);
     }
 
-    function getUsername() public view returns (string memory) {
+    function getCommunityMembers(string memory _communityName) public view returns (address[] memory) {
+        CommunityRoom storage room = communityRooms[_communityName];
+        require(bytes(room.communityName).length > 0, "Community room does not exist!");
+        
+        return room.members;
+    }
+
+    function getUserCommunities() public view returns (string[] memory) {
         require(users[msg.sender].isRegistered, "User not registered!");
-        return users[msg.sender].name;
+        return users[msg.sender].joinedCommunities;
     }
 
-    function getUserActivityCount() public view returns (uint) {
-        require(users[msg.sender].isRegistered, "User not registered!");
-        return users[msg.sender].activities.length;
+    function getDeployedCommunityRooms()
+        public
+        view
+        returns (CommunityRoom[] memory)
+    {
+        return allCommunityRooms;
     }
 
-    function createCommunityRoom(string memory communityName, string memory communityLogo, string memory systemPrompt, uint256 assistantUnlockCost) public {
-        require(bytes(communityName).length > 0, "Community name cannot be empty!");
-        require(bytes(communityLogo).length > 0, "Community logo cannot be empty!");
-        require(bytes(systemPrompt).length > 0, "System prompt cannot be empty!");
+    function getCommunityCreator(
+        string memory _communityName
+    ) public view returns (address) {
+        CommunityRoom storage room = communityRooms[_communityName];
+        require(
+            bytes(room.communityName).length > 0,
+            "Community room does not exist!"
+        );
 
-        CommunityRoom newRoom = new CommunityRoom(msg.sender, communityName, communityLogo, systemPrompt, assistantUnlockCost);
-        deployedCommunityRooms.push(address(newRoom));
-
-        emit CommunityRoomCreated(address(newRoom), msg.sender);
+        return room.createdBy;
     }
 
-    function getDeployedCommunityRooms() public view returns (address[] memory) {
-        return deployedCommunityRooms;
+    function getCommunityRoomDetails(
+        string memory _communityName
+    )
+        public
+        view
+        returns (
+            string memory communityName,
+            string memory communityImage,
+            Bot memory bot,
+            address createdBy,
+            uint256 messageCount
+        )
+    {
+        CommunityRoom storage room = communityRooms[_communityName];
+        require(
+            bytes(room.communityName).length > 0,
+            "Community room does not exist!"
+        );
+
+        return (
+            room.communityName,
+            room.communityImage,
+            room.bot,
+            room.createdBy,
+            room.messageIds.length
+        );
     }
 }

@@ -17,6 +17,7 @@
     "ethers": "^5.7.2"
   },
   "dependencies": {
+    "@openzeppelin/contracts": "4.6",
     "dotenv": "^16.4.7"
   }
 }

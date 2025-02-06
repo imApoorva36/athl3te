@@ -3,7 +3,7 @@ require('@nomiclabs/hardhat-ethers');
 require('@nomiclabs/hardhat-waffle');
 
 module.exports = {
-  solidity: "0.8.0", 
+  solidity: "0.8.20", 
   networks: {
     base_sepolia: {
       url: `https://base-sepolia.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`, 
