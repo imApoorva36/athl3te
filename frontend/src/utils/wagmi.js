@@ -1,15 +1,26 @@
 import { http, cookieStorage, createConfig, createStorage } from 'wagmi';
 import { baseSepolia } from 'wagmi/chains';
 import { coinbaseWallet } from 'wagmi/connectors';
- 
+
 export function getConfig() {
+  const baseSepoliaChain = {
+    ...baseSepolia,
+    rpcUrls: {
+      default: { 
+        http: [process.env.NEXT_PUBLIC_BASE_RPC_URL]
+      },
+      public: {
+        http: [process.env.NEXT_PUBLIC_BASE_RPC_URL]
+      }
+    }
+  };
+
   return createConfig({
-    chains: [baseSepolia],
+    chains: [baseSepoliaChain],
     connectors: [
       coinbaseWallet({
-        appName: 'OnchainKit',
-        preference: 'smartWalletOnly',
-        version: '4',
+        appName: 'Athl3te',
+        chainId: baseSepoliaChain.id,
       }),
     ],
     storage: createStorage({
@@ -17,7 +28,7 @@ export function getConfig() {
     }),
     ssr: true,
     transports: {
-      [baseSepolia.id]: http(), // add baseSepolia for testing
+      [baseSepoliaChain.id]: http(process.env.NEXT_PUBLIC_BASE_RPC_URL),
     },
   });
 }

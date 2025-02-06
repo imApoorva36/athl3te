@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import ActivityCard from "../components/ActivityCard";
 import { WalletComponents } from "@/components/WalletComponents";
 import NavBar from "../components/NavBar";
+import Link from 'next/link';
 
 export default function Home() {
     const [authData, setAuthData] = useState(null);
@@ -72,58 +73,63 @@ export default function Home() {
 
     return (
         <div>
+            <NavBar />
+            <div className="p-8">
+                {/* <ActivityCard title="Morning Run" activity={sampleActivity} /> */}
+                {/* <LayeredCard 
+                    title="Welcome Back"
+                    content="This is a layered card component with a colored background card creating a stacked effect."
+                    backgroundColor="#94a3b8"
+                /> */}
+                {/* <ActivityCard activity={sampleActivity}> */}
 
-      {/* <ActivityCard title="Morning Run" activity={sampleActivity} /> */}
-      <div className="p-8">
-      {/* <LayeredCard 
-        title="Welcome Back"
-        content="This is a layered card component with a colored background card creating a stacked effect."
-        backgroundColor="#94a3b8"
-      /> */}
-      {/* <ActivityCard activity={sampleActivity}> */}
+                {/* </ActivityCard> */}
+                <NavBar></NavBar>
+                {/* <h1 className="text-3xl font-bold mb-4">Strava Integration</h1> */}
+                {/* Commenting out existing code */}
+                {/* <div className="flex flex-col items-center justify-center min-h-screen bg-black-100 p-6">
+                    <h1 className="text-3xl font-bold mb-4">Strava Integration</h1>
+                    
+                    {!authData ? (
+                        <button onClick={handleLogin} className="bg-orange-500 text-white px-4 py-2 rounded">
+                            Login with Strava
+                        </button>
+                    ) : (
+                        <>
+                            <p className="text-blue mb-4">Welcome, {userName}!</p>
+                            <button onClick={fetchActivities} className="bg-green-500 text-white px-4 py-2 rounded">
+                                Fetch Activities
+                            </button>
+                        </>
+                    )}
 
-      {/* </ActivityCard> */}
-      <NavBar></NavBar>
-    </div>
-      </div>
-        // <div className="flex flex-col items-center justify-center min-h-screen bg-black-100 p-6">
-        //     <h1 className="text-3xl font-bold mb-4">Strava Integration</h1>
-            
-        //     {!authData ? (
-        //         <button onClick={handleLogin} className="bg-orange-500 text-white px-4 py-2 rounded">
-        //             Login with Strava
-        //         </button>
-        //     ) : (
-        //         <>
-        //             <p className="text-blue mb-4">Welcome, {userName}!</p>
-        //             <button onClick={fetchActivities} className="bg-green-500 text-white px-4 py-2 rounded">
-        //                 Fetch Activities
-        //             </button>
-        //         </>
-        //     )}
+                    {stats.totalRuns > 0 && (
+                        <div className="mt-6 w-full max-w-md text-white">
+                            <p>Total Runs: {stats.totalRuns}</p>
+                            <p>Total Distance: {stats.totalDistance} meters</p>
+                        </div>
+                    )}
 
-        //     {stats.totalRuns > 0 && (
-        //         <div className="mt-6 w-full max-w-md text-white">
-        //             <p>Total Runs: {stats.totalRuns}</p>
-        //             <p>Total Distance: {stats.totalDistance} meters</p>
-        //         </div>
-        //     )}
-
-        //     {activities.length > 0 && (
-        //         <div className="mt-6 w-full max-w-4xl">
-        //             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        //                 {activities.map((activity) => (
-        //                     <div key={activity.id} className="bg-gray-800 text-white p-4 rounded shadow">
-        //                         <p className="font-bold">{activity.name}</p>
-        //                         <p>Type: {activity.type}</p>
-        //                         <p>Distance: {activity.distance} meters</p>
-        //                         <p>Duration: {activity.moving_time} seconds</p>
-        //                         <p>Date: {new Date(activity.start_date).toLocaleDateString()}</p>
-        //                     </div>
-        //                 ))}
-        //             </div>
-        //         </div>
-        //     )}
-        // </div>
+                    {activities.length > 0 && (
+                        <div className="mt-6 w-full max-w-4xl">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                                {activities.map((activity) => (
+                                    <div key={activity.id} className="bg-gray-800 text-white p-4 rounded shadow">
+                                        <p className="font-bold">{activity.name}</p>
+                                        <p>Type: {activity.type}</p>
+                                        <p>Distance: {activity.distance} meters</p>
+                                        <p>Duration: {activity.moving_time} seconds</p>
+                                        <p>Date: {new Date(activity.start_date).toLocaleDateString()}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                </div> */}
+                <Link href="/mintnft" legacyBehavior>
+                    <a className="bg-blue-500 text-white px-4 py-2 rounded">Mint NFT</a>
+                </Link>
+            </div>
+        </div>
     );
 }
