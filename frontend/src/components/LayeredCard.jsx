@@ -1,25 +1,28 @@
-import React from 'react';
 import { Card } from '@/components/ui/card';
-import { motion } from 'framer-motion';
 
-const LayeredCard = ({ children }) => {
+const LayeredCard = ({
+    children,
+    mainColor,
+    bgColor,
+    borderWidth,
+    topOffset,
+    leftOffset,
+    roundedness,
+    textColor
+}) => {
     return (
-        <>
-            <motion.div
-                transition={{ type: "spring" }} whileHover={{ scale: 1.02 }}
-            >
-                <div className="relative w-fit pt-1 pr-1">
-                    {/* Background Card */}
-                    <div
-                        className="absolute top-3 left-3 w-full h-full rounded-3xl bg-primary"
-                    />
-                    {/* Main Card */}
-                    <Card className="relative w-full bg-white p-6 shadow-lg rounded-3xl border-black border-[3px]">
-                        {children}
-                    </Card>
-                </div>
-            </motion.div>
-        </>
+        <div className='hover:scale-105 transform transition-transform duration-300'>
+            <div className={`relative w-fit pt-1 pr-1`}>
+                {/* Background Card */}
+                <div
+                    className={`absolute ${topOffset} ${leftOffset} w-[95%] h-[95%] ${roundedness} ${bgColor} border-black  ${borderWidth}`}
+                />
+                {/* Main Card */}
+                <Card className={`relative w-full ${mainColor} ${roundedness} border-black ${borderWidth} ${textColor}`}>
+                    {children}
+                </Card>
+            </div>
+        </div>
     );
 };
 
