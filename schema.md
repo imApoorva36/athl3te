@@ -48,6 +48,8 @@
 | `completedMetrics`   | `array[Sports Metric]`                  | List of completed metrics (e.g., distance, calories).                  |
 | `targetMetrics`      | `array[Sports Metric]`                  | List of target metrics (e.g., distance, calories).                     |
 | `isGoalActive`       | `boolean`                               | Is the current goal active?                                           |
+| `goalDayWisePlan`       | `array[string]`                               | Just a daywise plan/description on how/what to complete                                             |
+
 
 ## 4. Sports Metric Model
 | Field                | Data Type                               | Description                                                            |
@@ -62,6 +64,7 @@
 | `targetMetrics`       | `array[NutritionMetric]`                | List of target nutrition metrics (e.g., proteins, carbs, hydration).   |
 | `intervalDuration`    | `string`                                | Duration for the nutrition goal interval (e.g., "1 week", "1 month").  |
 | `isGoalActive`       | `array[Sports Metric]`                         | Is the current goal active?                   |
+| `goalDayWisePlan`       | `array[string]`                               | Just a daywise plan/description on how/what to complete    
 
 ## 6. Nutrition Metric Model
 | Field                | Data Type                               | Description                                                            |
@@ -92,6 +95,7 @@
 | `communityName`                     | `string`                        | Name of the community.                                                  |
 | `communityLogo`                     | `string (URI)`                  | Logo of the community stored in a decentralized location (e.g., IPFS).  |
 | `bot`                               | `Bot Model`                  | Bot which is present in the community  |
+| `sportsGoals`         | `array[SportGoal]`                      | A list of sports goals the community is working on.                        |
 
 
 ## 9. Message Model
@@ -108,5 +112,6 @@
 ## 10. Personal Assistant Model
 
 | Field        | Data Type             | Description                                                     |
+|--------------|-----------------------|---------------------------------------------------------------|
 | `bot`        | `Bot Model`           | Bot to talk to                                                  |
 | `messages`   | `array[Message]`      | Array of messages in the community, including both bot and user |
