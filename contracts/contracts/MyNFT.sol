@@ -10,6 +10,9 @@ contract SimpleNFT is ERC721 {
 
     mapping(uint256 => string) private _tokenURIs;
 
+    event Minted(address indexed owner, uint256 indexed tokenId, string tokenURI);
+    event TokenURIUpdated(uint256 indexed tokenId, string newTokenURI);
+
     constructor(string memory name, string memory symbol) ERC721(name, symbol) {}
 
     function mintWithURI(string memory imageURI) public {
@@ -17,10 +20,20 @@ contract SimpleNFT is ERC721 {
         _tokenIdCounter.increment();
         _mint(msg.sender, tokenId);
         _tokenURIs[tokenId] = imageURI;
+
+        emit Minted(msg.sender, tokenId, imageURI);
     }
 
     function tokenURI(uint256 tokenId) public view override returns (string memory) {
         require(_exists(tokenId), "Token does not exist");
         return _tokenURIs[tokenId];
+    }
+
+    function updateTokenURI(uint256 tokenId, string memory newURI) public {
+        require(_exists(tokenId), "Token does not exist");
+        require(ownerOf(tokenId) == msg.sender, "Not the token owner");
+
+        _tokenURIs[tokenId] = newURI;
+        emit TokenURIUpdated(tokenId, newURI);
     }
 }

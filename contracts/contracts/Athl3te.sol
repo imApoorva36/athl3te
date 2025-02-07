@@ -2,6 +2,26 @@
 pragma solidity ^0.8.20;
 
 contract Athl3te {
+    // Events
+    event UserRegistered(address indexed userAddress, string metadata);
+    event ActivityAdded(address indexed userAddress, string activityId);
+    event SportGoalAdded(address indexed userAddress, string goalId);
+    event NutritionGoalAdded(address indexed userAddress, string goalId);
+    event BotPurchased(address indexed userAddress, string botName, uint16 messagesId);
+    event InjuryUpdated(address indexed userAddress, string injuryId);
+    event CommunityRoomCreated(
+        string indexed communityName,
+        address indexed creator,
+        string botName,
+        uint16 messagesId
+    );
+    event CommunityRoomJoined(address indexed userAddress, string communityName);
+    event BotCreated(
+        string indexed botName,
+        string deploymentURL,
+        uint16 unlockCostInGWei
+    );
+
     struct nft {
         string nftName;
         string nftImage;
@@ -14,7 +34,7 @@ contract Athl3te {
         string systemPrompt;
         string botDescription;
         string deploymentURL;
-        uint256 unlockCostInGWei;
+        uint16 unlockCostInGWei;
     }
 
     struct User {
@@ -22,7 +42,7 @@ contract Athl3te {
         string[] activityIds; //Nillion
         string[] sportGoalIds; //Nillion
         string[] nutritionGoalIds; //Nillion
-        PeronsalAssistant[] purchasedAssistants;
+        PersonalAssistant[] purchasedAssistants;
         string injuriesDescriptionId; //Nillion
         nft[] nfts;
         bool isRegistered;
@@ -34,15 +54,17 @@ contract Athl3te {
         string communityImage;
         Bot bot;
         address createdBy;
-        string messagesId; // Messages are stored on Nillion
+        uint16 messagesId; // Messages are stored on Nillion
         string[] communitySportGoalIds; //Nillion
         address[] members; // Array of member addresses
     }
 
-    struct PeronsalAssistant {
+    struct PersonalAssistant {
         Bot bot;
-        string messagesId; // Messages are stored on Nillion
+        uint16 messagesId; // Messages are stored on Nillion
     }
+
+    uint16 private messageIdGenerator = 0;
 
     mapping(address => User) private users;
     mapping(string => Bot) private bots;
@@ -64,39 +86,32 @@ contract Athl3te {
         newUser.injuriesDescriptionId = "";
 
         allUsers.push(newUser);
+        
+        emit UserRegistered(msg.sender, _metadata);
     }
 
     function addActivity(string memory _activityId) public {
         require(users[msg.sender].isRegistered, "User not registered!");
 
         users[msg.sender].activityIds.push(_activityId);
+        
+        emit ActivityAdded(msg.sender, _activityId);
     }
 
     function addSportGoal(string memory _goalId) public {
         require(users[msg.sender].isRegistered, "User not registered!");
 
         users[msg.sender].sportGoalIds.push(_goalId);
+        
+        emit SportGoalAdded(msg.sender, _goalId);
     }
 
     function addNutritionGoal(string memory _goalId) public {
         require(users[msg.sender].isRegistered, "User not registered!");
 
         users[msg.sender].nutritionGoalIds.push(_goalId);
-    }
-
-    function getUserActivities() public view returns (string[] memory) {
-        require(users[msg.sender].isRegistered, "User not registered!");
-        return users[msg.sender].activityIds;
-    }
-
-    function getUserSportGoals() public view returns (string[] memory) {
-        require(users[msg.sender].isRegistered, "User not registered!");
-        return users[msg.sender].sportGoalIds;
-    }
-
-    function getUserNutritionGoals() public view returns (string[] memory) {
-        require(users[msg.sender].isRegistered, "User not registered!");
-        return users[msg.sender].nutritionGoalIds;
+        
+        emit NutritionGoalAdded(msg.sender, _goalId);
     }
 
     function buyBot(string memory _botName) public payable {
@@ -109,33 +124,24 @@ contract Athl3te {
             "Insufficient payment"
         );
 
-        PeronsalAssistant memory newAssistant = PeronsalAssistant({
+        uint16 newMessageId = messageIdGenerator++;
+        
+        PersonalAssistant memory newAssistant = PersonalAssistant({
             bot: bot,
-            messagesId: ""
+            messagesId: newMessageId
         });
 
         users[msg.sender].purchasedAssistants.push(newAssistant);
+        
+        emit BotPurchased(msg.sender, _botName, newMessageId);
     }
 
     function updateInjury(string memory _injuryId) public {
         require(users[msg.sender].isRegistered, "User not registered!");
 
         users[msg.sender].injuriesDescriptionId = _injuryId;
-    }
-
-    function getUserMetadata() public view returns (string memory) {
-        require(users[msg.sender].isRegistered, "User not registered!");
-        return users[msg.sender].metadata;
-    }
-
-    function getInjuryDescription() public view returns (string memory) {
-        require(users[msg.sender].isRegistered, "User not registered!");
-        return users[msg.sender].injuriesDescriptionId;
-    }
-
-    function getUserNfts() public view returns (nft[] memory) {
-        require(users[msg.sender].isRegistered, "User not registered!");
-        return users[msg.sender].nfts;
+        
+        emit InjuryUpdated(msg.sender, _injuryId);
     }
 
     function getUserDetails()
@@ -147,8 +153,8 @@ contract Athl3te {
             string[] memory sportGoalIds,
             string[] memory nutritionGoalIds,
             string memory injuriesDescriptionId,
-            uint256 nftCount,
-            uint256 assistantCount
+            nft[] memory nfts,
+            PersonalAssistant[] memory assitants
         )
     {
         require(users[msg.sender].isRegistered, "User not registered!");
@@ -160,8 +166,8 @@ contract Athl3te {
             user.sportGoalIds,
             user.nutritionGoalIds,
             user.injuriesDescriptionId,
-            user.nfts.length,
-            user.purchasedAssistants.length
+            user.nfts,
+            user.purchasedAssistants
         );
     }
 
@@ -176,12 +182,14 @@ contract Athl3te {
         Bot storage bot = bots[_botName];
         require(bytes(bot.botName).length > 0, "Bot does not exist!");
 
+        uint16 newMessageId = messageIdGenerator++;
+        
         CommunityRoom storage newRoom = communityRooms[_communityName];
         newRoom.communityName = _communityName;
         newRoom.communityImage = _communityImage;
         newRoom.bot = bot;
+        newRoom.messagesId = newMessageId;
         newRoom.createdBy = msg.sender;
-        newRoom.messagesId = "";
         newRoom.members = new address[](0);
         newRoom.communitySportGoalIds = new string[](0);
 
@@ -189,24 +197,21 @@ contract Athl3te {
         newRoom.members.push(msg.sender);
         users[msg.sender].joinedCommunities.push(_communityName);
         allCommunityRooms.push(newRoom);
+        
+        emit CommunityRoomCreated(_communityName, msg.sender, _botName, newMessageId);
     }
 
     function joinCommunityRoom(string memory _communityName) public {
         require(users[msg.sender].isRegistered, "User not registered!");
         CommunityRoom storage room = communityRooms[_communityName];
         require(bytes(room.communityName).length > 0, "Community room does not exist!");
-        for (uint i = 0; i < room.members.length; i++) {
+        for (uint16 i = 0; i < room.members.length; i++) {
             require(room.members[i] != msg.sender, "Already a member of this community!");
         }
         room.members.push(msg.sender);
         users[msg.sender].joinedCommunities.push(_communityName);
-    }
-
-    function getCommunityMembers(string memory _communityName) public view returns (address[] memory) {
-        CommunityRoom storage room = communityRooms[_communityName];
-        require(bytes(room.communityName).length > 0, "Community room does not exist!");
         
-        return room.members;
+        emit CommunityRoomJoined(msg.sender, _communityName);
     }
 
     function getUserCommunities() public view returns (string[] memory) {
@@ -214,27 +219,26 @@ contract Athl3te {
         return users[msg.sender].joinedCommunities;
     }
 
-    function getCommunityCreator(
-        string memory _communityName
-    ) public view returns (address) {
-        CommunityRoom storage room = communityRooms[_communityName];
-        require(
-            bytes(room.communityName).length > 0,
-            "Community room does not exist!"
-        );
-
-        return room.createdBy;
-    }
-
-    function getCommunityRoomDetails(string memory _communityName) public view returns (string memory communityName, string memory communityImage, Bot memory bot, address createdBy, string memory messagesId)
+    function getCommunityRoomDetails(string memory _communityName) public view returns (string memory communityName, string memory communityImage, Bot memory bot, address createdBy, uint messagesId, string[] memory communitySportGoalIds, address[] memory members)
     {
         CommunityRoom storage room = communityRooms[_communityName];
         require(bytes(room.communityName).length > 0,"Community room does not exist!");
 
-        return (room.communityName,room.communityImage, room.bot, room.createdBy, room.messagesId);
+        return (room.communityName,room.communityImage, room.bot, room.createdBy, room.messagesId, room.communitySportGoalIds, room.members);
     }
 
-    function createBot( string memory _botName, string memory _botImage, string memory _systemPrompt, string memory _botDescription, string memory _deploymentURL, uint256 _unlockCostInGWei) public {
+    function getAllCommunityRooms() public view returns (CommunityRoom[] memory) {
+        return allCommunityRooms;
+    }
+
+    function createBot(
+        string memory _botName,
+        string memory _botImage,
+        string memory _systemPrompt,
+        string memory _botDescription,
+        string memory _deploymentURL,
+        uint16 _unlockCostInGWei
+    ) public {
         require(bytes(_botName).length > 0, "Bot name cannot be empty!");
         require(_unlockCostInGWei > 0, "Unlock cost must be greater than 0");
 
@@ -247,5 +251,7 @@ contract Athl3te {
         newBot.unlockCostInGWei = _unlockCostInGWei;
 
         allBots.push(newBot);
+        
+        emit BotCreated(_botName, _deploymentURL, _unlockCostInGWei);
     }
 }
