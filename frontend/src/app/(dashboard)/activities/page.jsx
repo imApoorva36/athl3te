@@ -1,4 +1,3 @@
-import { Bike, Clock, FlameIcon, Footprints, HeartIcon, MapPin, PersonStanding, Wallet, WavesLadder } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import LayeredCard from "@/components/LayeredCard";
 import Image from "next/image";
@@ -36,13 +35,13 @@ export default function MyActivities() {
         distance: 1,
         duration: 15,
     }
-];
+    ];
 
 
     return (
         <>
             {/* Header */}
-            <div className="flex justify-center items-center p-3 border-b">
+            <div className="flex justify-between items-center p-3 border-b">
                 <LayeredCard
                     mainColor="bg-accent"
                     bgColor="bg-primary"
@@ -56,7 +55,10 @@ export default function MyActivities() {
                         <Image src="/wallet.png" width={20} height={20} alt="wallet" />
                     </Button>
                 </LayeredCard>
-                <h1 className="text-2xl font-bold mt-2 mx-auto text-primary">ATHL3TE</h1>
+                <div className="flex items-center">
+                    <Image src="/logo/athlete_logo.png" width={40} height={40} alt="logo" />
+                    <h1 className="text-2xl font-bold mt-2 mx-auto text-primary">ATHL3TE</h1>
+                </div>
                 <LayeredCard
                     mainColor="bg-accent"
                     bgColor="bg-primary"
@@ -67,7 +69,7 @@ export default function MyActivities() {
                     textColor="text-white"
                 >
                     <Button variant="ghost" size="icon" className="text-primary hover:text-descructive hover:bg-orange-50">
-                        <FlameIcon className="h-6 w-6" />
+                        <Image src="/fire.png" width={20} height={20} alt="fire" />
                     </Button>
                 </LayeredCard>
             </div>
@@ -90,24 +92,24 @@ export default function MyActivities() {
                         >
                             <div className="p-4 w-full">
                                 <div className="flex flex-row  justify-between mb-3">
-                                    {activity.type == 'Running' && <PersonStanding className="h-6 w-6 text-blue-500" />}
-                                    {activity.type == 'Walking' && <Footprints className="h-6 w-6 text-yellow-500" />}
-                                    {activity.type == 'Cycling' && <Bike className="h-6 w-6 text-orange-500" />}
-                                    {activity.type == 'Swimming' && <WavesLadder className="h-6 w-6 text-cyan-500" />}
+                                    {activity.type == 'Running' && <Image src="/sports/orange/run.png" width={30} height={20} alt="running" />}
+                                    {activity.type == 'Walking' && <Image src="/sports/orange/walk.png" width={30} height={20} alt="walking" />}
+                                    {activity.type == 'Cycling' && <Image src="/sports/orange/cycle.png" width={30} height={20} alt="cycling" />}
+                                    {activity.type == 'Swimming' && <Image src="/sports/orange/swim.png" width={30} height={20} alt="swimming" />}
                                     <h2 className="text-lg font-semibold">{activity.name}</h2>
                                     <div className="text-sm text-gray-600">{activity.date}</div>
                                 </div>
-                                <div className="flex justify-between text-sm w-full">
+                                <div className="flex justify-between text-xs pt-2 w-4/5 mx-auto">
                                     <div className="flex flex-col items-center gap-1">
-                                        <MapPin className="h-6 w-6" />
+                                        <Image src="/metrics/distance.png" width={20} height={20} alt="distance" />
                                         {activity.distance}km
                                     </div>
                                     <div className="flex flex-col items-center gap-1">
-                                        <Clock className="h-6 w-6" />
+                                        <Image src="/metrics/time.png" width={20} height={20} alt="duration" />
                                         {activity.duration}min
                                     </div>
                                     <div className="flex flex-col items-center gap-1">
-                                        <HeartIcon className="h-6 w-6" />
+                                        <Image src="/metrics/heart_rate.png" width={20} height={20} alt="bpm" />
                                         {activity.bpm}
                                     </div>
                                 </div>

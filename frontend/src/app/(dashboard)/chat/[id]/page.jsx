@@ -1,9 +1,9 @@
-import { ArrowLeft, Heart, Send } from "lucide-react"
-import { Card } from "@/components/ui/card"
+import { Heart, Send } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import LayeredCard from "@/components/LayeredCard";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Chat() {
     const chatData = {
@@ -49,7 +49,7 @@ export default function Chat() {
                 >
                     <Link href="/communities">
                         <Button variant="ghost" size="icon" className="text-primary hover:text-descructive">
-                            <ArrowLeft className="h-6 w-6" />
+                            <Image src="/back.png" width={20} height={20} alt="back" />
                         </Button>
                     </Link>
                 </LayeredCard>
@@ -63,8 +63,8 @@ export default function Chat() {
                     roundedness="rounded-lg"
                     textColor="text-white"
                 >
-                    <Button variant="ghost" size="icon" className="text-[#FF4500] hover:text-[#FF4500] hover:bg-orange-50">
-                        <Heart className="h-8 w-8 fill-primary" />
+                    <Button variant="ghost" size="icon">
+                        <Image src="/wallet.png" width={20} height={20} alt="wallet" />
                     </Button>
                 </LayeredCard>
             </div>

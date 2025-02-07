@@ -2,6 +2,8 @@
 
 import { useConnect, useAccount, useDisconnect } from "wagmi";
 import { useEffect } from "react";
+import LayeredCard from "./LayeredCard";
+import { CoinbaseWalletLogo } from "./CoinbaseWalletLogo";
 
 export function WalletComponents({ onWalletConnect }) {
   const { connect, connectors } = useConnect();
@@ -17,22 +19,57 @@ export function WalletComponents({ onWalletConnect }) {
   return (
     <div className="flex flex-col gap-8 mx-auto p-8">
       {!isConnected ? (
-        <button
-          onClick={() => connect({ connector: connectors[0] })}
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+        <LayeredCard
+          mainColor="bg-primary"
+          bgColor="bg-white"
+          borderWidth="border-[2px]"
+          topOffset="top-[8px]"
+          leftOffset="left-[18px]"
+          roundedness="rounded-lg"
+          textColor="text-white"
         >
-          Connect Coinbase Wallet
-        </button>
-      ) : (
-        <div className="flex flex-col gap-2">
-          <p className="text-sm font-medium text-green-600">Wallet Connected</p>
-          <p className="text-xs text-gray-600">{address}</p>
           <button
-            onClick={() => disconnect()}
-            className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700"
+            onClick={() => connect({ connector: connectors[0] })}
+            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-white hover:bg-primary/90"
           >
-            Disconnect
+            <CoinbaseWalletLogo className="h-6 w-6" />
+            Connect Coinbase Wallet
           </button>
+        </LayeredCard>
+      ) : (
+        <div className="relative group">
+          <LayeredCard
+            mainColor="bg-primary"
+            bgColor="bg-white"
+            borderWidth="border-[2px]"
+            topOffset="top-[8px]"
+            leftOffset="left-[15px]"
+            roundedness="rounded-lg"
+            textColor="text-white"
+          >
+            <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-white">
+              <CoinbaseWalletLogo className="h-6 w-6" />
+              {`${address.slice(0, 6)}...${address.slice(-4)}`}
+            </button>
+          </LayeredCard>
+          <div className="hidden group-hover:block absolute w-full mt-2">
+            <LayeredCard
+              mainColor="bg-destructive"
+              bgColor="bg-white"
+              borderWidth="border-[2px]"
+              topOffset="top-[8px]"
+              leftOffset="left-[15px]"
+              roundedness="rounded-lg"
+              textColor="text-white"
+            >
+              <button
+                onClick={() => disconnect()}
+                className="w-full px-4 py-2"
+              >
+                Disconnect
+              </button>
+            </LayeredCard>
+          </div>
         </div>
       )}
     </div>

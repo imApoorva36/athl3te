@@ -1,4 +1,4 @@
-import { FlameIcon, HeartIcon, Wallet } from "lucide-react"
+import { HeartIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import LayeredCard from "@/components/LayeredCard";
 import Link from "next/link";
@@ -35,7 +35,7 @@ export default function FindCommunities() {
     return (
         <>
             {/* Header */}
-            <div className="flex justify-center items-center p-3 border-b">
+            <div className="flex justify-between items-center p-3 border-b">
                 <LayeredCard
                     mainColor="bg-accent"
                     bgColor="bg-primary"
@@ -49,7 +49,10 @@ export default function FindCommunities() {
                         <Image src="/wallet.png" width={20} height={20} alt="wallet" />
                     </Button>
                 </LayeredCard>
-                <h1 className="text-2xl font-bold mt-2 justify-center mx-auto text-primary">ATHL3TE</h1>
+                <div className="flex items-center">
+                    <Image src="/logo/athlete_logo.png" width={40} height={40} alt="logo" />
+                    <h1 className="text-2xl font-bold mt-2 mx-auto text-primary">ATHL3TE</h1>
+                </div>
                 <LayeredCard
                     mainColor="bg-accent"
                     bgColor="bg-primary"
@@ -60,7 +63,7 @@ export default function FindCommunities() {
                     textColor="text-white"
                 >
                     <Button variant="ghost" size="icon" className="text-[#FF4500] hover:text-[#FF4500] hover:bg-orange-50">
-                        <FlameIcon className="h-6 w-6" />
+                        <Image src="/fire.png" width={20} height={20} alt="fire" />
                     </Button>
                 </LayeredCard>
             </div>

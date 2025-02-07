@@ -1,7 +1,8 @@
-import { ArrowLeft, ArrowUp } from "lucide-react"
+import { ArrowUp } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import LayeredCard from "@/components/LayeredCard"
 import Link from "next/link"
+import Image from "next/image"
 
 
 export default function Community() {
@@ -32,7 +33,7 @@ export default function Community() {
         >
           <Link href="/communities">
             <Button variant="ghost" size="icon" className="text-primary hover:text-destructive">
-              <ArrowLeft className="h-6 w-6" />
+              <Image src="/back.png" width={20} height={20} alt="back" />
             </Button>
           </Link>
         </LayeredCard>
