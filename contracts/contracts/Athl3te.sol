@@ -34,14 +34,14 @@ contract Athl3te {
         string communityImage;
         Bot bot;
         address createdBy;
-        string[] messageIds; // Messages are stored on Nillion
+        string messagesId; // Messages are stored on Nillion
         string[] communitySportGoalIds; //Nillion
         address[] members; // Array of member addresses
     }
 
     struct PeronsalAssistant {
         Bot bot;
-        string[] messageIds; // Messages are stored on Nillion
+        string messagesId; // Messages are stored on Nillion
     }
 
     mapping(address => User) private users;
@@ -116,7 +116,7 @@ contract Athl3te {
 
         PeronsalAssistant memory newAssistant = PeronsalAssistant({
             bot: bot,
-            messageIds: new string[](0)
+            messagesId: ""
         });
 
         users[msg.sender].purchasedAssistants.push(newAssistant);
@@ -188,7 +188,7 @@ contract Athl3te {
         newRoom.communityImage = _communityImage;
         newRoom.bot = bot;
         newRoom.createdBy = msg.sender;
-        newRoom.messageIds = new string[](0);
+        newRoom.messagesId = "";
         newRoom.members = new address[](0);
         newRoom.communitySportGoalIds = new string[](0);
 
@@ -256,7 +256,7 @@ contract Athl3te {
             string memory communityImage,
             Bot memory bot,
             address createdBy,
-            uint256 messageCount
+            string memory messagesId
         )
     {
         CommunityRoom storage room = communityRooms[_communityName];
@@ -270,7 +270,33 @@ contract Athl3te {
             room.communityImage,
             room.bot,
             room.createdBy,
-            room.messageIds.length
+            room.messagesId
         );
+    }
+
+    function createBot(
+        string memory _botName,
+        string memory _botImage,
+        string memory _systemPrompt,
+        string memory _botDescription,
+        string memory _deploymentURL,
+        uint256 _unlockCostInGWei
+    ) public {
+        require(bytes(_botName).length > 0, "Bot name cannot be empty!");
+        require(bytes(_botImage).length > 0, "Bot image cannot be empty!");
+        require(bytes(_systemPrompt).length > 0, "System prompt cannot be empty!");
+        require(bytes(_botDescription).length > 0, "Bot description cannot be empty!");
+        require(bytes(_deploymentURL).length > 0, "Deployment URL cannot be empty!");
+        require(_unlockCostInGWei > 0, "Unlock cost must be greater than 0");
+
+        Bot storage newBot = bots[_botName];
+        newBot.botName = _botName;
+        newBot.botImage = _botImage;
+        newBot.systemPrompt = _systemPrompt;
+        newBot.botDescription = _botDescription;
+        newBot.deploymentURL = _deploymentURL;
+        newBot.unlockCostInGWei = _unlockCostInGWei;
+
+        allBots.push(newBot);
     }
 }

@@ -6,8 +6,8 @@ async function main() {
     console.log(`Deploying contract with account: ${deployer.address}`);
 
     // Deploy the contract
-    const SimpleNFT = await ethers.getContractFactory("SimpleNFT");
-    const simpleNFT = await SimpleNFT.deploy("SimpleNFT", "SNFT");
+    const SimpleNFT = await ethers.getContractFactory("Athl3te");
+    const simpleNFT = await SimpleNFT.deploy();
 
     await simpleNFT.deployed();
     console.log(`SimpleNFT deployed to: ${simpleNFT.address}`);
