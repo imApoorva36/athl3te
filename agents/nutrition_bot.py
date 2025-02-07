@@ -66,7 +66,7 @@ class NutritionBot:
             - Areas for improvement
             - Specific recommendations
             
-            Be encouraging but honest about areas needing improvement."""),
+            Be encouraging but honest about areas needing improvement. Give a CONCISE reply, within 50 words!!"""),
             ("human", "{input}")
         ])
         
@@ -79,11 +79,11 @@ class NutritionBot:
             
         total_days = len(logs)
         analysis = NutritionAnalysis(
-            average_calories=sum(log.calories_consumed for log in logs) / total_days,
-            average_protein=sum(log.protein for log in logs) / total_days,
-            average_carbs=sum(log.carbs for log in logs) / total_days,
-            average_fats=sum(log.fats for log in logs) / total_days,
-            average_water=sum(log.water_consumed for log in logs) / total_days,
+            average_calories = sum(log["calories_consumed"] for log in logs) / total_days,
+            average_protein = sum(log["protein"] for log in logs) / total_days,
+            average_carbs = sum(log["carbs"] for log in logs) / total_days,
+            average_fats = sum(log["fats"] for log in logs) / total_days,
+            average_water = sum(log["water_consumed"] for log in logs) / total_days,
             goal_completion_rate={},
             trend_analysis="",
             recommendations=[]
@@ -94,16 +94,16 @@ class NutritionBot:
         """Calculate completion rates for each nutrition goal"""
         completion_rates = {}
         
-        if goal.calories_consumed:
-            completion_rates['calories'] = (analysis.average_calories / goal.calories_consumed) * 100
-        if goal.protein:
-            completion_rates['protein'] = (analysis.average_protein / goal.protein) * 100
-        if goal.carbs:
-            completion_rates['carbs'] = (analysis.average_carbs / goal.carbs) * 100
-        if goal.fats:
-            completion_rates['fats'] = (analysis.average_fats / goal.fats) * 100
-        if goal.water_consumed:
-            completion_rates['water'] = (analysis.average_water / goal.water_consumed) * 100
+        if goal['calories_consumed']:
+            completion_rates['calories'] = (analysis.average_calories / goal['calories_consumed']) * 100
+        if goal['protein']:
+            completion_rates['protein'] = (analysis.average_protein / goal['protein']) * 100
+        if goal['carbs']:
+            completion_rates['carbs'] = (analysis.average_carbs / goal['carbs']) * 100
+        if goal['fats']:
+            completion_rates['fats'] = (analysis.average_fats / goal['fats']) * 100
+        if goal['water_consumed']:
+            completion_rates['water'] = (analysis.average_water / goal['water_consumed']) * 100
             
         return completion_rates
 
@@ -116,13 +116,16 @@ class NutritionBot:
                 return "No nutrition logs available for analysis."
 
             # Calculate goal completion rates
-            if user_goal.nutrition:
-                analysis.goal_completion_rate = self.calculate_goal_completion(user_goal.nutrition, analysis)
+            if user_goal["nutrition"]:
+                analysis.goal_completion_rate = self.calculate_goal_completion(user_goal["nutrition"], analysis)
 
             # Format goals and logs for the prompt
-            goals_str = user_goal.nutrition.model_dump_json(indent=2) if user_goal.nutrition else "No specific goals set"
-            logs_str = "\n".join([log.model_dump_json() for log in logs])
-            analysis_str = analysis.model_dump_json(indent=2)
+            goals_str = str(user_goal["nutrition"]) if user_goal["nutrition"] else "No specific goals set"
+            # print("1")
+            logs_str = "\n".join([str(log) for log in logs])
+            # print("2")
+            analysis_str = str(analysis)
+            # print("13")
 
             # Generate feedback
             response = self.analysis_chain.invoke({

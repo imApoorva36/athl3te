@@ -28,7 +28,7 @@ class PersonalBot:
             - Injury updates: {injury_updates}
             - Current mood: {sentiment}
             
-            Provide a personalized summary and motivational message based on this information."""),
+            Provide a personalized summary and motivational message based on this information. Give a CONCISE reply, within 50 words!!"""),
             ("human", "What's my daily summary and what should I focus on?")
         ])
         

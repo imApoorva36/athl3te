@@ -48,14 +48,14 @@ class CommunityBot:
         self.injury_prompt = ChatPromptTemplate.from_messages([
             ("system", """You're a community health advisor.
             Common injuries in {activity_type}: {injuries}
-            Provide prevention and recovery advice."""),
+            Provide prevention and recovery advice. Give a CONCISE reply, within 50 words!!"""),
             ("human", "{input}")
         ])
 
         self.performer_prompt = ChatPromptTemplate.from_messages([
             ("system", """Highlight top performers in {activity_type} community.
             Performers: {performers}
-            Create engaging highlights of their achievements."""),
+            Create engaging highlights of their achievements.  Give a CONCISE reply, within 50 words!!"""),
             ("human", "Who are our top performers?")
         ])
 

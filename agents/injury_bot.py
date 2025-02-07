@@ -26,7 +26,9 @@ class InjuryBot:
             - Specific exercises or modifications they should consider
             
             Personal Info: {personal_info}
-            Injury History: {injuries}"""),
+            Injury History: {injuries}
+            
+            Make sure you give concise responses, limited to 50 WORDS, in a paragraph"""),
             ("human", "{input}")
         ])
         
@@ -40,7 +42,9 @@ class InjuryBot:
             - When to seek professional medical help
             
             Personal Info: {personal_info}
-            Injury History: {injuries}"""),
+            Injury History: {injuries}
+            
+            Make sure you give concise responses, limited to 50 WORDS, in a paragraph"""),
             ("human", "{input}")
         ])
         
@@ -109,7 +113,6 @@ def run_agent(input_text, action, params):
         response = agent.get_prevention_advice(user_profile, input_text)
     elif action == "recovery":
         response = agent.get_recovery_advice(user_profile, input_text)
-    response = agent.parse_goal(input_text)
     
     return response
 
