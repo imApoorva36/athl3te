@@ -48,13 +48,12 @@ contract Athl3te {
     mapping(string => Bot) private bots;
     mapping(string => CommunityRoom) private communityRooms;
 
-    User[] private allUsers;
-    Bot[] private allBots;
-    CommunityRoom[] private allCommunityRooms;
+    User[] public allUsers;
+    Bot[] public allBots;
+    CommunityRoom[] public allCommunityRooms;
 
     function registerUser(string memory _metadata) public {
         require(!users[msg.sender].isRegistered, "User already registered!");
-        require(bytes(_metadata).length > 0, "Metadata cannot be empty!");
 
         User storage newUser = users[msg.sender];
         newUser.isRegistered = true;
@@ -69,21 +68,18 @@ contract Athl3te {
 
     function addActivity(string memory _activityId) public {
         require(users[msg.sender].isRegistered, "User not registered!");
-        require(bytes(_activityId).length > 0, "Activity ID cannot be empty!");
 
         users[msg.sender].activityIds.push(_activityId);
     }
 
     function addSportGoal(string memory _goalId) public {
         require(users[msg.sender].isRegistered, "User not registered!");
-        require(bytes(_goalId).length > 0, "Goal ID cannot be empty!");
 
         users[msg.sender].sportGoalIds.push(_goalId);
     }
 
     function addNutritionGoal(string memory _goalId) public {
         require(users[msg.sender].isRegistered, "User not registered!");
-        require(bytes(_goalId).length > 0, "Goal ID cannot be empty!");
 
         users[msg.sender].nutritionGoalIds.push(_goalId);
     }
@@ -105,7 +101,6 @@ contract Athl3te {
 
     function buyBot(string memory _botName) public payable {
         require(users[msg.sender].isRegistered, "User not registered!");
-        require(bytes(_botName).length > 0, "Bot name cannot be empty!");
 
         Bot storage bot = bots[_botName];
         require(bytes(bot.botName).length > 0, "Bot does not exist!");
@@ -124,7 +119,6 @@ contract Athl3te {
 
     function updateInjury(string memory _injuryId) public {
         require(users[msg.sender].isRegistered, "User not registered!");
-        require(bytes(_injuryId).length > 0, "Injury ID cannot be empty!");
 
         users[msg.sender].injuriesDescriptionId = _injuryId;
     }
@@ -177,7 +171,6 @@ contract Athl3te {
         string memory _botName
     ) public {
         require(bytes(_communityName).length > 0, "Community name cannot be empty!");
-        require(bytes(_communityImage).length > 0, "Community image cannot be empty!");
         require(bytes(_botName).length > 0, "Bot name cannot be empty!");
 
         Bot storage bot = bots[_botName];
@@ -195,22 +188,17 @@ contract Athl3te {
         // Add creator as first member
         newRoom.members.push(msg.sender);
         users[msg.sender].joinedCommunities.push(_communityName);
-
         allCommunityRooms.push(newRoom);
     }
 
     function joinCommunityRoom(string memory _communityName) public {
         require(users[msg.sender].isRegistered, "User not registered!");
-        
         CommunityRoom storage room = communityRooms[_communityName];
         require(bytes(room.communityName).length > 0, "Community room does not exist!");
-        
         for (uint i = 0; i < room.members.length; i++) {
             require(room.members[i] != msg.sender, "Already a member of this community!");
         }
-
         room.members.push(msg.sender);
-        
         users[msg.sender].joinedCommunities.push(_communityName);
     }
 
@@ -226,14 +214,6 @@ contract Athl3te {
         return users[msg.sender].joinedCommunities;
     }
 
-    function getDeployedCommunityRooms()
-        public
-        view
-        returns (CommunityRoom[] memory)
-    {
-        return allCommunityRooms;
-    }
-
     function getCommunityCreator(
         string memory _communityName
     ) public view returns (address) {
@@ -246,47 +226,16 @@ contract Athl3te {
         return room.createdBy;
     }
 
-    function getCommunityRoomDetails(
-        string memory _communityName
-    )
-        public
-        view
-        returns (
-            string memory communityName,
-            string memory communityImage,
-            Bot memory bot,
-            address createdBy,
-            string memory messagesId
-        )
+    function getCommunityRoomDetails(string memory _communityName) public view returns (string memory communityName, string memory communityImage, Bot memory bot, address createdBy, string memory messagesId)
     {
         CommunityRoom storage room = communityRooms[_communityName];
-        require(
-            bytes(room.communityName).length > 0,
-            "Community room does not exist!"
-        );
+        require(bytes(room.communityName).length > 0,"Community room does not exist!");
 
-        return (
-            room.communityName,
-            room.communityImage,
-            room.bot,
-            room.createdBy,
-            room.messagesId
-        );
+        return (room.communityName,room.communityImage, room.bot, room.createdBy, room.messagesId);
     }
 
-    function createBot(
-        string memory _botName,
-        string memory _botImage,
-        string memory _systemPrompt,
-        string memory _botDescription,
-        string memory _deploymentURL,
-        uint256 _unlockCostInGWei
-    ) public {
+    function createBot( string memory _botName, string memory _botImage, string memory _systemPrompt, string memory _botDescription, string memory _deploymentURL, uint256 _unlockCostInGWei) public {
         require(bytes(_botName).length > 0, "Bot name cannot be empty!");
-        require(bytes(_botImage).length > 0, "Bot image cannot be empty!");
-        require(bytes(_systemPrompt).length > 0, "System prompt cannot be empty!");
-        require(bytes(_botDescription).length > 0, "Bot description cannot be empty!");
-        require(bytes(_deploymentURL).length > 0, "Deployment URL cannot be empty!");
         require(_unlockCostInGWei > 0, "Unlock cost must be greater than 0");
 
         Bot storage newBot = bots[_botName];
