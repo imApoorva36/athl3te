@@ -2,8 +2,6 @@
 
 import { useState, useEffect } from "react";
 import ActivityCard from "../components/ActivityCard";
-import { WalletComponents } from "@/components/WalletComponents";
-import NavBar from "../components/NavBar";
 import Link from 'next/link';
 
 export default function Home() {
@@ -73,7 +71,6 @@ export default function Home() {
 
     return (
         <div>
-            <NavBar />
             <div className="p-8">
 
                 <ActivityCard title="Morning Run" activity={sampleActivity} />
@@ -85,7 +82,6 @@ export default function Home() {
                 {/* <ActivityCard activity={sampleActivity}> */}
 
                 {/* </ActivityCard> */}
-                <NavBar></NavBar>
                 {/* <h1 className="text-3xl font-bold mb-4">Strava Integration</h1> */}
                 {/* Commenting out existing code */}
                 {/* <div className="flex flex-col items-center justify-center min-h-screen bg-black-100 p-6">

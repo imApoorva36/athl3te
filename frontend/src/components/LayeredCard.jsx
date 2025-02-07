@@ -12,7 +12,7 @@ const LayeredCard = ({
 }) => {
     return (
         <div className='hover:scale-105 transform transition-transform duration-300'>
-            <div className={`relative w-fit pt-1 pr-1`}>
+            <div className={`relative pt-1 pr-1`}>
                 {/* Background Card */}
                 <div
                     className={`absolute ${topOffset} ${leftOffset} w-[95%] h-[95%] ${roundedness} ${bgColor} border-black  ${borderWidth}`}

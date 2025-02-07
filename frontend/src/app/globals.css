@@ -95,3 +95,29 @@ h1, h2, h3, h4, h5, h6, p, li, button {
     @apply bg-background text-foreground;
   }
 }
+
+/* Webkit (Chrome, Safari, Brave, etc.) */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ock-bg-primary-hover);
+}
+
+/* Standard scrollbar properties */
+* {
+  scrollbar-width: thin;
+  scrollbar-track-color: var(--accent);
+  scrollbar-color: var(--primary) transparent;
+}
