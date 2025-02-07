@@ -1,0 +1,55 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Message Schema",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "_id": {
+        "type": "string",
+        "format": "uuid",
+        "coerce": true
+      },
+      "chat_id": {
+        "type": "string"
+      },
+      "sender": {
+        "type": "string"
+      },
+      "message": {
+        "type": "object",
+        "properties": {
+          "$share": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "$share"
+        ]
+      },
+      "timestamp": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "ipfsImageURL": {
+        "type": "object",
+        "properties": {
+          "$share": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "$share"
+        ]
+      }
+    },
+    "required": [
+      "_id",
+      "chat_id",
+      "sender",
+      "message",
+      "timestamp",
+      "ipfsImageURL"
+    ]
+  }
+}
