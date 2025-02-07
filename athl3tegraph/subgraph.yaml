@@ -48,3 +48,35 @@ dataSources:
         - event: UserRegistered(indexed address,string)
           handler: handleUserRegistered
       file: ./src/athl-3-te.ts
+  - kind: ethereum
+    name: Contract
+    network: base-sepolia
+    source:
+      address: "0x9165C7E9A401b159b4621B1bD588bDD58636E720"
+      abi: Contract
+      startBlock: 21571309
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Approval
+        - ApprovalForAll
+        - Minted
+        - TokenURIUpdated
+        - Transfer
+      abis:
+        - name: Contract
+          file: ./abis/Contract.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,indexed uint256)
+          handler: handleApproval
+        - event: ApprovalForAll(indexed address,indexed address,bool)
+          handler: handleApprovalForAll
+        - event: Minted(indexed address,indexed uint256,string)
+          handler: handleMinted
+        - event: TokenURIUpdated(indexed uint256,string)
+          handler: handleTokenURIUpdated
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+      file: ./src/contract.ts

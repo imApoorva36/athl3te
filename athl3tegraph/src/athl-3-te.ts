@@ -39,7 +39,7 @@ export function handleBotCreated(event: BotCreatedEvent): void {
   let entity = new BotCreated(
     event.transaction.hash.concatI32(event.logIndex.toI32())
   )
-  entity.botName = event.params.botName
+  entity.botName = event.params.botName.toString()
   entity.deploymentURL = event.params.deploymentURL
   entity.unlockCostInGWei = event.params.unlockCostInGWei
 
@@ -71,7 +71,7 @@ export function handleCommunityRoomCreated(
   let entity = new CommunityRoomCreated(
     event.transaction.hash.concatI32(event.logIndex.toI32())
   )
-  entity.communityName = event.params.communityName
+  entity.communityName = event.params.communityName.toString()
   entity.creator = event.params.creator
   entity.botName = event.params.botName
   entity.messagesId = event.params.messagesId
