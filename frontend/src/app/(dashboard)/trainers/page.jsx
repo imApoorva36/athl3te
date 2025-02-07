@@ -43,7 +43,7 @@ export default function MyAgents() {
                     roundedness="rounded-lg"
                     textColor="text-white"
                 >
-                    <Button variant="ghost" size="icon" className="text-[#FF4500] hover:text-[#FF4500] hover:bg-orange-50">
+                    <Button variant="ghost" size="icon" className="text-primary hover:text-destructive hover:bg-orange-50">
                         <FlameIcon className="h-6 w-6" />
                     </Button>
                 </LayeredCard>

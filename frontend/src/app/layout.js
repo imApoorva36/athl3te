@@ -38,9 +38,7 @@ export default async function RootLayout({ children }) {
         <div className="min-h-screen bg-[url(/desktop.jpg)] bg-cover bg-no-repeat flex items-center justify-center">
           <Card className="w-full max-w-md mx-auto bg-white overflow-hidden flex flex-col h-screen sm:h-[95vh] shadow-2xl relative">
           {children}
-          <NavBar className="absolute top-0 left-0 right-0" />
           </Card>
-          
         </div>
         </Providers>
       </body>
