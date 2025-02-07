@@ -1,0 +1,50 @@
+specVersion: 1.0.0
+indexerHints:
+  prune: auto
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Athl3te
+    network: base-sepolia
+    source:
+      address: "0x815176B666F6E5C7d2C1d13D949f811fac0e562E"
+      abi: Athl3te
+      startBlock: 21571294
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - ActivityAdded
+        - BotCreated
+        - BotPurchased
+        - CommunityRoomCreated
+        - CommunityRoomJoined
+        - InjuryUpdated
+        - NutritionGoalAdded
+        - SportGoalAdded
+        - UserRegistered
+      abis:
+        - name: Athl3te
+          file: ./abis/Athl3te.json
+      eventHandlers:
+        - event: ActivityAdded(indexed address,string)
+          handler: handleActivityAdded
+        - event: BotCreated(indexed string,string,uint16)
+          handler: handleBotCreated
+        - event: BotPurchased(indexed address,string,uint16)
+          handler: handleBotPurchased
+        - event: CommunityRoomCreated(indexed string,indexed address,string,uint16)
+          handler: handleCommunityRoomCreated
+        - event: CommunityRoomJoined(indexed address,string)
+          handler: handleCommunityRoomJoined
+        - event: InjuryUpdated(indexed address,string)
+          handler: handleInjuryUpdated
+        - event: NutritionGoalAdded(indexed address,string)
+          handler: handleNutritionGoalAdded
+        - event: SportGoalAdded(indexed address,string)
+          handler: handleSportGoalAdded
+        - event: UserRegistered(indexed address,string)
+          handler: handleUserRegistered
+      file: ./src/athl-3-te.ts
