@@ -77,7 +77,7 @@
 | caloriesConsumed | uint | Total calories consumed | Encrypted |
 | hydration | uint | Amount of hydration (in liters) | Encrypted |
 
-## 8. Bot Model - Contract + UUID
+## 8. Bot Model - Contract
 
 | Field | Type | Description | Storage |
 | --- | --- | --- | --- |
@@ -95,7 +95,7 @@
 | members | mapping(address => boolean) | Mapping of community members and their membership status | Contract |
 | membersWithPersonalAssistants | mapping(address => boolean) | Mapping of members with unlocked personal assistants | Contract |
 | costToUnlockPersonalAssistantGW | uint256 | Cost to unlock the personal assistant (in GigaWei) | Contract |
-| messages | array[Message] | Array of messages in the community | Encrypted(UUID) |
+| messages | array[Message] | Array of messages in the community | Encrypted |
 | communityName | string | Name of the community | Contract |
 | communityLogo | string (URI) | Logo of the community | Contract |
 | bot | Bot Model | Bot which is present in the community | Contract |
@@ -105,11 +105,11 @@
 
 | Field | Type | Description | Storage |
 | --- | --- | --- | --- |
-| text | string | Content of the message | Encrypted UUID |
-| sender | address | Ethereum address of the message sender | Contract |
-| ipfsImageUrl | string (IPFS CID) | Optional image attached to the message | Contract |
-| timestamp | uint256 | Timestamp when the message was sent | Contract |
-| sentByBot | boolean | Flag to indicate if the message was sent by the bot | Contract |
+| text | string | Content of the message | Encrypted |
+| sender | address | Ethereum address of the message sender | Encrypted |
+| ipfsImageUrl | string (IPFS CID) | Optional image attached to the message | Encrypted |
+| timestamp | uint256 | Timestamp when the message was sent | Encrypted |
+| sentByBot | boolean | Flag to indicate if the message was sent by the bot | Encrypted |
 
 ## 11. Personal Assistant Model
 
