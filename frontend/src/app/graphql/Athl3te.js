@@ -1,4 +1,4 @@
-[
+const abi = [
   {
     "inputs": [
       { "internalType": "string", "name": "name", "type": "string" },

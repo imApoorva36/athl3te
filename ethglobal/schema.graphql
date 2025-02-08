@@ -32,9 +32,10 @@ type ApprovalForAll @entity(immutable: true) {
 type BotCreated @entity(immutable: true) {
   id: Bytes!
   botName: String! # string
+  systemPrompt: String! # string
+  botDescription: String! # string
   deploymentURL: String! # string
   unlockCostInGWei: Int! # uint16
-  botDescription: String! # string
   timestamp: BigInt! # uint256
   totalBots: BigInt! # uint256
   blockNumber: BigInt!
@@ -50,6 +51,18 @@ type BotPurchased @entity(immutable: true) {
   costPaid: BigInt! # uint256
   timestamp: BigInt! # uint256
   totalBotsPurchased: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type CommunityGoalAdded @entity(immutable: true) {
+  id: Bytes!
+  userAddress: Bytes! # address
+  communityName: String! # string
+  goalId: String! # string
+  timestamp: BigInt! # uint256
+  totalGoalsOfCommunity: BigInt! # uint256
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!

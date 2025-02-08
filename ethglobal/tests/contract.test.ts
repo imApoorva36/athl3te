@@ -8,9 +8,9 @@ import {
 } from "matchstick-as/assembly/index"
 import { Address, BigInt } from "@graphprotocol/graph-ts"
 import { ActivityAdded } from "../generated/schema"
-import { ActivityAdded as ActivityAddedEvent } from "../generated/Athl3te/Athl3te"
-import { handleActivityAdded } from "../src/athl-3-te"
-import { createActivityAddedEvent } from "./athl-3-te-utils"
+import { ActivityAdded as ActivityAddedEvent } from "../generated/Contract/Contract"
+import { handleActivityAdded } from "../src/contract"
+import { createActivityAddedEvent } from "./contract-utils"
 
 // Tests structure (matchstick-as >=0.5.0)
 // https://thegraph.com/docs/en/developer/matchstick/#tests-structure-0-5-0

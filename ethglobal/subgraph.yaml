@@ -5,12 +5,12 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum
-    name: Athl3te
+    name: Contract
     network: base-sepolia
     source:
-      address: "0xe7683ef11C2DEe46a0d0B3006f30AdBf813f433F"
-      abi: Athl3te
-      startBlock: 21637938
+      address: "0xA9A98bAcAa8446145062070113194a2657e683b8"
+      abi: Contract
+      startBlock: 21642101
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -21,6 +21,7 @@ dataSources:
         - ApprovalForAll
         - BotCreated
         - BotPurchased
+        - CommunityGoalAdded
         - CommunityRoomCreated
         - CommunityRoomJoined
         - GoalAdded
@@ -29,8 +30,8 @@ dataSources:
         - Transfer
         - UserRegistered
       abis:
-        - name: Athl3te
-          file: ./abis/Athl3te.json
+        - name: Contract
+          file: ./abis/Contract.json
       eventHandlers:
         - event: ActivityAdded(address,string,uint256,uint256)
           handler: handleActivityAdded
@@ -38,10 +39,12 @@ dataSources:
           handler: handleApproval
         - event: ApprovalForAll(indexed address,indexed address,bool)
           handler: handleApprovalForAll
-        - event: BotCreated(string,string,uint16,string,uint256,uint256)
+        - event: BotCreated(string,string,string,string,uint16,uint256,uint256)
           handler: handleBotCreated
         - event: BotPurchased(address,string,uint16,uint256,uint256,uint256)
           handler: handleBotPurchased
+        - event: CommunityGoalAdded(address,string,string,uint256,uint256)
+          handler: handleCommunityGoalAdded
         - event: CommunityRoomCreated(string,address,string,uint16,uint256,uint256)
           handler: handleCommunityRoomCreated
         - event: CommunityRoomJoined(address,string,uint256,uint256)
@@ -56,4 +59,4 @@ dataSources:
           handler: handleTransfer
         - event: UserRegistered(address,string,uint256)
           handler: handleUserRegistered
-      file: ./src/athl-3-te.ts
+      file: ./src/contract.ts

@@ -4,6 +4,7 @@ import {
   ApprovalForAll as ApprovalForAllEvent,
   BotCreated as BotCreatedEvent,
   BotPurchased as BotPurchasedEvent,
+  CommunityGoalAdded as CommunityGoalAddedEvent,
   CommunityRoomCreated as CommunityRoomCreatedEvent,
   CommunityRoomJoined as CommunityRoomJoinedEvent,
   GoalAdded as GoalAddedEvent,
@@ -11,13 +12,14 @@ import {
   NFTMinted as NFTMintedEvent,
   Transfer as TransferEvent,
   UserRegistered as UserRegisteredEvent
-} from "../generated/Athl3te/Athl3te"
+} from "../generated/Contract/Contract"
 import {
   ActivityAdded,
   Approval,
   ApprovalForAll,
   BotCreated,
   BotPurchased,
+  CommunityGoalAdded,
   CommunityRoomCreated,
   CommunityRoomJoined,
   GoalAdded,
@@ -78,9 +80,10 @@ export function handleBotCreated(event: BotCreatedEvent): void {
     event.transaction.hash.concatI32(event.logIndex.toI32())
   )
   entity.botName = event.params.botName
+  entity.systemPrompt = event.params.systemPrompt
+  entity.botDescription = event.params.botDescription
   entity.deploymentURL = event.params.deploymentURL
   entity.unlockCostInGWei = event.params.unlockCostInGWei
-  entity.botDescription = event.params.botDescription
   entity.timestamp = event.params.timestamp
   entity.totalBots = event.params.totalBots
 
@@ -101,6 +104,23 @@ export function handleBotPurchased(event: BotPurchasedEvent): void {
   entity.costPaid = event.params.costPaid
   entity.timestamp = event.params.timestamp
   entity.totalBotsPurchased = event.params.totalBotsPurchased
+
+  entity.blockNumber = event.block.number
+  entity.blockTimestamp = event.block.timestamp
+  entity.transactionHash = event.transaction.hash
+
+  entity.save()
+}
+
+export function handleCommunityGoalAdded(event: CommunityGoalAddedEvent): void {
+  let entity = new CommunityGoalAdded(
+    event.transaction.hash.concatI32(event.logIndex.toI32())
+  )
+  entity.userAddress = event.params.userAddress
+  entity.communityName = event.params.communityName
+  entity.goalId = event.params.goalId
+  entity.timestamp = event.params.timestamp
+  entity.totalGoalsOfCommunity = event.params.totalGoalsOfCommunity
 
   entity.blockNumber = event.block.number
   entity.blockTimestamp = event.block.timestamp

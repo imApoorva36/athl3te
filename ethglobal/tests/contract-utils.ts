@@ -6,6 +6,7 @@ import {
   ApprovalForAll,
   BotCreated,
   BotPurchased,
+  CommunityGoalAdded,
   CommunityRoomCreated,
   CommunityRoomJoined,
   GoalAdded,
@@ -13,7 +14,7 @@ import {
   NFTMinted,
   Transfer,
   UserRegistered
-} from "../generated/Athl3te/Athl3te"
+} from "../generated/Contract/Contract"
 
 export function createActivityAddedEvent(
   userAddress: Address,
@@ -99,9 +100,10 @@ export function createApprovalForAllEvent(
 
 export function createBotCreatedEvent(
   botName: string,
+  systemPrompt: string,
+  botDescription: string,
   deploymentURL: string,
   unlockCostInGWei: i32,
-  botDescription: string,
   timestamp: BigInt,
   totalBots: BigInt
 ): BotCreated {
@@ -114,6 +116,18 @@ export function createBotCreatedEvent(
   )
   botCreatedEvent.parameters.push(
     new ethereum.EventParam(
+      "systemPrompt",
+      ethereum.Value.fromString(systemPrompt)
+    )
+  )
+  botCreatedEvent.parameters.push(
+    new ethereum.EventParam(
+      "botDescription",
+      ethereum.Value.fromString(botDescription)
+    )
+  )
+  botCreatedEvent.parameters.push(
+    new ethereum.EventParam(
       "deploymentURL",
       ethereum.Value.fromString(deploymentURL)
     )
@@ -122,12 +136,6 @@ export function createBotCreatedEvent(
     new ethereum.EventParam(
       "unlockCostInGWei",
       ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(unlockCostInGWei))
-    )
-  )
-  botCreatedEvent.parameters.push(
-    new ethereum.EventParam(
-      "botDescription",
-      ethereum.Value.fromString(botDescription)
     )
   )
   botCreatedEvent.parameters.push(
@@ -193,6 +201,48 @@ export function createBotPurchasedEvent(
   )
 
   return botPurchasedEvent
+}
+
+export function createCommunityGoalAddedEvent(
+  userAddress: Address,
+  communityName: string,
+  goalId: string,
+  timestamp: BigInt,
+  totalGoalsOfCommunity: BigInt
+): CommunityGoalAdded {
+  let communityGoalAddedEvent = changetype<CommunityGoalAdded>(newMockEvent())
+
+  communityGoalAddedEvent.parameters = new Array()
+
+  communityGoalAddedEvent.parameters.push(
+    new ethereum.EventParam(
+      "userAddress",
+      ethereum.Value.fromAddress(userAddress)
+    )
+  )
+  communityGoalAddedEvent.parameters.push(
+    new ethereum.EventParam(
+      "communityName",
+      ethereum.Value.fromString(communityName)
+    )
+  )
+  communityGoalAddedEvent.parameters.push(
+    new ethereum.EventParam("goalId", ethereum.Value.fromString(goalId))
+  )
+  communityGoalAddedEvent.parameters.push(
+    new ethereum.EventParam(
+      "timestamp",
+      ethereum.Value.fromUnsignedBigInt(timestamp)
+    )
+  )
+  communityGoalAddedEvent.parameters.push(
+    new ethereum.EventParam(
+      "totalGoalsOfCommunity",
+      ethereum.Value.fromUnsignedBigInt(totalGoalsOfCommunity)
+    )
+  )
+
+  return communityGoalAddedEvent
 }
 
 export function createCommunityRoomCreatedEvent(
