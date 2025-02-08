@@ -1,6 +1,6 @@
 import { GraphQLClient } from "graphql-request";
 
-const API_URL = "https://api.studio.thegraph.com/query/103282/athl3tegraph/version/latest";
+const API_URL = "https://api.studio.thegraph.com/query/103282/graphathl3te/version/latest";
 
 export const client = new GraphQLClient(API_URL);
 

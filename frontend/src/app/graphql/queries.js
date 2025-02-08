@@ -79,49 +79,5 @@ export const GET_ALL_DATA = gql`
       blockTimestamp
       transactionHash
     }
-    approvals(first: 1000) {
-      id
-      owner
-      approved
-      tokenId
-      blockNumber
-      blockTimestamp
-      transactionHash
-    }
-    approvalForAlls(first: 1000) {
-      id
-      owner
-      operator
-      approved
-      blockNumber
-      blockTimestamp
-      transactionHash
-    }
-    minteds(first: 1000) {
-      id
-      owner
-      tokenId
-      tokenURI
-      blockNumber
-      blockTimestamp
-      transactionHash
-    }
-    tokenURIUpdateds(first: 1000) {
-      id
-      tokenId
-      newTokenURI
-      blockNumber
-      blockTimestamp
-      transactionHash
-    }
-    transfers(first: 1000) {
-      id
-      from
-      to
-      tokenId
-      blockNumber
-      blockTimestamp
-      transactionHash
-    }
   }
 `;
