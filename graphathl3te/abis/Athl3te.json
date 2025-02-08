@@ -196,11 +196,7 @@
   },
   {
     "inputs": [
-      {
-        "internalType": "string",
-        "name": "_activityId",
-        "type": "string"
-      }
+      { "internalType": "string", "name": "_activityId", "type": "string" }
     ],
     "name": "addActivity",
     "outputs": [],
@@ -209,11 +205,7 @@
   },
   {
     "inputs": [
-      {
-        "internalType": "string",
-        "name": "_goalId",
-        "type": "string"
-      }
+      { "internalType": "string", "name": "_goalId", "type": "string" }
     ],
     "name": "addNutritionGoal",
     "outputs": [],
@@ -222,11 +214,7 @@
   },
   {
     "inputs": [
-      {
-        "internalType": "string",
-        "name": "_goalId",
-        "type": "string"
-      }
+      { "internalType": "string", "name": "_goalId", "type": "string" }
     ],
     "name": "addSportGoal",
     "outputs": [],
@@ -235,11 +223,7 @@
   },
   {
     "inputs": [
-      {
-        "internalType": "string",
-        "name": "_botName",
-        "type": "string"
-      }
+      { "internalType": "string", "name": "_botName", "type": "string" }
     ],
     "name": "buyBot",
     "outputs": [],
@@ -248,31 +232,11 @@
   },
   {
     "inputs": [
-      {
-        "internalType": "string",
-        "name": "_botName",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
-        "name": "_botImage",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
-        "name": "_systemPrompt",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
-        "name": "_botDescription",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
-        "name": "_deploymentURL",
-        "type": "string"
-      },
+      { "internalType": "string", "name": "_botName", "type": "string" },
+      { "internalType": "string", "name": "_botImage", "type": "string" },
+      { "internalType": "string", "name": "_systemPrompt", "type": "string" },
+      { "internalType": "string", "name": "_botDescription", "type": "string" },
+      { "internalType": "string", "name": "_deploymentURL", "type": "string" },
       {
         "internalType": "uint16",
         "name": "_unlockCostInGWei",
@@ -286,21 +250,9 @@
   },
   {
     "inputs": [
-      {
-        "internalType": "string",
-        "name": "_communityName",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
-        "name": "_communityImage",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
-        "name": "_botName",
-        "type": "string"
-      }
+      { "internalType": "string", "name": "_communityName", "type": "string" },
+      { "internalType": "string", "name": "_communityImage", "type": "string" },
+      { "internalType": "string", "name": "_botName", "type": "string" }
     ],
     "name": "createCommunityRoom",
     "outputs": [],
@@ -309,26 +261,14 @@
   },
   {
     "inputs": [
-      {
-        "internalType": "string",
-        "name": "_botName",
-        "type": "string"
-      }
+      { "internalType": "string", "name": "_botName", "type": "string" }
     ],
     "name": "getBotDetails",
     "outputs": [
       {
         "components": [
-          {
-            "internalType": "string",
-            "name": "botName",
-            "type": "string"
-          },
-          {
-            "internalType": "string",
-            "name": "botImage",
-            "type": "string"
-          },
+          { "internalType": "string", "name": "botName", "type": "string" },
+          { "internalType": "string", "name": "botImage", "type": "string" },
           {
             "internalType": "string",
             "name": "systemPrompt",
@@ -360,11 +300,7 @@
   },
   {
     "inputs": [
-      {
-        "internalType": "string",
-        "name": "_communityName",
-        "type": "string"
-      }
+      { "internalType": "string", "name": "_communityName", "type": "string" }
     ],
     "name": "getCommunityRoomDetails",
     "outputs": [
@@ -380,21 +316,9 @@
             "name": "communityImage",
             "type": "string"
           },
-          {
-            "internalType": "string",
-            "name": "botName",
-            "type": "string"
-          },
-          {
-            "internalType": "address",
-            "name": "createdBy",
-            "type": "address"
-          },
-          {
-            "internalType": "uint16",
-            "name": "messagesId",
-            "type": "uint16"
-          },
+          { "internalType": "string", "name": "botName", "type": "string" },
+          { "internalType": "address", "name": "createdBy", "type": "address" },
+          { "internalType": "uint16", "name": "messagesId", "type": "uint16" },
           {
             "internalType": "string[]",
             "name": "communitySportGoalIds",
@@ -417,13 +341,7 @@
   {
     "inputs": [],
     "name": "getUserCommunities",
-    "outputs": [
-      {
-        "internalType": "string[]",
-        "name": "",
-        "type": "string[]"
-      }
-    ],
+    "outputs": [{ "internalType": "string[]", "name": "", "type": "string[]" }],
     "stateMutability": "view",
     "type": "function"
   },
@@ -433,11 +351,7 @@
     "outputs": [
       {
         "components": [
-          {
-            "internalType": "string",
-            "name": "metadata",
-            "type": "string"
-          },
+          { "internalType": "string", "name": "metadata", "type": "string" },
           {
             "internalType": "string[]",
             "name": "activityIds",
@@ -455,11 +369,7 @@
           },
           {
             "components": [
-              {
-                "internalType": "string",
-                "name": "botName",
-                "type": "string"
-              },
+              { "internalType": "string", "name": "botName", "type": "string" },
               {
                 "internalType": "uint16",
                 "name": "messagesId",
@@ -477,11 +387,7 @@
           },
           {
             "components": [
-              {
-                "internalType": "string",
-                "name": "nftName",
-                "type": "string"
-              },
+              { "internalType": "string", "name": "nftName", "type": "string" },
               {
                 "internalType": "string",
                 "name": "nftImage",
@@ -497,11 +403,7 @@
             "name": "nfts",
             "type": "tuple[]"
           },
-          {
-            "internalType": "bool",
-            "name": "isRegistered",
-            "type": "bool"
-          },
+          { "internalType": "bool", "name": "isRegistered", "type": "bool" },
           {
             "internalType": "string[]",
             "name": "joinedCommunities",
@@ -518,11 +420,7 @@
   },
   {
     "inputs": [
-      {
-        "internalType": "string",
-        "name": "_communityName",
-        "type": "string"
-      }
+      { "internalType": "string", "name": "_communityName", "type": "string" }
     ],
     "name": "joinCommunityRoom",
     "outputs": [],
@@ -531,11 +429,7 @@
   },
   {
     "inputs": [
-      {
-        "internalType": "string",
-        "name": "_metadata",
-        "type": "string"
-      }
+      { "internalType": "string", "name": "_metadata", "type": "string" }
     ],
     "name": "registerUser",
     "outputs": [],
@@ -544,11 +438,7 @@
   },
   {
     "inputs": [
-      {
-        "internalType": "string",
-        "name": "_injuryId",
-        "type": "string"
-      }
+      { "internalType": "string", "name": "_injuryId", "type": "string" }
     ],
     "name": "updateInjury",
     "outputs": [],
