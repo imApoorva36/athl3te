@@ -453,45 +453,9 @@
       ]
     },
     "/Users/abhisheksatpathy/athl3te/contracts/contracts/Athl3te.sol": {
-      "lastModificationDate": 1738910849541,
-      "contentHash": "fe24485d899dd56b266ac339e2d302e7",
+      "lastModificationDate": 1739026065726,
+      "contentHash": "a1f05c1e1a334e0a3d71c1d29762f558",
       "sourceName": "contracts/Athl3te.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "evmVersion": "paris",
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "Athl3te"
-      ]
-    },
-    "/Users/abhisheksatpathy/athl3te/contracts/contracts/MyNFT.sol": {
-      "lastModificationDate": 1738910838109,
-      "contentHash": "f281ba7aa503e459dc6355ef8d724d71",
-      "sourceName": "contracts/MyNFT.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
@@ -524,7 +488,7 @@
         "^0.8.20"
       ],
       "artifacts": [
-        "SimpleNFT"
+        "Athl3te"
       ]
     }
   }

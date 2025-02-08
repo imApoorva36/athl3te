@@ -1,80 +1,93 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-contract Athl3te {
+import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/utils/Counters.sol";
+
+contract Athl3te is ERC721  {
+    using Counters for Counters.Counter;
+    Counters.Counter private _tokenIdCounter;
+
     // Events
     event UserRegistered(address indexed userAddress, string metadata);
     event ActivityAdded(address indexed userAddress, string activityId);
-    event SportGoalAdded(address indexed userAddress, string goalId);
-    event NutritionGoalAdded(address indexed userAddress, string goalId);
+    event GoalAdded(address indexed userAddress, string goalId);
     event BotPurchased(address indexed userAddress, string botName, uint16 messagesId);
-    event InjuryUpdated(address indexed userAddress, string injuryId);
-    event CommunityRoomCreated(
-        string indexed communityName,
-        address indexed creator,
-        string botName,
-        uint16 messagesId
-    );
+    event CommunityRoomCreated(string indexed communityName, address indexed creator, string botName, uint16 messagesId);
     event CommunityRoomJoined(address indexed userAddress, string communityName);
-    event BotCreated(
-        string indexed botName,
-        string deploymentURL,
-        uint16 unlockCostInGWei
-    );
-
-    struct nft {
-        string nftName;
-        string nftImage;
-        string description;
-    }
+    event BotCreated(string indexed botName, string deploymentURL, uint16 unlockCostInGWei);
 
     struct Bot {
         string botName;
-        string botImage;
         string systemPrompt;
         string botDescription;
         string deploymentURL;
         uint16 unlockCostInGWei;
     }
 
+    struct PersonalAssistant {
+        string botName;
+        uint16 messagesId;
+    }
+
     struct User {
-        string metadata; // Nillion - age, gender, name, weight, height
-        string[] activityIds; //Nillion
-        string[] sportGoalIds; //Nillion
-        string[] nutritionGoalIds; //Nillion
+        string metadata;
+        string[] activityIds;
+        string[] sportGoalIds;
+        string[] nutritionGoalIds;
         PersonalAssistant[] purchasedAssistants;
-        string injuriesDescriptionId; //Nillion
-        nft[] nfts;
+        string injuriesDescriptionId;
+        uint256[] nftTokenIds;
         bool isRegistered;
-        string[] joinedCommunities; // Array of community names the user has joined
+        string[] joinedCommunities;
     }
 
     struct CommunityRoom {
         string communityName;
-        string communityImage;
-        Bot bot;
+        string botName;
         address createdBy;
-        uint16 messagesId; // Messages are stored on Nillion
-        string[] communitySportGoalIds; //Nillion
-        address[] members; // Array of member addresses
+        uint16 messagesId;
+        string[] communitySportGoalIds;
+        address[] members;
     }
 
-    struct PersonalAssistant {
-        Bot bot;
-        uint16 messagesId; // Messages are stored on Nillion
+    string private baseURI;
+
+    constructor(string memory name, string memory symbol, string memory _baseURL) ERC721(name, symbol) {
+        baseURI = _baseURL;
+    }
+
+    function _baseURI() internal view override returns (string memory) {
+        return baseURI;
     }
 
     uint16 private messageIdGenerator = 0;
-
+    
     mapping(address => User) private users;
     mapping(string => Bot) private bots;
     mapping(string => CommunityRoom) private communityRooms;
 
-    User[] public allUsers;
-    Bot[] public allBots;
-    CommunityRoom[] public allCommunityRooms;
+    mapping(uint256 => string) public _tokenURIs;
 
-    function registerUser(string memory _metadata) public {
+    string[] private allBotNames;
+    address[] private allUsers;
+    string[] private allCommunityNames;
+
+    modifier onlyRegistered() {
+        require(users[msg.sender].isRegistered, "Not registered");
+        _;
+    }
+
+    function mintNftWithUri(string memory uri) onlyRegistered external returns (uint) {
+        uint256 tokenId = _tokenIdCounter.current();
+        _tokenIdCounter.increment();
+        _mint(msg.sender, tokenId);
+        _tokenURIs[tokenId] = uri;
+        users[msg.sender].nftTokenIds.push(tokenId);
+        return tokenId;
+    }
+
+    function registerUser(string calldata _metadata) external {
         require(!users[msg.sender].isRegistered, "User already registered!");
 
         User storage newUser = users[msg.sender];
@@ -83,175 +96,122 @@ contract Athl3te {
         newUser.activityIds = new string[](0);
         newUser.sportGoalIds = new string[](0);
         newUser.nutritionGoalIds = new string[](0);
-        newUser.injuriesDescriptionId = "";
+        newUser.nftTokenIds = new uint256[](0);
 
-        allUsers.push(newUser);
-        
+        allUsers.push(msg.sender);
+
         emit UserRegistered(msg.sender, _metadata);
     }
 
-    function addActivity(string memory _activityId) public {
-        require(users[msg.sender].isRegistered, "User not registered!");
-
+    function addActivity(string calldata _activityId) external onlyRegistered {
         users[msg.sender].activityIds.push(_activityId);
-        
         emit ActivityAdded(msg.sender, _activityId);
     }
 
-    function addSportGoal(string memory _goalId) public {
-        require(users[msg.sender].isRegistered, "User not registered!");
-
-        users[msg.sender].sportGoalIds.push(_goalId);
-        
-        emit SportGoalAdded(msg.sender, _goalId);
+    function addGoal(string memory _goalId, string calldata goalType) external onlyRegistered {
+         bytes32 goalTypeHash = keccak256(abi.encodePacked(goalType));
+    
+        if(goalTypeHash == keccak256(abi.encodePacked("nutrition"))) {
+            users[msg.sender].nutritionGoalIds.push(_goalId);
+        } else if(goalTypeHash == keccak256(abi.encodePacked("sport"))) {
+            users[msg.sender].sportGoalIds.push(_goalId);
+        } else {
+            revert("Invalid goal type");
+        }
+        emit GoalAdded(msg.sender, _goalId);
     }
 
-    function addNutritionGoal(string memory _goalId) public {
-        require(users[msg.sender].isRegistered, "User not registered!");
+    function buyBot(string calldata _botName) external payable onlyRegistered {
+        require(bytes(bots[_botName].botName).length > 0, "Bot does not exist!");
+        require(msg.value >= bots[_botName].unlockCostInGWei * 1 gwei, "Insufficient payment");
 
-        users[msg.sender].nutritionGoalIds.push(_goalId);
-        
-        emit NutritionGoalAdded(msg.sender, _goalId);
+
+        users[msg.sender].purchasedAssistants.push(PersonalAssistant({botName: _botName, messagesId: ++messageIdGenerator}));
+        emit BotPurchased(msg.sender, _botName, messageIdGenerator);
     }
 
-    function buyBot(string memory _botName) public payable {
-        require(users[msg.sender].isRegistered, "User not registered!");
-
-        Bot storage bot = bots[_botName];
-        require(bytes(bot.botName).length > 0, "Bot does not exist!");
-        require(
-            msg.value >= bot.unlockCostInGWei * 1 gwei,
-            "Insufficient payment"
-        );
-
-        uint16 newMessageId = messageIdGenerator++;
-        
-        PersonalAssistant memory newAssistant = PersonalAssistant({
-            bot: bot,
-            messagesId: newMessageId
-        });
-
-        users[msg.sender].purchasedAssistants.push(newAssistant);
-        
-        emit BotPurchased(msg.sender, _botName, newMessageId);
-    }
-
-    function updateInjury(string memory _injuryId) public {
-        require(users[msg.sender].isRegistered, "User not registered!");
-
+    function updateInjury(string calldata _injuryId) external onlyRegistered {
         users[msg.sender].injuriesDescriptionId = _injuryId;
-        
-        emit InjuryUpdated(msg.sender, _injuryId);
     }
 
-    function getUserDetails()
-        public
-        view
-        returns (
-            string memory metadata,
-            string[] memory activityIds,
-            string[] memory sportGoalIds,
-            string[] memory nutritionGoalIds,
-            string memory injuriesDescriptionId,
-            nft[] memory nfts,
-            PersonalAssistant[] memory assitants
-        )
-    {
-        require(users[msg.sender].isRegistered, "User not registered!");
-
-        User storage user = users[msg.sender];
-        return (
-            user.metadata,
-            user.activityIds,
-            user.sportGoalIds,
-            user.nutritionGoalIds,
-            user.injuriesDescriptionId,
-            user.nfts,
-            user.purchasedAssistants
-        );
+    function getUserDetails() external view onlyRegistered returns (User memory) {
+        return users[msg.sender];
     }
 
     function createCommunityRoom(
-        string memory _communityName,
-        string memory _communityImage,
-        string memory _botName
-    ) public {
-        require(bytes(_communityName).length > 0, "Community name cannot be empty!");
-        require(bytes(_botName).length > 0, "Bot name cannot be empty!");
+        string calldata _communityName,
+        string calldata _botName
+    ) external onlyRegistered {
+        require(bytes(bots[_botName].botName).length > 0, "Bot does not exist!");
+        require(bytes(communityRooms[_communityName].communityName).length == 0, "Community already exists!");
 
-        Bot storage bot = bots[_botName];
-        require(bytes(bot.botName).length > 0, "Bot does not exist!");
+        CommunityRoom storage room = communityRooms[_communityName];
 
-        uint16 newMessageId = messageIdGenerator++;
-        
-        CommunityRoom storage newRoom = communityRooms[_communityName];
-        newRoom.communityName = _communityName;
-        newRoom.communityImage = _communityImage;
-        newRoom.bot = bot;
-        newRoom.messagesId = newMessageId;
-        newRoom.createdBy = msg.sender;
-        newRoom.members = new address[](0);
-        newRoom.communitySportGoalIds = new string[](0);
+        room.communityName = _communityName;
+        room.botName = _botName;
+        room.messagesId = ++messageIdGenerator;
+        room.createdBy = msg.sender;
+        room.members.push(msg.sender);
+        allCommunityNames.push(_communityName);
 
-        // Add creator as first member
-        newRoom.members.push(msg.sender);
         users[msg.sender].joinedCommunities.push(_communityName);
-        allCommunityRooms.push(newRoom);
-        
-        emit CommunityRoomCreated(_communityName, msg.sender, _botName, newMessageId);
+        emit CommunityRoomCreated(_communityName, msg.sender, _botName, messageIdGenerator);
     }
 
-    function joinCommunityRoom(string memory _communityName) public {
-        require(users[msg.sender].isRegistered, "User not registered!");
+    function joinCommunityRoom(string calldata _communityName) external onlyRegistered {
         CommunityRoom storage room = communityRooms[_communityName];
         require(bytes(room.communityName).length > 0, "Community room does not exist!");
-        for (uint16 i = 0; i < room.members.length; i++) {
-            require(room.members[i] != msg.sender, "Already a member of this community!");
+
+        for (uint256 i = 0; i < room.members.length; i++) {
+            if (room.members[i] == msg.sender) revert("Already a member!");
         }
+
         room.members.push(msg.sender);
         users[msg.sender].joinedCommunities.push(_communityName);
-        
         emit CommunityRoomJoined(msg.sender, _communityName);
     }
 
-    function getUserCommunities() public view returns (string[] memory) {
-        require(users[msg.sender].isRegistered, "User not registered!");
-        return users[msg.sender].joinedCommunities;
+    function getCommunityRoomDetails(string calldata _communityName) external view returns (CommunityRoom memory) {
+        require(bytes(communityRooms[_communityName].communityName).length > 0, "Community does not exist!");
+        return communityRooms[_communityName];
     }
 
-    function getCommunityRoomDetails(string memory _communityName) public view returns (string memory communityName, string memory communityImage, Bot memory bot, address createdBy, uint messagesId, string[] memory communitySportGoalIds, address[] memory members)
-    {
-        CommunityRoom storage room = communityRooms[_communityName];
-        require(bytes(room.communityName).length > 0,"Community room does not exist!");
-
-        return (room.communityName,room.communityImage, room.bot, room.createdBy, room.messagesId, room.communitySportGoalIds, room.members);
+    function getBotDetails(string calldata _botName) external view returns (Bot memory) {
+        require(bytes(bots[_botName].botName).length > 0, "Bot does not exist!");
+        return bots[_botName];
     }
 
-    function getAllCommunityRooms() public view returns (CommunityRoom[] memory) {
-        return allCommunityRooms;
+    function getAllBotNames() external view returns (string[] memory) {
+        return allBotNames;
+    }
+
+    function getAllUsers() external view returns (address[] memory) {
+        return allUsers;
+    }
+
+    function getAllCommunityNames() external view returns (string[] memory) {
+        return allCommunityNames;
     }
 
     function createBot(
-        string memory _botName,
-        string memory _botImage,
-        string memory _systemPrompt,
-        string memory _botDescription,
-        string memory _deploymentURL,
+        string calldata _botName,
+        string calldata _systemPrompt,
+        string calldata _botDescription,
+        string calldata _deploymentURL,
         uint16 _unlockCostInGWei
-    ) public {
+    ) external {
         require(bytes(_botName).length > 0, "Bot name cannot be empty!");
-        require(_unlockCostInGWei > 0, "Unlock cost must be greater than 0");
+        require(bytes(bots[_botName].botName).length == 0, "Bot already exists!");
 
-        Bot storage newBot = bots[_botName];
-        newBot.botName = _botName;
-        newBot.botImage = _botImage;
-        newBot.systemPrompt = _systemPrompt;
-        newBot.botDescription = _botDescription;
-        newBot.deploymentURL = _deploymentURL;
-        newBot.unlockCostInGWei = _unlockCostInGWei;
+        bots[_botName] = Bot({
+            botName: _botName,
+            systemPrompt: _systemPrompt,
+            botDescription: _botDescription,
+            deploymentURL: _deploymentURL,
+            unlockCostInGWei: _unlockCostInGWei
+        });
 
-        allBots.push(newBot);
-        
+        allBotNames.push(_botName);
         emit BotCreated(_botName, _deploymentURL, _unlockCostInGWei);
     }
 }
