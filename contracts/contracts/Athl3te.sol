@@ -11,7 +11,7 @@ contract Athl3te is ERC721  {
     // Events
     event UserRegistered(address indexed userAddress, string metadata);
     event ActivityAdded(address indexed userAddress, string activityId);
-    event GoalAdded(address indexed userAddress, string goalId);
+    event GoalAdded(address indexed userAddress, string goalId, string goalType);
     event BotPurchased(address indexed userAddress, string botName, uint16 messagesId);
     event CommunityRoomCreated(string indexed communityName, address indexed creator, string botName, uint16 messagesId);
     event CommunityRoomJoined(address indexed userAddress, string communityName);
@@ -118,7 +118,7 @@ contract Athl3te is ERC721  {
         } else {
             revert("Invalid goal type");
         }
-        emit GoalAdded(msg.sender, _goalId);
+        emit GoalAdded(msg.sender, _goalId, goalType);
     }
 
     function buyBot(string calldata _botName) external payable onlyRegistered {

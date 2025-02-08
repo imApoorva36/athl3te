@@ -63,14 +63,6 @@ export const GET_ALL_DATA = gql`
       blockTimestamp
       transactionHash
     }
-    sportGoalAddeds(first: 1000) {
-      id
-      userAddress
-      goalId
-      blockNumber
-      blockTimestamp
-      transactionHash
-    }
     userRegistereds(first: 1000) {
       id
       userAddress
@@ -81,3 +73,54 @@ export const GET_ALL_DATA = gql`
     }
   }
 `;
+
+export const GET_USER_ACTIVITIES_QUERY = gql`
+   query getUserActivities {
+    activityAddeds(first: 1000) {
+      userAddress
+      activityId
+    }
+   }
+`;
+
+export const GET_ALL_COMMUNITY_ROOMS = gql`
+    query communityRoomsCreated {
+      communityRoomCreateds(messagesId: 2) {
+      id
+      communityName
+      creator
+      botName
+      messagesId
+    }
+  }
+`;
+
+//get all bots
+export const GET_ALL_BOTS = gql`
+    botCreateds(first: 1000) {
+      botName
+      deploymentURL
+      unlockCostInGWei
+    }
+    `;
+
+
+
+export const GET_USER_GOALS_QUERY = gql`
+   query GetUserActivities {
+    nutritionGoalAddeds(first: 1000) {
+      userAddress
+      goalId
+    }
+   }
+`;
+
+
+// export const GET_USER_ACTIVITIES_QUERY = gql`
+//    query GetUserActivities {
+//     activityAddeds(first: 1000) {
+//       userAddress
+//       activityId
+//     }
+//    }
+// `;

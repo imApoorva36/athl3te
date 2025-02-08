@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 import ActivityCard from "../components/ActivityCard";
 import Link from 'next/link';
+import {GET_USER_ACTIVITIES_QUERY} from "../app/graphql/queries";
+import {fetchGraphQL} from "../utils/graphql-client";
 
 export default function Home() {
     const [authData, setAuthData] = useState(null);
@@ -37,6 +39,7 @@ export default function Home() {
     };
 
     useEffect(() => {
+        fetchGraphQL(GET_USER_ACTIVITIES_QUERY);
         const urlParams = new URLSearchParams(window.location.search);
         const code = urlParams.get("code");
 

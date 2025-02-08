@@ -1,0 +1,59 @@
+specVersion: 1.0.0
+indexerHints:
+  prune: auto
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Athl3te
+    network: base-sepolia
+    source:
+      address: "0xe7683ef11C2DEe46a0d0B3006f30AdBf813f433F"
+      abi: Athl3te
+      startBlock: 21637938
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - ActivityAdded
+        - Approval
+        - ApprovalForAll
+        - BotCreated
+        - BotPurchased
+        - CommunityRoomCreated
+        - CommunityRoomJoined
+        - GoalAdded
+        - InjuryUpdated
+        - NFTMinted
+        - Transfer
+        - UserRegistered
+      abis:
+        - name: Athl3te
+          file: ./abis/Athl3te.json
+      eventHandlers:
+        - event: ActivityAdded(address,string,uint256,uint256)
+          handler: handleActivityAdded
+        - event: Approval(indexed address,indexed address,indexed uint256)
+          handler: handleApproval
+        - event: ApprovalForAll(indexed address,indexed address,bool)
+          handler: handleApprovalForAll
+        - event: BotCreated(string,string,uint16,string,uint256,uint256)
+          handler: handleBotCreated
+        - event: BotPurchased(address,string,uint16,uint256,uint256,uint256)
+          handler: handleBotPurchased
+        - event: CommunityRoomCreated(string,address,string,uint16,uint256,uint256)
+          handler: handleCommunityRoomCreated
+        - event: CommunityRoomJoined(address,string,uint256,uint256)
+          handler: handleCommunityRoomJoined
+        - event: GoalAdded(address,string,string,uint256,uint256)
+          handler: handleGoalAdded
+        - event: InjuryUpdated(address,string,string,uint256)
+          handler: handleInjuryUpdated
+        - event: NFTMinted(address,uint256,string,uint256,uint256)
+          handler: handleNFTMinted
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+        - event: UserRegistered(address,string,uint256)
+          handler: handleUserRegistered
+      file: ./src/athl-3-te.ts
