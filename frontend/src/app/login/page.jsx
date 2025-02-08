@@ -25,7 +25,7 @@ export default function LoginPage() {
   const [formData, setFormData] = useState({
     name: "",
     age: 21,
-    weight: 21,
+    weight: 60,
     height: 180,
     gender: "",
   })
@@ -143,6 +143,7 @@ export default function LoginPage() {
               <div className="flex gap-4">
                 {["Male", "Female"].map((gender) => (
                   <LayeredCard
+                    key={gender}
                     mainColor="bg-accent"
                     bgColor="bg-primary"
                     borderWidth="border-[2px]"
