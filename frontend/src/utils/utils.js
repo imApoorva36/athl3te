@@ -46,6 +46,62 @@ function getMetricUnit(metricName) {
   return metricUnits[metricName] || '';
 }
 
+const nftData = {
+  "Running NFTs": [
+      {
+          id: 1,
+          name: "Ran 10km",
+          image: "/NFTs/run.png"
+      },
+      {
+          id: 2,
+          name: "Ran 20km",
+          image: "/NFTs/run.png"
+      },
+      {
+          id: 3,
+          name: "Ran 30km",
+          image: "/NFTs/run.png"
+      }
+  ],
+  "Walking NFTs": [
+      {
+          id: 4,
+          name: "Walk 5km",
+          image: "/NFTs/walk.png"
+      },
+      {
+          id: 5,
+          name: "Walk 10km",
+          image: "/NFTs/walk.png"
+      },
+      {
+          id: 6,
+          name: "Walk 15km",
+          image: "/NFTs/walk.png"
+      }
+  ],
+  "Swimming NFTs": [
+      {
+          id: 7,
+          name: "Swim 1km",
+          image: "/NFTs/swim.png"
+      },
+      {
+          id: 8,
+          name: "Swim 2km",
+          image: "/NFTs/swim.png"
+      },
+      {
+          id: 9,
+          name: "Swim 3km",
+          image: "/NFTs/swim.png"
+      }
+  ]
+};
+
+export { nftData };
+
 export { getAgentDescription, getAgentImagePath, getAgentName };
 
 export { getActivityImagePath, getMetricImagePath, getMetricUnit };

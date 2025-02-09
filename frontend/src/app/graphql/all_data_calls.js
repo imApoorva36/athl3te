@@ -14,7 +14,8 @@ import {
   GET_BOT_DETAILS,
   GET_COMMUNITY_GOALS
 } from "./graphql_queries";
-
+import ABI from '../abi';
+import Web3 from 'web3';
 
 export class GetDataUtils {
   constructor(contractAddress, abi, web3Instance = null) {
@@ -101,10 +102,15 @@ export class GetDataUtils {
   async getUserProfile(userAddress) {
     // Fetch on-chain data using GraphQL
     const onChainData = await graphQLClient.request(GET_USER_PROFILE, { userAddress });
-
+    console.log("on chain")
+    console.log(onChainData)
+    
     // Fetch off-chain data from Nillium
     const userMetadata = onChainData.userRegistereds[0].metadata;
-    const offChainData = await NilliumUtils.getUserProfile(userMetadata);
+    const offChainData = await NilliumUtils.getUserMetadata(userMetadata);
+    
+    console.log("off chain")
+    console.log(offChainData)
 
     return {
       ...onChainData,
@@ -204,7 +210,8 @@ export class GetDataUtils {
 
   async registerUser(metadata) {
     const id = await NilliumUtils.addUserMetadata([metadata]);
-    await this.contractUtils.registerUser("sdfsdfds");
+    console.log(id)
+    await this.contractUtils.registerUser(id[0]);
   }
 
   async addActivity(activityData) {
@@ -235,3 +242,5 @@ export class GetDataUtils {
     return this.contractUtils.joinCommunityRoom(communityName);
   }
 }
+
+export const dataUtils = new GetDataUtils(process.env.NEXT_PUBLIC_CONTRACT_ADDRESS, ABI, new Web3(window.ethereum));
