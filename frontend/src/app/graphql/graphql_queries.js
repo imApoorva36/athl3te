@@ -40,14 +40,27 @@ export const GET_USER_GOALS_AND_INJURIES = gql`
       orderDirection: desc
       first: 1
     ) {
-      oldInjuryId
       newInjuryId
       timestamp
     }
   }
 `;
 
-// get community goal
+// get user injury
+export const GET_USER_INJURY = gql`
+  query GetUserInjury($userAddress: Bytes!) {
+    injuryUpdateds(
+      where: { userAddress: $userAddress }
+      orderBy: timestamp
+      orderDirection: desc
+      first: 1
+    ) {
+      newInjuryId
+      timestamp
+    }
+  }`;
+
+
 export const GET_COMMUNITY_GOALS = gql`
   query GetCommunityGoals($communityName: String!) {
     communityGoalAddeds(

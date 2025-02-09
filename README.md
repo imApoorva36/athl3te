@@ -10,10 +10,15 @@ athl3te is a Web3-powered fitness application with AI-driven features that trans
 
 We're proud to be building with and applying for the following sponsor tracks:
 
-- Autonome
-- Base
-- Nillion
-- The Graph
+- Autonome - AI Agent Ecosystem
+- The Graph - Data Indexing & Queries
+- Nillion - Secure Data Storage
+- Base - Smart Contract Infrastructure
+
+
+## System Architecture
+
+![System Architecture](frontend/public/system_arch.png)
 
 ## Core Features
 
@@ -39,18 +44,32 @@ We're proud to be building with and applying for the following sponsor tracks:
 - Community challenges and goals
 - AI-driven community management
 - Achievement NFTs for milestones
+- Automated health monitoring and tips
+- Regular motivational updates
+- Injury prevention insights
+
+## Automated Systems
+
+Our platform implements several automated processes to enhance user experience:
+
+### Periodic Health Checks
+
+- Regular community-wide injury pattern analysis
+- Proactive injury prevention recommendations
+- Automated recovery guidance for common injuries
+
+### Community Engagement
+
+- Scheduled motivational messages
+- Regular fitness tips and best practices
+- Activity trend analysis and insights
+- Periodic achievement celebrations
 
 ## Technology Stack
 
-### Base
-
-- Smart contract deployment and management
-- Secure transaction handling
-- Web3 wallet integration (MetaMask and Coinbase Wallet)
-
 ### Autonome Implementation
 
-We leverage Autonome for our AI agent ecosystem:
+Inspired by CDP's Agentkit, we created a [custom framework](https://dev.autonome.fun/autonome/new?template=f4f58c1a-07e5-400a-bd9a-ecf415d30df9) called *lang-server*, that allows us to effectively multiplex between all our agents. In addition, leverage Autonome for our AI agent ecosystem's deployment:
 
 - Goal Setting Agent: Converts user inputs to structured JSON
 - Personal Check-in Agent: Daily monitoring and guidance
@@ -79,6 +98,12 @@ Private data storage for:
 - Activity progress
 - Community memberships
 - Agent subscriptions
+
+### Base
+
+- Smart contract deployment and management
+- Secure transaction handling
+- Web3 wallet integration (MetaMask and Coinbase Wallet)
 
 ## Premium Features
 

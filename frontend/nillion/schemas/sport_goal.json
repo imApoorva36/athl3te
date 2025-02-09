@@ -22,37 +22,106 @@
         ]
       },
       "completedMetrices": {
-        "type": "object",
-        "properties": {
-          "$share": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "$share"
-        ]
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "distance": {
+              "type": "object",
+              "properties": {
+                "$share": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "$share"
+              ]
+            },
+            "calories": {
+              "type": "object",
+              "properties": {
+                "$share": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "$share"
+              ]
+            }
+          },
+          "required": [
+            "distance",
+            "calories"
+          ]
+        }
       },
       "targetMertices": {
-        "type": "object",
-        "properties": {
-          "$share": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "$share"
-        ]
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "distance": {
+              "type": "object",
+              "properties": {
+                "$share": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "$share"
+              ]
+            },
+            "calories": {
+              "type": "object",
+              "properties": {
+                "$share": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "$share"
+              ]
+            }
+          },
+          "required": [
+            "distance",
+            "calories"
+          ]
+        }
       },
       "goalDayWisePlan": {
-        "type": "object",
-        "properties": {
-          "$share": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "$share"
-        ]
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "distance": {
+              "type": "object",
+              "properties": {
+                "$share": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "$share"
+              ]
+            },
+            "calories": {
+              "type": "object",
+              "properties": {
+                "$share": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "$share"
+              ]
+            }
+          },
+          "required": [
+            "distance",
+            "calories"
+          ]
+        }
       }
     },
     "required": [

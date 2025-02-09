@@ -52,19 +52,26 @@ export class GetDataUtils {
 
     // Loop through each goal and fetch off-chain data from Nillium
     for (const goal of onChainData.goalAddeds) {
-      //depending on goal.goalType we will call the appropriate function
-      const offChainData = await NilliumUtils.getGoalDetails(goal.goalId);
-      combinedGoals.push({
-        ...goal,
-        offChainData
-      });
+      if (goal.goalType === 'nutrition') {
+        const offChainData = await NilliumUtils.getNutritionGoalDetails(goal.goalId);
+        combinedGoals.push({
+          ...goal,
+          offChainData
+        });
+      } else if (goal.goalType === 'sport') {
+        const offChainData = await NilliumUtils.getSportsGoalDetails(goal.goalId);
+        combinedGoals.push({
+          ...goal,
+          offChainData
+        });
+      }
     }
 
     // Loop through each community the user has joined and fetch community goals
     for (const community of onChainData.communityRoomJoineds) {
       const communityGoalsData = await graphQLClient.request(GET_COMMUNITY_GOALS, { communityName: community.communityName });
       for (const communityGoal of communityGoalsData.communityGoalAddeds) {
-        const offChainData = await NilliumUtils.getGoalDetails(communityGoal.goalId);
+        const offChainData = await NilliumUtils.getSportsGoalDetails(communityGoal.goalId);
         combinedCommunityGoals.push({
           ...communityGoal,
           communityName: community.communityName,
@@ -73,19 +80,10 @@ export class GetDataUtils {
       }
     }
 
-    // Loop through each injury and fetch off-chain data from Nillium
-    for (const injury of onChainData.injuryUpdateds) {
-      const offChainData = await NilliumUtils.getInjuryDetails(injury.newInjuryId);
-      combinedInjuries.push({
-        ...injury,
-        offChainData
-      });
-    }
-
     return {
       goals: combinedGoals,
       communityGoals: combinedCommunityGoals,
-      injuries: combinedInjuries
+      injuries: onChainData.injuryUpdateds[0].newInjuryId
     };
   }
 
@@ -96,7 +94,7 @@ export class GetDataUtils {
   }
 
   async getMessagesForMessagesId(messagesId) {
-    const messages = await NilliumUtils.getMessagesForMessagesId(messagesId);
+    const messages = await NilliumUtils.getMessagesFromChatId(messagesId);
     return messages;
   }
 
@@ -134,7 +132,7 @@ export class GetDataUtils {
 
     // Loop through each message and fetch off-chain data from Nillium
     for (const message of onChainData.communityRoomCreateds) {
-      const messages = await NilliumUtils.getMessagesForMessagesId(message.messagesId);
+      const messages = await NilliumUtils.getMessagesFromChatId(message.messagesId);
       combinedMessages.push({
         ...message,
         messages
@@ -143,7 +141,7 @@ export class GetDataUtils {
 
     // Loop through each goal and fetch off-chain data from Nillium
     for (const goal of onChainData.goalAddeds) {
-      const offChainData = await NilliumUtils.getGoalDetails(goal.goalId);
+      const offChainData = await NilliumUtils.getSportsGoalDetails(goal.goalId);
       combinedGoals.push({
         ...goal,
         offChainData
@@ -154,6 +152,11 @@ export class GetDataUtils {
       messages: combinedMessages,
       goals: combinedGoals
     };
+  }
+
+  async getInjuryDetails(userAddress) {
+    const onChainData = await fetchGraphQL(GET_USER_INJURY, { userAddress });
+    return onChainData;
   }
 
 
@@ -189,6 +192,10 @@ export class GetDataUtils {
 
 
   // Write
+  //add chat_id, senderidentifier, message, timestamp, ipfs image/""
+  async sendMessage(messageData) {
+    return await NilliumUtils.addMessage(messageData);
+  }
 
   async mintNFT(uri) {
     // await NilliumUtils.storeUserMetadata(uri);
@@ -197,8 +204,7 @@ export class GetDataUtils {
 
   async registerUser(metadata) {
     const id = await NilliumUtils.addUserMetadata([metadata]);
-    console.log(id[0]);
-    return await this.contractUtils.registerUser(id[0]);
+    await this.contractUtils.registerUser("sdfsdfds");
   }
 
   async addActivity(activityData) {

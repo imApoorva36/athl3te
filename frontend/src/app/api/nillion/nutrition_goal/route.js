@@ -2,7 +2,7 @@ import { SecretVaultWrapper } from 'nillion-sv-wrappers';
 import { v4 as uuidv4 } from 'uuid';
 import { orgConfig } from '../../../../../nillion/nillionOrgConfig.js';
 
-const SCHEMA_ID = 'ad4d522f-65ad-42a7-b1f9-349be81cd45e';
+const SCHEMA_ID = 'ffa6b00a-cdd1-42dd-a7c2-85c86d0156ee';
 
 export async function POST(req) {
     try {
@@ -21,14 +21,29 @@ export async function POST(req) {
         await collection.init();
 
         const formattedData = data.map(item => ({
-            _id: uuidv4(),
-            distance: { $allot: item.distance },
-            time: { $allot: item.time },
-            speed: { $allot: item.speed },
-            calories: { $allot: item.calories },
-            cadence: { $allot: item.cadence },
-            activityType: { $allot: item.activityType },
-            pr: { $allot: item.pr },
+            _id: uuidv4().toString(),
+            intervalDuration: { $allot: item.intervalDuration },
+            completedMetrices: item.completedMetrices.map(metric => ({
+                proteins: { $allot: metric.proteins },
+                carbohydrates: { $allot: metric.carbohydrates },
+                fats: { $allot: metric.fats },
+                caloriesConsumed: { $allot: metric.caloriesConsumed },
+                hydration: { $allot: metric.hydration }
+            })),
+            targetMertices: item.targetMertices.map(metric => ({
+                proteins: { $allot: metric.proteins },
+                carbohydrates: { $allot: metric.carbohydrates },
+                fats: { $allot: metric.fats },
+                caloriesConsumed: { $allot: metric.caloriesConsumed },
+                hydration: { $allot: metric.hydration }
+            })),
+            goalDayWisePlan: item.goalDayWisePlan.map(metric => ({
+                proteins: { $allot: metric.proteins },
+                carbohydrates: { $allot: metric.carbohydrates },
+                fats: { $allot: metric.fats },
+                caloriesConsumed: { $allot: metric.caloriesConsumed },
+                hydration: { $allot: metric.hydration }
+            }))
         }));
 
         const dataWritten = await collection.writeToNodes(formattedData);
@@ -54,7 +69,7 @@ export async function GET(req) {
         await collection.init();
 
         const decryptedCollectionData = await collection.readFromNodes({ _id: filter });
-        return Response.json(decryptedCollectionData);
+        return Response.json(decryptedCollectionData );
     } catch (error) {
         console.error('❌ Fetch error:', error.message);
         return Response.json({ success: false, error: error.message }, { status: 500 });

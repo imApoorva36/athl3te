@@ -1,11 +1,3 @@
-import { uploadToNillion as activityPost, fetchFromNillion as activityFetch } from "../../../nillion/utils/activity";
-import { uploadToNillion as messagePost, fetchFromNillion as messageFetch } from "../../../nillion/utils/message";
-import { uploadToNillion as nutriMatricPost, fetchFromNillion as nutriMatricFetch } from "../../../nillion/utils/nutrition_metric";
-import { uploadToNillion as nutriGoalPost, fetchFromNillion as nutriGoalFetch } from "../../../nillion/utils/nutritional_goal";
-import { uploadToNillion as sportGoalPost, fetchFromNillion as sportGoalFetch } from "../../../nillion/utils/sport_goal";
-import { uploadToNillion as sportMetricPost, fetchFromNillion as sportMetricFetch } from "../../../nillion/utils/sport_metric";
-import { uploadToNillion as userPost, fetchFromNillion as userFetch } from "../../../nillion/utils/user";
-
 export class NilliumUtils {
 
   static async addUserMetadata(userMetadata) {
@@ -54,55 +46,125 @@ export class NilliumUtils {
       }
       return await response.json();
     } catch (error) {
-      console.error('Error in addActivity:', error);
+      console.error('Error in addMessage:', error);
       return { success: false, error: error.message };
     }
   }
 
   //add sports goal
   static async addSportsGoal(sportsGoalData) {
-    return sportGoalPost(sportsGoalData);
+    try {
+      const response = await fetch('/api/nillion/sport_goal', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ data: sportsGoalData }),
+      });
+      if (!response.ok) {
+        throw new Error(`Failed to upload: ${response.statusText}`);
+      }
+      return await response.json();
+    } catch (error) {
+      console.error('Error in addSportsGoal:', error);
+      return { success: false, error: error.message };
+    }
   }
 
   //add nutrition goal
-  static async addNutritionGoal(sportsGoalData) {
-    return nutriGoalPost(sportsGoalData);
+  static async addNutritionGoal(nutritionGoalData) {
+    try {
+      const response = await fetch('/api/nillion/nutrition_goal', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ data: nutritionGoalData }),
+      });
+      if (!response.ok) {
+        throw new Error(`Failed to upload: ${response.statusText}`);
+      }
+      return await response.json();
+    } catch (error) {
+      console.error('Error in addNutritionGoal:', error);
+      return { success: false, error: error.message };
+    }
   }
 
-  static async addCommunityGoalDetails(communityName, goalId) {
-    // Implement the logic to add community goal details on Nillium
-    // Example: await fetch('https://nillium-api.com/add', { method: 'POST', body: JSON.stringify({ communityName, goalId }) });
-  }
-
-  static async addBotPurchaseDetails(botName, account) {
-    // Implement the logic to add bot purchase details on Nillium
-    // Example: await fetch('https://nillium-api.com/add', { method: 'POST', body: JSON.stringify({ botName, account }) });
-  }
-
-  static async addInjuryUpdateDetails(injuryId) {
-    // Implement the logic to add injury update details on Nillium
-    // Example: await fetch('https://nillium-api.com/add', { method: 'POST', body: JSON.stringify({ injuryId }) });
-  }
-
-  static async addCommunityRoomDetails(communityName, botName) {
-    // Implement the logic to add community room creation details on Nillium
-    // Example: await fetch('https://nillium-api.com/add', { method: 'POST', body: JSON.stringify({ communityName, botName }) });
-  }
-
-  static async addCommunityRoomJoinDetails(communityName, account) {
-    // Implement the logic to add community room join details on Nillium
-    // Example: await fetch('https://nillium-api.com/add', { method: 'POST', body: JSON.stringify({ communityName, account }) });
-  }
 
   static async getUserMetadata(userId) {
-    return userFetch(userId);
+    try {
+      const response = await fetch(`/api/nillion/user?filter=${encodeURIComponent(JSON.stringify({ userId }))}`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+      });
+      if (!response.ok) {
+        throw new Error(`Failed to fetch: ${response.statusText}`);
+      }
+      return await response.json();
+    } catch (error) {
+      console.error('Error in getUserMetadata:', error);
+      return { success: false, error: error.message };
+    }
   }
 
   static async getActivity(activityId) {
-    return activityFetch(activityId);
+    try {
+      const response = await fetch(`/api/nillion/activity?filter=${encodeURIComponent(JSON.stringify({ activityId }))}`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+      });
+      if (!response.ok) {
+        throw new Error(`Failed to fetch: ${response.statusText}`);
+      }
+      return await response.json();
+    } catch (error) {
+      console.error('Error in getActivity:', error);
+      return { success: false, error: error.message };
+    }
   }
 
-  static async getMessage(messageId) {
-    return messageFetch(messageId);
+  static async getMessagesFromChatId(messageId) {
+    try {
+      const response = await fetch(`/api/nillion/message?filter=${encodeURIComponent(JSON.stringify({ messageId }))}`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+      });
+      if (!response.ok) {
+        throw new Error(`Failed to fetch: ${response.statusText}`);
+      }
+      return await response.json();
+    } catch (error) {
+      console.error('Error in getMessagesFromChatId:', error);
+      return { success: false, error: error.message };
+    }
+  }
+
+  static async getSportsGoalDetails(goalId) {
+    try {
+      const response = await fetch(`/api/nillion/sport_goal?filter=${encodeURIComponent(JSON.stringify({ goalId }))}`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+      });
+      if (!response.ok) {
+        throw new Error(`Failed to fetch: ${response.statusText}`);
+      }
+      return await response.json();
+    } catch (error) {
+      console.error('Error in getSportsGoalDetails:', error);
+      return { success: false, error: error.message };
+    }
+  }
+
+  static async getNutritionGoalDetails(goalId) {
+    try {
+      const response = await fetch(`/api/nillion/nutrition_goal?filter=${encodeURIComponent(JSON.stringify({ goalId }))}`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+      });
+      if (!response.ok) {
+        throw new Error(`Failed to fetch: ${response.statusText}`);
+      }
+      return await response.json();
+    } catch (error) {
+      console.error('Error in getNutritionGoalDetails:', error);
+      return { success: false, error: error.message };
+    }
   }
 }

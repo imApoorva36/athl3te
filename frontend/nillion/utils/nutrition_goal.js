@@ -2,7 +2,7 @@ import { SecretVaultWrapper } from 'nillion-sv-wrappers';
 import { v4 as uuidv4 } from 'uuid';
 import { orgConfig } from '../nillionOrgConfig.js';
 
-const SCHEMA_ID = '4006a504-a24f-4ff2-8e36-a63d1f2bf2de';
+const SCHEMA_ID = 'ffa6b00a-cdd1-42dd-a7c2-85c86d0156ee';
 
 export async function uploadToNillion(data) {
     try {
@@ -15,11 +15,28 @@ export async function uploadToNillion(data) {
 
         const formattedData = data.map(item => ({
             _id: uuidv4().toString(),
-            proteins: { $allot: item.proteins },
-            carbohydrates: { $allot: item.carbohydrates },
-            fats: { $allot: item.fats },
-            caloriesConsumed: { $allot: item.caloriesConsumed },
-            hydration: { $allot: item.hydration }
+            intervalDuration: { $allot: item.intervalDuration },
+            completedMetrices: item.completedMetrices.map(metric => ({
+                proteins: { $allot: metric.proteins },
+                carbohydrates: { $allot: metric.carbohydrates },
+                fats: { $allot: metric.fats },
+                caloriesConsumed: { $allot: metric.caloriesConsumed },
+                hydration: { $allot: metric.hydration }
+            })),
+            targetMertices: item.targetMertices.map(metric => ({
+                proteins: { $allot: metric.proteins },
+                carbohydrates: { $allot: metric.carbohydrates },
+                fats: { $allot: metric.fats },
+                caloriesConsumed: { $allot: metric.caloriesConsumed },
+                hydration: { $allot: metric.hydration }
+            })),
+            goalDayWisePlan: item.goalDayWisePlan.map(metric => ({
+                proteins: { $allot: metric.proteins },
+                carbohydrates: { $allot: metric.carbohydrates },
+                fats: { $allot: metric.fats },
+                caloriesConsumed: { $allot: metric.caloriesConsumed },
+                hydration: { $allot: metric.hydration }
+            }))
         }));
 
         const dataWritten = await collection.writeToNodes(formattedData);

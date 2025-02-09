@@ -48,10 +48,7 @@ export class Athl3teContractUtils {
     const account = await this.getAccount();
     // Get bot details first to know the cost
     const botDetails = await this.contract.methods.getBotDetails(botName).call();
-    const costInWei = this.web3.utils.toWei(
-      this.web3.utils.fromWei(botDetails.unlockCostInGWei.toString(), 'gwei'),
-      'wei'
-    );
+    const costInWei = botDetails.unlockCostInGWei.toString();
     
     return this.contract.methods.buyBot(botName)
       .send({ 
