@@ -1,8 +1,8 @@
 import Image from "next/image";
 
-export default function GoalCard({ type, data = {}, color }) {
+export default function GoalCard({ type, data = {} }) {
 
-  console.log(type, data, color)
+  console.log(type, data)
 
   if (!data || Object.keys(data).length === 0) {
     return null;
@@ -28,25 +28,18 @@ export default function GoalCard({ type, data = {}, color }) {
         </div>
 
         {/* Metrics Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 p-4">
-            {metrics.map(metric => (
-              data[metric] !== null && (
-                <div key={metric} className="flex flex-col items-center gap-2">
-            <div className="w-12 h-12 rounded-full border-2 border-current flex items-center justify-center mb-2">
-              {metricIcons[metric]}
-            </div>
-            <span className="">{data[metric] ?? "N/A"}</span>
-            <span className="text-xs capitalize">{metric}</span>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 p-4">
+          {metrics.map(metric => (
+            data[metric] !== null && (
+              <div key={metric} className="flex flex-col items-center gap-2">
+                <div className="w-10 h-10 rounded-full border-2 border-primary flex items-center justify-center mb-2">
+                  {metricIcons[metric]}
                 </div>
-              )
-            ))}
-          </div>
-
-          {/* Add Goal */}
-        <div className="flex justify-center">
-          <button className="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-700">
-            Add Goal
-          </button>
+                <span className="text-sm">{data[metric] ?? "N/A"}</span>
+                <span className="text-xs capitalize">{metric}</span>
+              </div>
+            )
+          ))}
         </div>
 
 

@@ -6,12 +6,6 @@ import Link from "next/link";
 
 export default function MyGoals() {
 
-    const colors = {
-        Running: "bg-blue-500",
-        Walking: "bg-green-500",
-        Cycling: "bg-yellow-500",
-        Swimming: "bg-purple-500"
-    };
 
     const myGoalsData = [{
         type: "Running",
@@ -20,33 +14,6 @@ export default function MyGoals() {
             calories: "75 kcal",
             duration: "30 min",
             speed: "10 km/h"
-        }
-    },
-    {
-        type: "Walking",
-        data: {
-            distance: "3 km",
-            calories: "50 kcal",
-            duration: "45 min",
-            speed: "4 km/h"
-        }
-    },
-    {
-        type: "Cycling",
-        data: {
-            distance: "15 km",
-            calories: "200 kcal",
-            duration: "60 min",
-            speed: "15 km/h"
-        }
-    },
-    {
-        type: "Swimming",
-        data: {
-            distance: "1 km",
-            calories: "300 kcal",
-            duration: "40 min",
-            speed: "2.5 km/h"
         }
     }];
 
@@ -96,7 +63,7 @@ export default function MyGoals() {
                         <LayeredCard
                             key={index}
                             mainColor="bg-accent"
-                            bgColor={colors[goals.type]}
+                            bgColor="bg-primary"
                             borderWidth="border-[2px]"
                             topOffset="top-[20px]"
                             leftOffset="left-[24px]"
@@ -107,7 +74,6 @@ export default function MyGoals() {
                                 <GoalCard
                                     type={goals.type}
                                     data={goals.data}
-                                    color={colors[goals.type]}
                                 />
                             </div>
                         </LayeredCard>
