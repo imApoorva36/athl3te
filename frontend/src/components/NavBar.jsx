@@ -28,16 +28,16 @@ const NavBar = () => {
           <button
             key={id}
             onClick={() => handleClickedTab(id)}
-            className={`flex flex-col items-center transition-colors duration-200 p-2 m-1 rounded-3xl
+            className={`flex flex-col items-center transition-colors duration-200 p-2 m-1 rounded-full
               ${activeTab === id ? 'bg-primary text-white' : 'text-black hover:bg-gray-200'}`}
           >
             <Image
               src={`/nav_bar_icons/${activeTab === id ? `${iconBase}_white` : `${iconBase}_black`}.png`}
               alt={label}
-              width={12}
-              height={12}
+              width={20}
+              height={20}
             />
-            <span className="text-xs mt-2">{label}</span>
+            <span className="text-[12px] mt-2">{label}</span>
           </button>
         ))}
       </div>

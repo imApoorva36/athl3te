@@ -33,14 +33,14 @@ export default function GoalCard({ type, data = {}, isNew }) {
       <div className="items-center justify-center flex flex-col gap-4">
         <div className="">
           {/* Header */}
-          <div className="flex items-center justify-between mb-6"></div>
+          <div className="flex items-center justify-between mb-2"></div>
           <div className="flex items-center gap-2">
-            <span className="font-medium text-gray-800">{type.toUpperCase()} Goals</span>
+            <span className="font-bold text-lg text-gray-800">{type.toUpperCase()} Goals</span>
           </div>
         </div>
 
         {/* Metrics Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 p-4">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-7 p-4">
           {metrics.map(metric => (
             data[metric] !== null && (
               <div key={metric} className="flex flex-col items-center gap-2">

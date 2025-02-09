@@ -103,6 +103,8 @@ export const GET_USER_PROFILE = gql`
     }
     userRegistereds(
       where: { userAddress: $userAddress }
+      orderBy: timestamp
+      orderDirection: desc
     ) {
       metadata
       timestamp
@@ -198,11 +200,29 @@ export const GET_USER_COMMUNITIES = gql`
   }
 `;
 
-// get all bots
+// get bot details
 export const GET_BOT_DETAILS = gql`
   query GetAllBots($botName: String!) {
     botCreateds(
       where: { botName: $botName }
+      orderBy: timestamp
+      orderDirection: desc
+    ) {
+      botName
+      systemPrompt
+      botDescription
+      deploymentURL
+      unlockCostInGWei
+      timestamp
+    }
+  }
+`;
+
+
+//get all bots
+export const GET_ALL_BOTS = gql`
+  query GetAllBots {
+    botCreateds(
       orderBy: timestamp
       orderDirection: desc
     ) {

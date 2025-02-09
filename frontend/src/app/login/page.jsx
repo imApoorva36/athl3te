@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { useAccount } from "wagmi";
 import LayeredCard from "@/components/LayeredCard";
 import Image from "next/image";
+import { dataUtils } from "../graphql/all_data_calls";
 
 const handleLogin = () => {
   const clientId = process.env.NEXT_PUBLIC_STRAVA_CLIENT_ID;
@@ -21,6 +22,7 @@ export default function LoginPage() {
   const router = useRouter();
   const { address, isConnected } = useAccount();
   const [isRedirecting, setIsRedirecting] = useState(false);
+  const [isRegistering, setIsRegistering] = useState(false);
 
   const [step, setStep] = useState(1)
   const [formData, setFormData] = useState({
@@ -180,12 +182,36 @@ export default function LoginPage() {
               roundedness="rounded-lg"
               textColor="text-white"
             >
-              <Button
-                onClick={handleNext}
-                className="flex mx-auto w-full"
-              >
-                NEXT
-              </Button>
+             <Button
+  onClick={async () => {
+    try {
+      setIsRegistering(true);
+      await dataUtils.registerUser({
+        name: formData.name,
+        age: formData.age.toString(),
+        weight: formData.weight.toString(),
+        height: formData.height.toString(),
+      });
+      handleNext();
+    } catch (error) {
+      console.error('Registration failed:', error);
+      // You might want to show an error toast here
+    } finally {
+      setIsRegistering(false);
+    }
+  }}
+  disabled={isRegistering}
+  className="flex mx-auto w-full items-center justify-center gap-2"
+>
+  {isRegistering ? (
+    <>
+      <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+      <span>Registering...</span>
+    </>
+  ) : (
+    'NEXT'
+  )}
+</Button>
             </LayeredCard>
           </div>
         </div>

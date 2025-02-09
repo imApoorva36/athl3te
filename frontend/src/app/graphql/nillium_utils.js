@@ -90,7 +90,7 @@ export class NilliumUtils {
 
   static async getUserMetadata(userId) {
     try {
-      const response = await fetch(`/api/nillion/user?filter=${encodeURIComponent(JSON.stringify({ userId }))}`, {
+      const response = await fetch(`/api/nillion/user?filter=${userId}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
       });
