@@ -58,7 +58,6 @@ export const GET_COMMUNITY_GOALS = gql`
     ) {
       goalId
       timestamp
-      # totalCommunityGoals
     }
   }
 `;
@@ -89,7 +88,6 @@ export const GET_USER_PROFILE = gql`
       tokenId
       uri
       timestamp
-      totalNFTsForUser
     }
     userRegistereds(
       where: { userAddress: $userAddress }
@@ -113,7 +111,6 @@ export const GET_ALL_COMMUNITIES = gql`
       botName
       messagesId
       timestamp
-      totalCommunities
     }
   }
 `;
@@ -150,7 +147,6 @@ export const GET_COMMUNITY_DETAILS = gql`
       creator
       botName
       timestamp
-      totalCommunities
     }
     communityRoomJoineds(
       where: { communityName: $communityName }
@@ -192,7 +188,6 @@ export const GET_ALL_BOTS = gql`
       deploymentURL
       unlockCostInGWei
       timestamp
-      totalBots
     }
   }
 `;
