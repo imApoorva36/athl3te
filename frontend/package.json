@@ -19,6 +19,7 @@
     "buffer": "^6.0.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "cron": "^3.5.0",
     "crypto-browserify": "^3.12.1",
     "dotenv": "^16.4.7",
     "ethers": "^6.13.5",
