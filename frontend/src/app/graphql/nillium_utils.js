@@ -9,6 +9,7 @@ import { uploadToNillion as userPost, fetchFromNillion as userFetch } from "../.
 export class NilliumUtils {
 
   static async addUserMetadata(userMetadata) {
+    console.log(userMetadata);
     return userPost(userMetadata);
   }
 
