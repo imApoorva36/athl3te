@@ -53,6 +53,21 @@ export const GET_USER_GOALS_AND_INJURIES = gql`
   }
 `;
 
+// get community goal
+export const GET_COMMUNITY_GOALS = gql`
+  query GetCommunityGoals($communityName: String!) {
+    communityGoalAdded(
+      where: { communityName: $communityName }
+      orderBy: timestamp
+      orderDirection: desc
+    ) {
+      goalId
+      timestamp
+      # totalCommunityGoals
+    }
+  }
+`;
+
 // 3. Get user personal assistants (bots)
 export const GET_USER_PERSONAL_ASSISTANTS = gql`
   query GetUserBots($userAddress: Bytes!) {
@@ -74,6 +89,7 @@ export const GET_USER_PERSONAL_ASSISTANTS = gql`
 // 5. Get user NFTs and metadata
 export const GET_USER_PROFILE = gql`
   query GetUserProfile($userAddress: Bytes!) {
+    # Check
     nftMinteds(
       where: { owner: $userAddress }
     ) {

@@ -95,27 +95,3 @@ export class Athl3teContractUtils {
 //     ).send({ from: account });
 //   }
 }
-
-// Example usage:
-/*
-const contractAddress = "YOUR_CONTRACT_ADDRESS";
-const contractABI = [...]; // Your contract ABI
-
-// Initialize with Web3 instance from MetaMask
-const web3 = new Web3(window.ethereum);
-const athl3teUtils = new Athl3teContractUtils(contractAddress, contractABI, web3);
-
-// Register a new user
-try {
-  const metadata = JSON.stringify({ name: "John Doe", email: "john@example.com" });
-  const result = await athl3teUtils.registerUser(metadata);
-  console.log("User registered:", result.transactionHash);
-} catch (error) {
-  console.error("Error registering user:", error);
-}
-
-// Subscribe to events
-athl3teUtils.subscribeToUserRegistered((data) => {
-  console.log('New user registered:', data);
-});
-*/

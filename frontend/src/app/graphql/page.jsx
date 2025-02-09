@@ -14,7 +14,8 @@ import {
   GET_COMMUNITY_MESSAGES_AND_GOALS,
   GET_COMMUNITY_DETAILS,
   GET_USER_COMMUNITIES,
-  GET_ALL_BOTS
+  GET_ALL_BOTS,
+  GET_COMMUNITY_GOALS
 } from "./graphql_queries";
 
 const abi = [
@@ -847,6 +848,7 @@ const queries = [
   { name: "Community Details", query: GET_COMMUNITY_DETAILS },
   { name: "User Communities", query: GET_USER_COMMUNITIES},
   { name: "All Bots", query: GET_ALL_BOTS},
+  { name: "Community Goals", query: GET_COMMUNITY_GOALS}
 ];
 
 const writeOperations = [
@@ -903,7 +905,7 @@ const writeOperations = [
   { 
     name: "Join Community Room", 
     action: async (utils) => {
-      const communityName = "room2";
+      const communityName = "room1";
       return await utils.joinCommunityRoom(communityName);
     }
   },
@@ -953,7 +955,7 @@ export default function GraphQLPage() {
 
         await window.ethereum.request({ method: 'eth_requestAccounts' });
         
-        const contractAddress = "0xe7683ef11C2DEe46a0d0B3006f30AdBf813f433F"; // Replace with actual address
+        const contractAddress = "0xA9A98bAcAa8446145062070113194a2657e683b8"; // Replace with actual address
         const contractABI = abi;
         
         const utils = new Athl3teContractUtils(contractAddress, contractABI, web3);
