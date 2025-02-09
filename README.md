@@ -99,6 +99,7 @@ Private data storage for:
 
 ### Base
 
+- [Link to basescan for our deployed contract with address 0x34058be1ec2F67eFD9Fa351dAaDe5bA81f397cD3](https://sepolia.basescan.org/address/0x34058be1ec2F67eFD9Fa351dAaDe5bA81f397cD3)
 - Smart contract deployment and management
 - Secure transaction handling
 - Web3 wallet integration (MetaMask and Coinbase Wallet)
