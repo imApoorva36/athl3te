@@ -1226,7 +1226,7 @@ export default function GraphQLPage() {
 
         // await window.ethereum.request({ method: 'eth_requestAccounts' });
         
-        const contractAddress = "0x73d14909Eb1027E8125225D4dEE5Cfd71004B637";
+        const contractAddress = "0x34058be1ec2F67eFD9Fa351dAaDe5bA81f397cD3";
         const contractABI = abi;
         
         const utils = new Athl3teContractUtils(contractAddress, contractABI, web3);
