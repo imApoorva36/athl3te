@@ -8,7 +8,6 @@ export const GET_USER_ACTIVITIES = gql`
       orderBy: timestamp
       orderDirection: desc
     ) {
-      id
       activityId
       timestamp
       totalActivities
@@ -26,13 +25,13 @@ export const GET_USER_GOALS_AND_INJURIES = gql`
       orderBy: timestamp
       orderDirection: desc
     ) {
-      id
       goalId
       goalType
       timestamp
       totalGoalsOfType
     }
-    communityRoomJoineds(where: { userAddress: $userAddress }) {
+    communityRoomJoineds(
+      where: { userAddress: $userAddress }) {
       communityName
   }
     injuryUpdateds(
@@ -98,6 +97,18 @@ export const GET_USER_PROFILE = gql`
   }
 `;
 
+//get user details
+export const GET_USER_DETAILS = gql`
+  query GetUserDetails($userAddress: Bytes!) {
+    userRegistereds(
+      where: { userAddress: $userAddress }
+    ) {
+      metadata
+      timestamp
+    }
+  }
+`;
+
 // 6. Get all communities
 export const GET_ALL_COMMUNITIES = gql`
   query GetAllCommunities {
@@ -105,7 +116,6 @@ export const GET_ALL_COMMUNITIES = gql`
       orderBy: timestamp
       orderDirection: desc
     ) {
-      id
       communityName
       creator
       botName
@@ -176,9 +186,10 @@ export const GET_USER_COMMUNITIES = gql`
 `;
 
 // get all bots
-export const GET_ALL_BOTS = gql`
-  query GetAllBots {
+export const GET_BOT_DETAILS = gql`
+  query GetAllBots($botName: String!) {
     botCreateds(
+      where: { botName: $botName }
       orderBy: timestamp
       orderDirection: desc
     ) {

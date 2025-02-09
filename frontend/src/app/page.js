@@ -67,7 +67,7 @@ export default function Home() {
         activityType: 'Run',
         title: "Morning Run",
         pr: '5K Personal Best',
-      };
+    };
 
     return (
         <div>

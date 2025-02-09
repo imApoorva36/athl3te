@@ -1,8 +1,38 @@
+'use client'
+
 import { Button } from "@/components/ui/button"
 import LayeredCard from "@/components/LayeredCard";
 import Image from "next/image";
+import { useState, useEffect } from "react";
 
 export default function MyActivities() {
+    const [activities, setActivities] = useState([]);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchActivities = async () => {
+            try {
+                const response = await fetch("/api/strava/activities"); // Calls the API route
+                const data = await response.json();
+
+                if (!response.ok) throw new Error(data.error || "Failed to fetch activities");
+                const formattedActivities = data.map(activity => ({
+                    name: activity.name || "Unknown Activity",
+                    type: activity.sport_type || activity.type || "Unknown",
+                    date: activity.start_date_local ? activity.start_date_local.split("T")[0] : "Unknown",
+                    bpm: activity.average_heartrate || 0, // Default to 0 if not available
+                    distance: (activity.distance / 1000).toFixed(2), // Convert meters to km
+                    duration: (activity.moving_time / 60).toFixed(1), // Convert seconds to minutes
+                }));
+                setActivities([...myActivitiesData, ...formattedActivities]);
+            } catch (err) {
+                setError(err.message);
+            }
+        };
+
+        fetchActivities();
+    }, []);
+    console.log(activities);
     const myActivitiesData = [{
         name: "Mangalore Run",
         type: "Running",
@@ -79,7 +109,7 @@ export default function MyActivities() {
 
                 {/* Activities */}
                 <div className="space-y-4 p-2 w-full">
-                    {myActivitiesData.map((activity, index) => (
+                    {activities.map((activity, index) => (
                         <LayeredCard
                             key={index}
                             mainColor="bg-accent"

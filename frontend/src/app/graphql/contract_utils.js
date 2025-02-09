@@ -17,7 +17,6 @@ export class Athl3teContractUtils {
       .send({ from: account });
   }
 
-  //check
   async registerUser(metadata) {
     const account = await this.getAccount();
     return this.contract.methods.registerUser(metadata)
@@ -79,20 +78,4 @@ export class Athl3teContractUtils {
       .send({ from: account });
   }
 
-//   async createBot(
-//     botName,
-//     systemPrompt,
-//     botDescription,
-//     deploymentURL,
-//     unlockCostInGWei
-//   ) {
-//     const account = await this.getAccount();
-//     return this.contract.methods.createBot(
-//       botName,
-//       systemPrompt,
-//       botDescription,
-//       deploymentURL,
-//       unlockCostInGWei
-//     ).send({ from: account });
-//   }
 }

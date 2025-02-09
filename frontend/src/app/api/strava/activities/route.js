@@ -1,23 +1,23 @@
-import axios from 'axios';
+import axios from "axios";
+import { NextResponse } from "next/server";
 
 export async function GET(req) {
-    const { searchParams } = new URL(req.url);
-    const access_token = searchParams.get('access_token');
+    const cookies = req.headers.get("cookie") || "";
+    const tokenMatch = cookies.match(/strava_access_token=([^;]*)/);
+    const access_token = tokenMatch ? tokenMatch[1] : null;
 
     if (!access_token) {
-        return new Response(JSON.stringify({ error: 'Missing access_token' }), { status: 400 });
+        return NextResponse.json({ error: "Unauthorized: No token found" }, { status: 401 });
     }
 
     try {
-        console.log('Fetching activities with access token:', access_token);
-        const response = await axios.get('https://www.strava.com/api/v3/athlete/activities', {
+        const response = await axios.get("https://www.strava.com/api/v3/athlete/activities", {
             headers: { Authorization: `Bearer ${access_token}` },
         });
 
-        console.log('Activities fetched:', response.data);
-        return new Response(JSON.stringify(response.data), { status: 200 });
+        return NextResponse.json(response.data, { status: 200 });
     } catch (error) {
-        console.error('Error fetching activities:', error);
-        return new Response(JSON.stringify({ error: 'Failed to fetch activities' }), { status: 500 });
+        console.error("Error fetching activities:", error);
+        return NextResponse.json({ error: "Failed to fetch activities" }, { status: 500 });
     }
 }
