@@ -97,7 +97,7 @@ export default function Collections() {
             </div>
 
             <div className="flex-1 overflow-y-auto px-4 space-y-12 my-4">
-            <h2 className="text-xl font-semibold">My Collections</h2>
+            <h2 className="text-xl font-semibold">Collections</h2>
                 <div className="flex flex-col space-y-2 gap-4">
                     {Object.keys(nftData).map((key) => (
                         <div key={key} className="flex flex-col space-y-2">

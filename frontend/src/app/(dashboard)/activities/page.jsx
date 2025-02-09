@@ -68,9 +68,9 @@ export default function MyActivities() {
                     roundedness="rounded-lg"
                     textColor="text-white"
                 >
-                    <Button variant="ghost" size="icon" className="text-primary hover:text-descructive hover:bg-orange-50">
-                        <Image src="/fire.png" width={20} height={20} alt="fire" />
-                    </Button>
+                    <Link href="/collections">
+                        <Image src="/fire.png" width={20} height={20} alt="fire" className="m-2" />
+                    </Link>
                 </LayeredCard>
             </div>
 
