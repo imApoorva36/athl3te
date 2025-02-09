@@ -56,8 +56,11 @@ export async function POST(req) {
     }
 }
 
-export async function GET() {
+export async function GET(req) {
     try {
+        const { searchParams } = new URL(req.url);
+        const filter = searchParams.get('filter');
+
         const collection = new SecretVaultWrapper(
             orgConfig.nodes,
             orgConfig.orgCredentials,
@@ -65,8 +68,8 @@ export async function GET() {
         );
         await collection.init();
 
-        const decryptedCollectionData = await collection.readFromNodes({});
-        return Response.json({ success: true, data: decryptedCollectionData });
+        const decryptedCollectionData = await collection.readFromNodes({ _id: filter });
+        return Response.json(decryptedCollectionData );
     } catch (error) {
         console.error('❌ Fetch error:', error.message);
         return Response.json({ success: false, error: error.message }, { status: 500 });
