@@ -8,9 +8,9 @@ dataSources:
     name: Contract
     network: base-sepolia
     source:
-      address: "0xA9A98bAcAa8446145062070113194a2657e683b8"
+      address: "0x34058be1ec2F67eFD9Fa351dAaDe5bA81f397cD3"
       abi: Contract
-      startBlock: 21642101
+      startBlock: 21658288
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -39,13 +39,13 @@ dataSources:
           handler: handleApproval
         - event: ApprovalForAll(indexed address,indexed address,bool)
           handler: handleApprovalForAll
-        - event: BotCreated(string,string,string,string,uint16,uint256,uint256)
+        - event: BotCreated(string,string,string,string,uint16,uint256)
           handler: handleBotCreated
         - event: BotPurchased(address,string,uint16,uint256,uint256,uint256)
           handler: handleBotPurchased
         - event: CommunityGoalAdded(address,string,string,uint256,uint256)
           handler: handleCommunityGoalAdded
-        - event: CommunityRoomCreated(string,address,string,uint16,uint256,uint256)
+        - event: CommunityRoomCreated(string,address,string,uint16,uint256)
           handler: handleCommunityRoomCreated
         - event: CommunityRoomJoined(address,string,uint256,uint256)
           handler: handleCommunityRoomJoined
@@ -53,7 +53,7 @@ dataSources:
           handler: handleGoalAdded
         - event: InjuryUpdated(address,string,string,uint256)
           handler: handleInjuryUpdated
-        - event: NFTMinted(address,uint256,string,uint256,uint256)
+        - event: NFTMinted(address,uint256,string,uint256)
           handler: handleNFTMinted
         - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handleTransfer

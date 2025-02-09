@@ -51,8 +51,7 @@ contract Athl3te is ERC721  {
         address creator,
         string botName,
         uint16 messagesId,
-        uint256 timestamp,       
-        uint256 totalCommunities 
+        uint256 timestamp
     );
 
     event CommunityRoomJoined(
@@ -68,8 +67,7 @@ contract Athl3te is ERC721  {
         string botDescription,  
         string deploymentURL,
         uint16 unlockCostInGWei,
-        uint256 timestamp,     
-        uint256 totalBots      
+        uint256 timestamp 
     );
 
     event InjuryUpdated(
@@ -83,8 +81,7 @@ contract Athl3te is ERC721  {
         address owner,
         uint256 tokenId,
         string uri,
-        uint256 timestamp,
-        uint256 totalNFTsForUser
+        uint256 timestamp
     );
 
     struct Bot {
@@ -107,7 +104,6 @@ contract Athl3te is ERC721  {
         string[] nutritionGoalIds;
         PersonalAssistant[] purchasedAssistants;
         string injuriesDescriptionId;
-        uint256[] nftTokenIds;
         bool isRegistered;
         string[] joinedCommunities;
     }
@@ -139,10 +135,6 @@ contract Athl3te is ERC721  {
 
     mapping(uint256 => string) public _tokenURIs;
 
-    string[] private allBotNames;
-    address[] private allUsers;
-    string[] private allCommunityNames;
-
     modifier onlyRegistered() {
         require(users[msg.sender].isRegistered, "Not registered");
         _;
@@ -153,14 +145,12 @@ contract Athl3te is ERC721  {
         _tokenIdCounter.increment();
         _mint(msg.sender, tokenId);
         _tokenURIs[tokenId] = uri;
-        users[msg.sender].nftTokenIds.push(tokenId);
         
         emit NFTMinted(
             msg.sender,
             tokenId,
             uri,
-            block.timestamp,
-            users[msg.sender].nftTokenIds.length
+            block.timestamp
         );
         
         return tokenId;
@@ -175,9 +165,7 @@ contract Athl3te is ERC721  {
         newUser.activityIds = new string[](0);
         newUser.sportGoalIds = new string[](0);
         newUser.nutritionGoalIds = new string[](0);
-        newUser.nftTokenIds = new uint256[](0);
 
-        allUsers.push(msg.sender);
 
         emit UserRegistered(
             msg.sender,
@@ -235,7 +223,7 @@ contract Athl3te is ERC721  {
     function buyBot(string calldata _botName) external payable onlyRegistered {
         Bot storage bot = bots[_botName]; // Caching `bots[_botName]` in storage
         require(bytes(bot.botName).length > 0, "Bot does not exist!");
-        require(msg.value >= bot.unlockCostInGWei * 1 gwei, "Insufficient payment");
+        require(msg.value >= bot.unlockCostInGWei, "Insufficient payment");
 
         User storage user = users[msg.sender]; // Caching `users[msg.sender]` in storage
         uint16 newMessageId = ++messageIdGenerator; // Increment outside struct assignment
@@ -278,7 +266,6 @@ contract Athl3te is ERC721  {
         room.messagesId = ++messageIdGenerator;
         room.createdBy = msg.sender;
         room.members.push(msg.sender);
-        allCommunityNames.push(_communityName);
 
         users[msg.sender].joinedCommunities.push(_communityName);
 
@@ -287,8 +274,7 @@ contract Athl3te is ERC721  {
             msg.sender,         
             _botName,           
             messageIdGenerator, 
-            block.timestamp,    
-            allCommunityNames.length 
+            block.timestamp 
         );
     }
 
@@ -338,16 +324,13 @@ contract Athl3te is ERC721  {
             unlockCostInGWei: _unlockCostInGWei
         });
 
-        allBotNames.push(_botName);
-
         emit BotCreated(
             _botName,       
             _systemPrompt,
             _botDescription,     
             _deploymentURL,     
             _unlockCostInGWei,  
-            block.timestamp,     
-            allBotNames.length   
+            block.timestamp    
         );
     }
 }
