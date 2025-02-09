@@ -115,7 +115,7 @@ export default function GoalSettingAgentChat() {
                             roundedness="rounded-xl"
                             textColor={message.isUser ? "text-white" : "text-black"}
                         >
-                            <div className="px-4 py-2 max-w-[80%]">
+                            <div className="px-4 py-2">
                                 {message.isUser ? (
                                     message.text || 'No message'
                                 ) : (
@@ -125,7 +125,7 @@ export default function GoalSettingAgentChat() {
                                                 .filter(([key, value]) => value !== null && key !== 'nutrition') // Ignore null values & nutrition
                                                 .map(([activity, metrics]) => (
                                                     console.log(activity, metrics),
-                                                    <GoalCard key={activity} type={activity} data={metrics} color="bg-blue-500" />
+                                                    <GoalCard key={activity} type={activity} data={metrics} isNew={true} color="bg-blue-500" />
                                                 ))
                                         ) : (
                                             message.text || 'No message'

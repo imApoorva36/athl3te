@@ -1,6 +1,8 @@
+"use client";
 import Image from "next/image";
+import { useState } from "react";
 
-export default function GoalCard({ type, data = {} }) {
+export default function GoalCard({ type, data = {}, isNew }) {
 
   console.log(type, data)
 
@@ -10,10 +12,20 @@ export default function GoalCard({ type, data = {} }) {
 
   const metrics = ["distance", "calories", "duration", "speed"];
   const metricIcons = {
-    distance: <Image src="/metrics/distance.png" width={24} height={24} />,
-    calories: <Image src="/metrics/heart_rate.png" width={24} height={24} />,
-    duration: <Image src="/metrics/time.png" width={24} height={24} />,
-    speed: <Image src="/metrics/speed.png" width={24} height={24} />,
+    distance: <Image src="/metrics/distance.png" width={24} height={24} alt="distance" />,
+    calories: <Image src="/metrics/heart_rate.png" width={24} height={24} alt="calories" />,
+    duration: <Image src="/metrics/time.png" width={24} height={24} alt="duration" />,
+    speed: <Image src="/metrics/speed.png" width={24} height={24} alt="speed" />,
+  };
+
+
+  const [goalAdded, setGoalAdded] = useState(false);
+
+  const handleAddGoal = () => {
+    const goals = JSON.parse(localStorage.getItem('goals')) || [];
+    goals.push({ type, data });
+    localStorage.setItem('goals', JSON.stringify(goals));
+    setGoalAdded(true);
   };
 
   return (
@@ -42,8 +54,18 @@ export default function GoalCard({ type, data = {} }) {
           ))}
         </div>
 
-
+        {isNew && (
+          <div className="flex items-center justify-center">
+            <button 
+              className="bg-primary text-white px-4 py-2 rounded-lg" 
+              onClick={handleAddGoal} 
+              disabled={goalAdded}
+            >
+              {goalAdded ? "Goal Added" : "Add Goal"}
+            </button>
+          </div>
+        )}
       </div>
     </div>
-  )
+  );
 }

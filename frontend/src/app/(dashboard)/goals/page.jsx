@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button"
+"use client";
 import LayeredCard from "@/components/LayeredCard";
 import Image from "next/image";
 import GoalCard from "@/components/GoalsCard";
@@ -7,7 +7,7 @@ import Link from "next/link";
 export default function MyGoals() {
 
 
-    const myGoalsData = [{
+    const myGoalsData = JSON.parse(localStorage.getItem("goals")) || [{
         type: "Running",
         data: {
             distance: "5 km",
@@ -74,6 +74,7 @@ export default function MyGoals() {
                                 <GoalCard
                                     type={goals.type}
                                     data={goals.data}
+                                    isNew={false}
                                 />
                             </div>
                         </LayeredCard>
