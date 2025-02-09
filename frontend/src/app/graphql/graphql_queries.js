@@ -18,8 +18,7 @@ export const GET_USER_ACTIVITIES = gql`
   }
 `;
 
-// 2. Get user goals, community goals, and injury info
-// CHECK
+// 2. Get user goals, communities joined, and injury info
 export const GET_USER_GOALS_AND_INJURIES = gql`
   query GetUserGoalsAndInjuries($userAddress: Bytes!) {
     goalAddeds(

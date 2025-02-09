@@ -242,12 +242,6 @@
                 "internalType": "uint256",
                 "name": "timestamp",
                 "type": "uint256"
-            },
-            {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "totalBots",
-                "type": "uint256"
             }
         ],
         "name": "BotCreated",
@@ -364,12 +358,6 @@
                 "indexed": false,
                 "internalType": "uint256",
                 "name": "timestamp",
-                "type": "uint256"
-            },
-            {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "totalCommunities",
                 "type": "uint256"
             }
         ],
@@ -500,12 +488,6 @@
                 "indexed": false,
                 "internalType": "uint256",
                 "name": "timestamp",
-                "type": "uint256"
-            },
-            {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "totalNFTsForUser",
                 "type": "uint256"
             }
         ],
