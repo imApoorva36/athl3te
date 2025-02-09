@@ -10,6 +10,13 @@ import { useAccount } from "wagmi";
 import LayeredCard from "@/components/LayeredCard";
 import Image from "next/image";
 
+const handleLogin = () => {
+  const clientId = process.env.NEXT_PUBLIC_STRAVA_CLIENT_ID;
+  const redirectUri = process.env.NEXT_PUBLIC_STRAVA_REDIRECT_URI;
+  const authUrl = `https://www.strava.com/oauth/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&scope=read,activity:read`;
+  window.location.href = authUrl;
+};
+
 export default function LoginPage() {
   const router = useRouter();
   const { address, isConnected } = useAccount();
@@ -152,15 +159,15 @@ export default function LoginPage() {
                     roundedness="rounded-lg"
                     textColor="text-white"
                   >
-                  <Button
-                    key={gender}
-                    onClick={() => handleInputChange("gender", gender)}
-                    variant={formData.gender === gender ? "default" : "outline"}
-                    className={`${formData.gender === gender ? "bg-primary text-white hover:bg-destructive" : ""
-                      }`}
-                  >
-                    {gender}
-                  </Button>
+                    <Button
+                      key={gender}
+                      onClick={() => handleInputChange("gender", gender)}
+                      variant={formData.gender === gender ? "default" : "outline"}
+                      className={`${formData.gender === gender ? "bg-primary text-white hover:bg-destructive" : ""
+                        }`}
+                    >
+                      {gender}
+                    </Button>
                   </LayeredCard>
                 ))}
               </div>
@@ -212,7 +219,14 @@ export default function LoginPage() {
               textColor="text-white"
             >
               <button
-                onClick={handleNext}
+                onClick={async () => {
+                  try {
+                    const response = await handleLogin();
+                    console.log("Strava Response:", response);
+                  } catch (error) {
+                    console.error("Error fetching Strava data:", error);
+                  }
+                }}
                 className="flex mx-auto w-full p-4 gap-2"
               >
                 <Image src="/logo/strava_logo.png" width={30} height={30} alt="strava" />
