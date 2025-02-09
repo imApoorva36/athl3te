@@ -1,8 +1,6 @@
 # athl3te
 
 > A submission for the ETHGlobal Agentic Hackathon by Team Higgs
->
-> [Live Demo](https://athl3te.vercel.app/)
 
 ## Overview
 
