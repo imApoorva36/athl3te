@@ -57,7 +57,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen w-full">
+    <div className="min-h-screen w-full overflow-y-scroll">
       {step === 1 ? (
         <div className="flex min-h-screen flex-col px-6 py-12">
           <div className="flex flex-row justify-center items-center mb-10">
