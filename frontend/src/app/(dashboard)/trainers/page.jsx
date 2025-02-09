@@ -1,20 +1,40 @@
-import { HeartIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import LayeredCard from "@/components/LayeredCard";
 import Image from "next/image";
+import Link from "next/link";
 
-export default function MyAgents() {
-    const agentData = [{
-        name: "Cardio Agent",
+export const agentData = [
+    {
+        logo: "/agents/personal_ai_agent.png",
+        name: "Personal Trainer Agent",
+        agent_name: "personal_bot",
         description:
-            "Cardio Community is an agent focused on heart health, endurance training, and fitness through activities like running, cycling, and HIIT workouts. It fosters motivation, shared goals, and a supportive environment for improving cardiovascular health. ❤️",
+            "Personal Trainer Agent provides personalized plans and suggestions to help you reach your fitness goals."
     },
     {
-        name: "Swim Coach",
+        logo: "/agents/sports_goal_creation_agent.png",
+        name: "Goal Setting Agent",
+        agent_name: "goal_setting_bot",
         description:
-            "Swim Coach is an agent focused on mental and physical well-being through yoga, meditation, and mindfulness practices. It fosters relaxation, stress relief, and a sense of inner peace. 🧘",
-    }];
+            "Goal Setting Agent helps you set fitness goals, providing personalized plans and progress tracking to help you achieve your targets."
+    },
+    {
+        logo: "/agents/recovery_coach_agent.png",
+        name: "Injury Agent",
+        agent_name: "injury_bot",
+        description:
+            "Injury Agent helps you prevent from common sports injuries, providing advice, and recovery plans to keep you healthy and active."
+    },
+    {
+        logo: "/agents/nutrition_agent.png",
+        name: "Nutrition Agent",
+        agent_name: "nutrition_bot",
+        description:
+            "Nutrition Agent helps you track and improve your diet, providing calorie tracking, and nutritional advice to help you reach your health goals."
+    }
+];
 
+export default function MyAgents() {
 
     return (
         <>
@@ -70,11 +90,15 @@ export default function MyAgents() {
                         >
                             <div className="p-4">
                                 <div className="flex justify-between items-center mb-3">
-                                    <HeartIcon className="h-6 w-6 text-primary" />
+                                    <Image src={community.logo} width={30} height={30} alt="logo" />
                                     <h2 className="text-lg font-semibold">{community.name}</h2>
-                                    <Button size="sm" variant="outline" className="text-primary font-bold hover:text-primary-dark">
-                                        Chat
-                                    </Button>
+                                    <Link href={
+                                        `/trainers/${community.agent_name}`
+                                    }>
+                                        <Button size="sm" variant="outline" className="text-primary font-bold hover:text-primary-dark">
+                                            Chat
+                                        </Button>
+                                    </Link>
                                 </div>
                                 <p className="text-md leading-relaxed">{community.description}</p>
                             </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import sendApiRequest from "./apiUtility";
+import sendApiRequest from "../../utils/apiUtility"
 
 export default function BotsPage() {
   const [loading, setLoading] = useState(null);
@@ -213,7 +213,7 @@ export default function BotsPage() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
+    <div className="max-w-4xl mx-auto p-6 overflow-y-scroll">
       <h1 className="text-3xl font-bold mb-6 text-center">Bot Actions</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4">
         {botRequests.map((bot, index) => (
@@ -231,7 +231,7 @@ export default function BotsPage() {
       {response && (
         <div className="mt-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded">
           <strong>Response from {response.bot}:</strong>
-          <pre>{JSON.stringify(response.data, null, 2)}</pre>
+          <p>{JSON.stringify(response.data, null, 2)}</p>
         </div>
       )}
 

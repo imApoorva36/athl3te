@@ -1,7 +1,4 @@
 import axios from "axios";
-import dotenv from "dotenv";
-
-dotenv.config(); // Load environment variables
 
 const API_URL = "https://autonome.alt.technology/test-fixwqh/query"; // Replace with actual URL
 
@@ -16,11 +13,12 @@ const API_URL = "https://autonome.alt.technology/test-fixwqh/query"; // Replace 
  * @returns {Promise<Object>} - API response.
  */
 async function sendApiRequest({ agent_name, action, params, input_text }) {
-//   const username = process.env.BASIC_AUTH_USERNAME;
-//   const password = process.env.BASIC_AUTH_PASSWORD;
 
-  const username = "username";
-  const password = "password";
+  const username = process.env.NEXT_PUBLIC_AGENT_USERNAME;
+  const password = process.env.NEXT_PUBLIC_AGENT_PASSWORD;
+
+  console.log(agent_name, action, params, input_text);
+
 
   if (!username || !password) {
     throw new Error("Basic Auth credentials are missing in the .env file");
