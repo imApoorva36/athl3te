@@ -1,35 +1,18 @@
-import { HeartIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import LayeredCard from "@/components/LayeredCard";
 import Link from "next/link";
 import Image from "next/image";
 
 export default function FindCommunities() {
-    const communityData = [{
-        name: "Cardio Community",
-        description:
-            "Cardio Community is a group focused on heart health, endurance training, and fitness through activities like running, cycling, and HIIT workouts. It fosters motivation, shared goals, and a supportive environment for improving cardiovascular health. ❤️",
-    },
-    {
-        name: "Yoga Community",
-        description:
-            "Yoga Community is a group focused on mental and physical well-being through yoga, meditation, and mindfulness practices. It fosters relaxation, stress relief, and a sense of inner peace. 🧘",
-    },
-    {
-        name: "Nutrition Community",
-        description:
-            "Nutrition Community is a group focused on healthy eating, balanced diets, and nutritional education. It fosters knowledge sharing, recipe ideas, and support for achieving dietary goals. 🍏",
-    },
-    {
-        name: "Meditation Community",
-        description:
-            "Meditation Community is a group focused on mindfulness, stress reduction, and spiritual growth through meditation practices. It fosters mental clarity, emotional well-being, and a sense of inner harmony. 🧘‍♂️",
-    },
+    const communityData = [
     {
         name: "Running Community",
+        id: "run",
         description:
-            "Running Community is a group focused on running enthusiasts, marathon training programs"
-    }];
+            "Running Community is a group focused on running enthusiasts, marathon training programs",
+        logo: "/sports/orange/run.png"
+    }
+];
 
 
     return (
@@ -45,9 +28,9 @@ export default function FindCommunities() {
                     roundedness="rounded-lg"
                     textColor="text-white"
                 >
-                    <Button variant="ghost" size="icon" className="text-primary hover:text-descructive">
-                        <Image src="/wallet.png" width={20} height={20} alt="wallet" />
-                    </Button>
+                    <Link href="/profile">
+                        <Image src="/wallet.png" width={20} height={20} alt="wallet" className="m-2" />
+                    </Link>
                 </LayeredCard>
                 <div className="flex items-center">
                     <Image src="/logo/athlete_logo.png" width={40} height={40} alt="logo" />
@@ -86,11 +69,11 @@ export default function FindCommunities() {
                         >
                             <div className="p-4">
                                 <div className="flex justify-between items-center mb-3">
-                                    <HeartIcon className="h-6 w-6 text-primary" />
+                                    <Image src={community.logo} width={35} height={35} alt="logo" />
                                     <h2 className="text-lg font-semibold">{community.name}</h2>
-                                    <Link href={`/community/${index}`}>
+                                    <Link href={`/community/${community.id}`}>
                                         <Button size="sm" variant="outline" className="text-primary font-bold hover:text-primary-dark">
-                                            Join
+                                            View
                                         </Button>
                                     </Link>
                                 </div>

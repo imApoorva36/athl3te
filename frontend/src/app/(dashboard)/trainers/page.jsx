@@ -49,9 +49,9 @@ export default function MyAgents() {
                     roundedness="rounded-lg"
                     textColor="text-white"
                 >
-                    <Button variant="ghost" size="icon" className="text-primary hover:text-descructive">
-                        <Image src="/wallet.png" width={20} height={20} alt="wallet" />
-                    </Button>
+                    <Link href="/profile">
+                        <Image src="/wallet.png" width={20} height={20} alt="wallet" className="m-2" />
+                    </Link>
                 </LayeredCard>
                 <div className="flex items-center">
                     <Image src="/logo/athlete_logo.png" width={40} height={40} alt="logo" />

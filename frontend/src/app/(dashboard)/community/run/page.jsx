@@ -7,15 +7,14 @@ import Image from "next/image"
 
 export default function Community() {
   const communityData = {
-    name: "Cardio Community",
+    name: "Running Community",
     description:
-      "Cardio Community is a group focused on heart health, endurance training, and fitness through activities like running, cycling, and HIIT workouts. It fosters motivation, shared goals, and a supportive environment for improving cardiovascular health. ❤️",
+      "Running Community is a group focused on running enthusiasts, marathon training programs. We are a group of people who love to run and are looking for like-minded individuals to join us in our journey to become better runners.",
     members: [
       { name: "Abhishek Satpathy", gender: "Male", age: 21 },
       { name: "Fahim Ahmed", gender: "Male", age: 21 },
       { name: "Apoorva", gender: "Female", age: 20 },
-    ],
-    price: "2000 GWei",
+    ]
   }
 
   return (
@@ -84,10 +83,11 @@ export default function Community() {
           roundedness="rounded-xl"
           textColor="text-black"
         >
-          <Button className="w-full h-12 flex items-center justify-center gap-2 bg-transparent hover:bg-transparent text-black">
+          <Link href="run/chat"
+          className="w-full h-12 flex items-center justify-center gap-2 bg-transparent hover:bg-transparent text-black px-2">
             <ArrowUp className="h-5 w-5" />
-            <span>Purchase for {communityData.price}</span>
-          </Button>
+            <span>Join and Chat</span>
+          </Link>
         </LayeredCard>
       </div>
     </>

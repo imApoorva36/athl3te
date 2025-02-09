@@ -1,132 +1,51 @@
-"use client";
-
-import { useState, useEffect } from "react";
-import ActivityCard from "../components/ActivityCard";
-import Link from 'next/link';
+import LayeredCard from "@/components/LayeredCard";
+import { Activity, Rocket, Sparkles, Target, Users, Utensils } from "lucide-react";
+import Link from "next/link";
 
 export default function Home() {
-    const [authData, setAuthData] = useState(null);
-    const [activities, setActivities] = useState([]);
-    const [stats, setStats] = useState({ totalDistance: 0, totalRuns: 0 });
-    const [userName, setUserName] = useState('');
 
-    const handleLogin = () => {
-        const clientId = process.env.NEXT_PUBLIC_STRAVA_CLIENT_ID;
-        const redirectUri = process.env.NEXT_PUBLIC_STRAVA_REDIRECT_URI;
-        const authUrl = `https://www.strava.com/oauth/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&scope=read,activity:read`;
-
-        window.location.href = authUrl;
-    };
-
-    const handleCallback = async (code) => {
-        const res = await fetch(`/api/strava/auth?code=${code}`);
-        const data = await res.json();
-        console.log('Auth Response:', data);
-        if (data.access_token) {
-            setAuthData({ access_token: data.access_token });
-            fetchAthlete(data.access_token);
-        }
-    };
-
-    const fetchAthlete = async (accessToken) => {
-        const res = await fetch(`https://www.strava.com/api/v3/athlete`, {
-            headers: { Authorization: `Bearer ${accessToken}` },
-        });
-        const data = await res.json();
-        setUserName(data.firstname + ' ' + data.lastname);
-    };
-
-    useEffect(() => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const code = urlParams.get("code");
-
-        if (code) {
-            handleCallback(code);
-        }
-    }, []);
-
-    const fetchActivities = async () => {
-        if (!authData) return;
-
-        const res = await fetch(`/api/strava/activities?access_token=${authData.access_token}`);
-        const data = await res.json();
-        console.log('Activities Response:', data);
-        setActivities(data.slice(0, 12)); // Limit to 12 activities
-
-        const totalDistance = data.reduce((acc, activity) => acc + activity.distance, 0);
-        const totalRuns = data.filter(activity => activity.type === 'Run').length;
-        setStats({ totalDistance, totalRuns });
-    };
-
-    const sampleActivity = {
-        distance: 5000,
-        time: 30,
-        speed: 10,
-        calories: 300,
-        cadence: 80,
-        activityType: 'Run',
-        title: "Morning Run",
-        pr: '5K Personal Best',
-    };
+    const features = [
+        { icon: <Activity className="h-5 w-5" />, text: "Monitor your activities" },
+        { icon: <Target className="h-5 w-5" />, text: "Push yourself to achieve your goals" },
+        { icon: <Users className="h-5 w-5" />, text: "Discuss with like minded individuals" },
+        { icon: <Utensils className="h-5 w-5" />, text: "Curate personalised custom diets" },
+        { icon: <Sparkles className="h-5 w-5" />, text: "Enhanced features and insights with AI" },
+      ];
 
     return (
         <div>
-            <div className="p-8">
-
-                <ActivityCard title="Morning Run" activity={sampleActivity} />
-                {/* <LayeredCard 
-                    title="Welcome Back"
-                    content="This is a layered card component with a colored background card creating a stacked effect."
-                    backgroundColor="#94a3b8"
-                /> */}
-                {/* <ActivityCard activity={sampleActivity}> */}
-
-                {/* </ActivityCard> */}
-                {/* <h1 className="text-3xl font-bold mb-4">Strava Integration</h1> */}
-                {/* Commenting out existing code */}
-                {/* <div className="flex flex-col items-center justify-center min-h-screen bg-black-100 p-6">
-                    <h1 className="text-3xl font-bold mb-4">Strava Integration</h1>
-                    
-                    {!authData ? (
-                        <button onClick={handleLogin} className="bg-orange-500 text-white px-4 py-2 rounded">
-                            Login with Strava
-                        </button>
-                    ) : (
-                        <>
-                            <p className="text-blue mb-4">Welcome, {userName}!</p>
-                            <button onClick={fetchActivities} className="bg-green-500 text-white px-4 py-2 rounded">
-                                Fetch Activities
-                            </button>
-                        </>
-                    )}
-
-                    {stats.totalRuns > 0 && (
-                        <div className="mt-6 w-full max-w-md text-white">
-                            <p>Total Runs: {stats.totalRuns}</p>
-                            <p>Total Distance: {stats.totalDistance} meters</p>
-                        </div>
-                    )}
-
-                    {activities.length > 0 && (
-                        <div className="mt-6 w-full max-w-4xl">
-                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                                {activities.map((activity) => (
-                                    <div key={activity.id} className="bg-gray-800 text-white p-4 rounded shadow">
-                                        <p className="font-bold">{activity.name}</p>
-                                        <p>Type: {activity.type}</p>
-                                        <p>Distance: {activity.distance} meters</p>
-                                        <p>Duration: {activity.moving_time} seconds</p>
-                                        <p>Date: {new Date(activity.start_date).toLocaleDateString()}</p>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    )}
-                </div> */}
-                <Link href="/mintnft" legacyBehavior>
-                    <a className="bg-blue-500 text-white px-4 py-2 rounded">Mint NFT</a>
-                </Link>
-            </div>
+            <div className="flex min-h-screen flex-col text-white items-center justify-between bg-gradient-to-b from-primary to-destructive px-6 py-12">
+          <h1 className="mb-12 text-3xl font-bold text-white mx-auto">ATHL3TE</h1>
+          <div className="flex flex-row items-center align-middle my-6 px-4">
+            <Rocket className="h-16 w-16 my-auto align-middle" />
+            <h2 className="text-2xl font-semibold text-white my-auto text-center p-2">Boost your fitness goals with Athl3te AI</h2>
+          </div>
+          <div className="mb-12 space-y-8">
+            {features.map((feature, index) => (
+              <div key={index} className="flex items-center gap-3">
+                {feature.icon}
+                <span className="text-sm">{feature.text}</span>
+              </div>
+            ))}
+          </div>
+          <div className="flex flex-row items-center align-middle my-6">
+            <LayeredCard
+              mainColor="bg-accent"
+              bgColor="bg-primary"
+              borderWidth="border-[2px]"
+              topOffset="top-[10px]"
+              leftOffset="left-[14px]"
+              roundedness="rounded-lg"
+              textColor="text-black"
+            >
+              <Link href="/login"
+                className="flex mx-auto w-full p-4 gap-2"
+              >
+                Get Started
+              </Link>
+            </LayeredCard>
+          </div>
+        </div>
         </div>
     );
 }

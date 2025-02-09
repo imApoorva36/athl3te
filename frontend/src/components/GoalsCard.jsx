@@ -11,7 +11,7 @@ export default function GoalCard({ type, data = {}, color }) {
   const metrics = ["distance", "calories", "duration", "speed"];
   const metricIcons = {
     distance: <Image src="/metrics/distance.png" width={24} height={24} />,
-    calories: <Image src="/metrics/calorie.png" width={24} height={24} />,
+    calories: <Image src="/metrics/heart_rate.png" width={24} height={24} />,
     duration: <Image src="/metrics/time.png" width={24} height={24} />,
     speed: <Image src="/metrics/speed.png" width={24} height={24} />,
   };
@@ -28,21 +28,21 @@ export default function GoalCard({ type, data = {}, color }) {
         </div>
 
         {/* Metrics Grid */}
-        <div className="grid grid-cols-3 gap-6 p-4">
-          {metrics.map(metric => (
-            data[metric] !== null && (
-              <div key={metric} className="flex flex-col items-center gap-2">
-                <div className="w-12 h-12 rounded-full border-2 border-current flex items-center justify-center mb-2">
-                  {metricIcons[metric]}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 p-4">
+            {metrics.map(metric => (
+              data[metric] !== null && (
+                <div key={metric} className="flex flex-col items-center gap-2">
+            <div className="w-12 h-12 rounded-full border-2 border-current flex items-center justify-center mb-2">
+              {metricIcons[metric]}
+            </div>
+            <span className="">{data[metric] ?? "N/A"}</span>
+            <span className="text-xs capitalize">{metric}</span>
                 </div>
-                <span className="">{data[metric] ?? "N/A"}</span>
-                <span className="text-xs capitalize">{metric}</span>
-              </div>
-            )
-          ))}
-        </div>
+              )
+            ))}
+          </div>
 
-        {/* Add Goal */}
+          {/* Add Goal */}
         <div className="flex justify-center">
           <button className="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-700">
             Add Goal

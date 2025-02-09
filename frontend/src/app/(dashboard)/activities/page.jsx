@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import LayeredCard from "@/components/LayeredCard";
 import Image from "next/image";
 import { useState, useEffect } from "react";
+import Link from "next/link";
 
 export default function MyActivities() {
     const [activities, setActivities] = useState([]);
@@ -33,38 +34,7 @@ export default function MyActivities() {
         fetchActivities();
     }, []);
     console.log(activities);
-    const myActivitiesData = [{
-        name: "Mangalore Run",
-        type: "Running",
-        date: "2022-10-10",
-        bpm: 120,
-        distance: 10,
-        duration: 60,
-    },
-    {
-        name: "Surathkal Walk",
-        type: "Walking",
-        date: "2022-10-10",
-        bpm: 100,
-        distance: 5,
-        duration: 30,
-    },
-    {
-        name: "Mukka Cycle",
-        type: "Cycling",
-        date: "2022-10-10",
-        bpm: 110,
-        distance: 15,
-        duration: 45,
-    },
-    {
-        name: "NITK Swim",
-        type: "Swimming",
-        date: "2022-10-10",
-        bpm: 90,
-        distance: 1,
-        duration: 15,
-    }
+    const myActivitiesData = [
     ];
 
 
@@ -81,9 +51,9 @@ export default function MyActivities() {
                     roundedness="rounded-lg"
                     textColor="text-white"
                 >
-                    <Button variant="ghost" size="icon" className="text-primary hover:text-descructive">
-                        <Image src="/wallet.png" width={20} height={20} alt="wallet" />
-                    </Button>
+                    <Link href="/profile">
+                        <Image src="/wallet.png" width={20} height={20} alt="wallet" className="m-2" />
+                    </Link>
                 </LayeredCard>
                 <div className="flex items-center">
                     <Image src="/logo/athlete_logo.png" width={40} height={40} alt="logo" />

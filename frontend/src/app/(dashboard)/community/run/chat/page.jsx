@@ -58,7 +58,7 @@ export default function CommunityChat() {
                 const newBotMessage = {
                     id: Date.now(),
                     text: data[messageType].result,
-                    sender: `Community Agent (${messageType})`,
+                    sender: ` Agent (${messageType})`,
                     time: new Date().toLocaleTimeString(),
                     isAI: true
                 };
@@ -83,7 +83,6 @@ export default function CommunityChat() {
         const intervalId = setInterval(fetchBotStatus, 15000); // Fetch every 15 seconds
 
         return () => {
-            isSubscribed = false;
             clearInterval(intervalId);
         };
     }, []); // No dependency on `messages`, so it won't cause an infinite loop
@@ -118,9 +117,9 @@ export default function CommunityChat() {
                     roundedness="rounded-lg"
                     textColor="text-white"
                 >
-                    <Button variant="ghost" size="icon">
-                        <Image src="/wallet.png" width={20} height={20} alt="wallet" />
-                    </Button>
+                    <Link href="/profile">
+                        <Image src="/wallet.png" width={20} height={20} alt="wallet" className="m-2" />
+                    </Link>
                 </LayeredCard>
             </div>
 

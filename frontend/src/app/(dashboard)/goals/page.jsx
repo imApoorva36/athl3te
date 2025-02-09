@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button"
 import LayeredCard from "@/components/LayeredCard";
 import Image from "next/image";
 import GoalCard from "@/components/GoalsCard";
+import Link from "next/link";
 
 export default function MyGoals() {
 
@@ -14,66 +15,40 @@ export default function MyGoals() {
 
     const myGoalsData = [{
         type: "Running",
-        metricData: {
-            distance: [
-                { achieved: "2 km", target: "5 km", percentage: 40 },
-                { achieved: "2 km", target: "5 km", percentage: 40 },
-                { achieved: "2 km", target: "5 km", percentage: 40 },
-            ],
-            calories: [
-                { achieved: "30 kcal", target: "75 kcal", percentage: 40 },
-                { achieved: "35 kcal", target: "75 kcal", percentage: 47 },
-                { achieved: "40 kcal", target: "75 kcal", percentage: 53 },
-            ],
+        data: {
+            distance: "5 km",
+            calories: "75 kcal",
+            duration: "30 min",
+            speed: "10 km/h"
         }
     },
     {
         type: "Walking",
-        metricData: {
-            distance: [
-                { achieved: "2 km", target: "5 km", percentage: 40 },
-                { achieved: "2 km", target: "5 km", percentage: 40 },
-                { achieved: "2 km", target: "5 km", percentage: 40 },
-            ],
-            calories: [
-                { achieved: "30 kcal", target: "75 kcal", percentage: 40 },
-                { achieved: "35 kcal", target: "75 kcal", percentage: 47 },
-                { achieved: "40 kcal", target: "75 kcal", percentage: 53 },
-            ],
+        data: {
+            distance: "3 km",
+            calories: "50 kcal",
+            duration: "45 min",
+            speed: "4 km/h"
         }
     },
     {
         type: "Cycling",
-        metricData: {
-            distance: [
-                { achieved: "2 km", target: "5 km", percentage: 40 },
-                { achieved: "2 km", target: "5 km", percentage: 40 },
-                { achieved: "2 km", target: "5 km", percentage: 40 },
-            ],
-            calories: [
-                { achieved: "30 kcal", target: "75 kcal", percentage: 40 },
-                { achieved: "35 kcal", target: "75 kcal", percentage: 47 },
-                { achieved: "40 kcal", target: "75 kcal", percentage: 53 },
-            ],
+        data: {
+            distance: "15 km",
+            calories: "200 kcal",
+            duration: "60 min",
+            speed: "15 km/h"
         }
     },
     {
         type: "Swimming",
-        metricData: {
-            distance: [
-                { achieved: "2 km", target: "5 km", percentage: 40 },
-                { achieved: "2 km", target: "5 km", percentage: 40 },
-                { achieved: "2 km", target: "5 km", percentage: 40 },
-            ],
-            calories: [
-                { achieved: "30 kcal", target: "75 kcal", percentage: 40 },
-                { achieved: "35 kcal", target: "75 kcal", percentage: 47 },
-                { achieved: "40 kcal", target: "75 kcal", percentage: 53 },
-            ],
+        data: {
+            distance: "1 km",
+            calories: "300 kcal",
+            duration: "40 min",
+            speed: "2.5 km/h"
         }
-    }
-
-    ];
+    }];
 
 
     return (
@@ -89,9 +64,9 @@ export default function MyGoals() {
                     roundedness="rounded-lg"
                     textColor="text-white"
                 >
-                    <Button variant="ghost" size="icon" className="text-primary hover:text-descructive">
-                        <Image src="/wallet.png" width={20} height={20} alt="wallet" />
-                    </Button>
+                    <Link href="/profile">
+                        <Image src="/wallet.png" width={20} height={20} alt="wallet" className="m-2" />
+                    </Link>
                 </LayeredCard>
                 <div className="flex items-center">
                     <Image src="/logo/athlete_logo.png" width={40} height={40} alt="logo" />
@@ -129,7 +104,11 @@ export default function MyGoals() {
                             textColor="text-black"
                         >
                             <div className="p-4 w-full">
-                                <GoalCard type={goals.type} metricData={goals.metricData} color={colors[goals.type]} />
+                                <GoalCard
+                                    type={goals.type}
+                                    data={goals.data}
+                                    color={colors[goals.type]}
+                                />
                             </div>
                         </LayeredCard>
                     ))}

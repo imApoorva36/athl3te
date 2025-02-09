@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "https://autonome.alt.technology/test-fixwqh/query"; // Replace with actual URL
+const API_URL = "https://autonome.alt.technology/agentmux-thkoer/query"; 
 
 /**
  * Sends an API request with basic authentication.

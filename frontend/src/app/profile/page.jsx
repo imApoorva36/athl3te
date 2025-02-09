@@ -1,33 +1,32 @@
+"use client";
 import { Button } from "@/components/ui/button"
 import LayeredCard from "@/components/LayeredCard";
 import Link from "next/link";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 export default function Profile() {
-    const profileData = {
-        name: "Abhishek Satpathy",
-        age: 21,
-        gender: "Male",
-        weight: 70,
-        walletAddress: "0x1234567890abcdef",
-        nftCollection: [
-            // {
-            //     id: 1,
-            //     name: "Ran 10km",
-            //     image: "/NFTs/run.png"
-            // },
-            // {
-            //     id: 2,
-            //     name: "Walking Badge",
-            //     image: "/NFTs/walk.png"
-            // },
-            // {
-            //     id: 3,
-            //     name: "Swim 10km",
-            //     image: "/NFTs/swim.png"
-            // }
-        ]
-    };
+    const [profileData, setProfileData] = useState({
+        name: "",
+        age: 0,
+        gender: "",
+        weight: 0,
+        address: "",
+        nftCollection: []
+    });
+
+    useEffect(() => {
+        const userProfile = localStorage.getItem('userProfile');
+        if (userProfile) {
+            setProfileData(JSON.parse(userProfile));
+        }
+
+            setProfileData(prevState => ({
+                ...prevState,
+                nftCollection: []
+            }));
+        
+    }, []);
 
     return (
         <>
@@ -84,7 +83,7 @@ export default function Profile() {
                     <h2 className="text-xl font-semibold">Connected Wallet</h2>
                     <div className="flex items-center space-x-2">
                         <Image src="/wallet.png" width={30} height={30} alt="wallet" />
-                        <h3 className="text-md">{profileData.walletAddress}</h3>
+                        <h3 className="text-md">{profileData.address.slice(0, 6)}...{profileData.address.slice(-4)}</h3>
                     </div>
                 </div>
                 <div className="flex flex-col space-y-2 my-4">

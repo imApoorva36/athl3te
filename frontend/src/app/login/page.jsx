@@ -22,12 +22,6 @@ export default function LoginPage() {
   const { address, isConnected } = useAccount();
   const [isRedirecting, setIsRedirecting] = useState(false);
 
-  useEffect(() => {
-    if (isConnected && address) {
-      // setIsRedirecting(true);
-      // router.push("/achievements");
-    }
-  }, [isConnected, address, router]);
   const [step, setStep] = useState(1)
   const [formData, setFormData] = useState({
     name: "",
@@ -37,13 +31,15 @@ export default function LoginPage() {
     gender: "",
   })
 
-  const features = [
-    { icon: <Activity className="h-5 w-5" />, text: "Monitor your activities" },
-    { icon: <Target className="h-5 w-5" />, text: "Push yourself to achieve your goals" },
-    { icon: <Users className="h-5 w-5" />, text: "Discuss with like minded individuals" },
-    { icon: <Utensils className="h-5 w-5" />, text: "Curate personalised custom diets" },
-    { icon: <Sparkles className="h-5 w-5" />, text: "Enhanced features and insights with AI" },
-  ]
+  useEffect(() => {
+    console.log(address)
+    if (step === 2) {
+      localStorage.setItem('userProfile', JSON.stringify({
+        ...formData,
+        address
+      }));
+    }
+  }, [step, formData, address]);
 
   const handleNext = () => setStep(2)
   const handleBack = () => setStep(1)
@@ -195,13 +191,19 @@ export default function LoginPage() {
         </div>
       ) : (
         <div className="flex min-h-screen flex-col text-white items-center justify-between bg-gradient-to-b from-primary to-destructive px-6 py-12">
-          <h1 className="mb-12 text-3xl font-bold text-white mx-auto">ATHL3TE</h1>
+          <h1 className="mb-12 text-3xl font-bold text-white mx-auto">Connect with Strava</h1>
           <div className="flex flex-row items-center align-middle my-6 px-4">
             <Rocket className="h-16 w-16 my-auto align-middle" />
-            <h2 className="text-2xl font-semibold text-white my-auto text-center p-2">Boost your fitness goals with Athl3te AI</h2>
+            <h2 className="text-2xl font-semibold text-white my-auto text-center p-2">Import Your Fitness Journey</h2>
           </div>
           <div className="mb-12 space-y-8">
-            {features.map((feature, index) => (
+            {[
+              { icon: <Activity className="h-5 w-5" />, text: "Seamlessly import all your activities" },
+              { icon: <Target className="h-5 w-5" />, text: "Track running, cycling, and swimming stats" },
+              { icon: <Users className="h-5 w-5" />, text: "Sync historical workout data" },
+              { icon: <Utensils className="h-5 w-5" />, text: "Get personalized training insights" },
+              { icon: <Sparkles className="h-5 w-5" />, text: "AI-powered performance analytics" },
+            ].map((feature, index) => (
               <div key={index} className="flex items-center gap-3">
                 {feature.icon}
                 <span className="text-sm">{feature.text}</span>
@@ -230,7 +232,7 @@ export default function LoginPage() {
                 className="flex mx-auto w-full p-4 gap-2"
               >
                 <Image src="/logo/strava_logo.png" width={30} height={30} alt="strava" />
-                Login with Strava
+                Connect Strava Account
               </button>
             </LayeredCard>
           </div>
