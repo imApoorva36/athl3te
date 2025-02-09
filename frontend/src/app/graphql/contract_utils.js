@@ -17,6 +17,7 @@ export class Athl3teContractUtils {
       .send({ from: account });
   }
 
+  //check
   async registerUser(metadata) {
     const account = await this.getAccount();
     return this.contract.methods.registerUser(metadata)

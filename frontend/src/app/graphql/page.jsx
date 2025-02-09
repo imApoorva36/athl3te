@@ -180,6 +180,18 @@ const abi = [
       {
         "indexed": false,
         "internalType": "string",
+        "name": "systemPrompt",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "botDescription",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
         "name": "deploymentURL",
         "type": "string"
       },
@@ -188,12 +200,6 @@ const abi = [
         "internalType": "uint16",
         "name": "unlockCostInGWei",
         "type": "uint16"
-      },
-      {
-        "indexed": false,
-        "internalType": "string",
-        "name": "botDescription",
-        "type": "string"
       },
       {
         "indexed": false,
@@ -252,6 +258,43 @@ const abi = [
       }
     ],
     "name": "BotPurchased",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "userAddress",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "communityName",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "goalId",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "timestamp",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "totalGoalsOfCommunity",
+        "type": "uint256"
+      }
+    ],
+    "name": "CommunityGoalAdded",
     "type": "event"
   },
   {
@@ -501,6 +544,16 @@ const abi = [
   },
   {
     "inputs": [
+      { "internalType": "string", "name": "communityName", "type": "string" },
+      { "internalType": "string", "name": "goalId", "type": "string" }
+    ],
+    "name": "addCommunityGoal",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
       { "internalType": "string", "name": "_goalId", "type": "string" },
       { "internalType": "string", "name": "goalType", "type": "string" }
     ],
@@ -639,66 +692,6 @@ const abi = [
           }
         ],
         "internalType": "struct Athl3te.CommunityRoom",
-        "name": "",
-        "type": "tuple"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "getUserDetails",
-    "outputs": [
-      {
-        "components": [
-          { "internalType": "string", "name": "metadata", "type": "string" },
-          {
-            "internalType": "string[]",
-            "name": "activityIds",
-            "type": "string[]"
-          },
-          {
-            "internalType": "string[]",
-            "name": "sportGoalIds",
-            "type": "string[]"
-          },
-          {
-            "internalType": "string[]",
-            "name": "nutritionGoalIds",
-            "type": "string[]"
-          },
-          {
-            "components": [
-              { "internalType": "string", "name": "botName", "type": "string" },
-              {
-                "internalType": "uint16",
-                "name": "messagesId",
-                "type": "uint16"
-              }
-            ],
-            "internalType": "struct Athl3te.PersonalAssistant[]",
-            "name": "purchasedAssistants",
-            "type": "tuple[]"
-          },
-          {
-            "internalType": "string",
-            "name": "injuriesDescriptionId",
-            "type": "string"
-          },
-          {
-            "internalType": "uint256[]",
-            "name": "nftTokenIds",
-            "type": "uint256[]"
-          },
-          { "internalType": "bool", "name": "isRegistered", "type": "bool" },
-          {
-            "internalType": "string[]",
-            "name": "joinedCommunities",
-            "type": "string[]"
-          }
-        ],
-        "internalType": "struct Athl3te.User",
         "name": "",
         "type": "tuple"
       }
@@ -941,7 +934,7 @@ export default function GraphQLPage() {
     queryKey: [selectedQuery?.name],
     queryFn: async () => {
       if (!selectedQuery) return null;
-      return await graphQLClient.request(selectedQuery.query, { userAddress: "0x04414c2006B22526872f04ac245dCD71959e753b", communityName: "room1" });
+      return await graphQLClient.request(selectedQuery.query, { userAddress: "0xecB4F7d130716305ae3a4B8b68D5a230166Ffa7D", communityName: "room1" });
     },
     enabled: !!selectedQuery,
   });

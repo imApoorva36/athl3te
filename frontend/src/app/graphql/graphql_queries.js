@@ -33,13 +33,9 @@ export const GET_USER_GOALS_AND_INJURIES = gql`
       timestamp
       totalGoalsOfType
     }
-    # Check
-    communityRoomJoineds(
-      where: { userAddress: $userAddress }
-    ) {
+    communityRoomJoineds(where: { userAddress: $userAddress }) {
       communityName
-      timestamp
-    }
+  }
     injuryUpdateds(
       where: { userAddress: $userAddress }
       orderBy: timestamp
@@ -56,7 +52,7 @@ export const GET_USER_GOALS_AND_INJURIES = gql`
 // get community goal
 export const GET_COMMUNITY_GOALS = gql`
   query GetCommunityGoals($communityName: String!) {
-    communityGoalAdded(
+    communityGoalAddeds(
       where: { communityName: $communityName }
       orderBy: timestamp
       orderDirection: desc
@@ -85,12 +81,10 @@ export const GET_USER_PERSONAL_ASSISTANTS = gql`
   }
 `;
 
-//CHECK
 // 5. Get user NFTs and metadata
 export const GET_USER_PROFILE = gql`
   query GetUserProfile($userAddress: Bytes!) {
-    # Check
-    nftMinteds(
+    nftminteds(
       where: { owner: $userAddress }
     ) {
       tokenId
