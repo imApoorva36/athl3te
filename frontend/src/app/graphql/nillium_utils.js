@@ -61,30 +61,10 @@ export class NilliumUtils {
     // return nutriGoalPost(sportsGoalData);
   }
 
-  static async addCommunityGoalDetails(communityName, goalId) {
-    // Implement the logic to add community goal details on Nillium
-    // Example: await fetch('https://nillium-api.com/add', { method: 'POST', body: JSON.stringify({ communityName, goalId }) });
-  }
-
-  static async addBotPurchaseDetails(botName, account) {
-    // Implement the logic to add bot purchase details on Nillium
-    // Example: await fetch('https://nillium-api.com/add', { method: 'POST', body: JSON.stringify({ botName, account }) });
-  }
-
-  static async addInjuryUpdateDetails(injuryId) {
-    // Implement the logic to add injury update details on Nillium
-    // Example: await fetch('https://nillium-api.com/add', { method: 'POST', body: JSON.stringify({ injuryId }) });
-  }
-
-  static async addCommunityRoomDetails(communityName, botName) {
-    // Implement the logic to add community room creation details on Nillium
-    // Example: await fetch('https://nillium-api.com/add', { method: 'POST', body: JSON.stringify({ communityName, botName }) });
-  }
-
-  static async addCommunityRoomJoinDetails(communityName, account) {
-    // Implement the logic to add community room join details on Nillium
-    // Example: await fetch('https://nillium-api.com/add', { method: 'POST', body: JSON.stringify({ communityName, account }) });
-  }
+  // static async addCommunityGoalDetails(communityName, goalId) {
+  //   // Implement the logic to add community goal details on Nillium
+  //   // Example: await fetch('https://nillium-api.com/add', { method: 'POST', body: JSON.stringify({ communityName, goalId }) });
+  // }
 
   static async getUserMetadata(userId) {
     // return userFetch(userId);
@@ -94,7 +74,14 @@ export class NilliumUtils {
     // return activityFetch(activityId);
   }
 
-  static async getMessage(messageId) {
+  static async getMessagesFromChatId(messageId) {
     // return messageFetch(messageId);
   }
+
+  static async getActivityDetails(activityId) {}
+
+  static async getSportsGoalDetails(goalId) {}
+  
+  static async getNutritionGoalDetails(goalId) {}
+  static async getUserProfile(goalId) {}
 }
