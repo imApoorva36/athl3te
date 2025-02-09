@@ -10,10 +10,14 @@ athl3te is a Web3-powered fitness application with AI-driven features that trans
 
 We're proud to be building with and applying for the following sponsor tracks:
 
-- Autonome
-- Base
-- Nillion
-- The Graph
+- Autonome - AI Agent Ecosystem
+- Base - Smart Contract Infrastructure
+- Nillion - Secure Data Storage
+- The Graph - Data Indexing & Queries
+
+## System Architecture
+
+![System Architecture](frontend/public/system_arch.png)
 
 ## Core Features
 
@@ -39,6 +43,26 @@ We're proud to be building with and applying for the following sponsor tracks:
 - Community challenges and goals
 - AI-driven community management
 - Achievement NFTs for milestones
+- Automated health monitoring and tips
+- Regular motivational updates
+- Injury prevention insights
+
+## Automated Systems
+
+Our platform implements several automated processes to enhance user experience:
+
+### Periodic Health Checks
+
+- Regular community-wide injury pattern analysis
+- Proactive injury prevention recommendations
+- Automated recovery guidance for common injuries
+
+### Community Engagement
+
+- Scheduled motivational messages
+- Regular fitness tips and best practices
+- Activity trend analysis and insights
+- Periodic achievement celebrations
 
 ## Technology Stack
 
