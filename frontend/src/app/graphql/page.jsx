@@ -14,7 +14,7 @@ import {
   GET_COMMUNITY_MESSAGES_AND_GOALS,
   GET_COMMUNITY_DETAILS,
   GET_USER_COMMUNITIES,
-  GET_ALL_BOTS,
+  GET_BOT_DETAILS,
   GET_COMMUNITY_GOALS
 } from "./graphql_queries";
 
@@ -1118,7 +1118,7 @@ const queries = [
   { name: "Community Messages & Goals", query: GET_COMMUNITY_MESSAGES_AND_GOALS },
   { name: "Community Details", query: GET_COMMUNITY_DETAILS },
   { name: "User Communities", query: GET_USER_COMMUNITIES},
-  { name: "All Bots", query: GET_ALL_BOTS},
+  { name: "All Bots", query: GET_BOT_DETAILS},
   { name: "Community Goals", query: GET_COMMUNITY_GOALS}
 ];
 
@@ -1162,7 +1162,7 @@ const writeOperations = [
   { 
     name: "Buy Bot", 
     action: async (utils) => {
-      const botName = "bot1";
+      const botName = "bot5";
       return await utils.buyBot(botName);
     }
   },
@@ -1212,7 +1212,7 @@ export default function GraphQLPage() {
     queryKey: [selectedQuery?.name],
     queryFn: async () => {
       if (!selectedQuery) return null;
-      return await graphQLClient.request(selectedQuery.query, { userAddress: "0xecB4F7d130716305ae3a4B8b68D5a230166Ffa7D", communityName: "room1" });
+      return await graphQLClient.request(selectedQuery.query, { userAddress: "0xecB4F7d130716305ae3a4B8b68D5a230166Ffa7D", communityName: "room1", botName:"bot1" });
     },
     enabled: !!selectedQuery,
   });
@@ -1226,7 +1226,7 @@ export default function GraphQLPage() {
 
         // await window.ethereum.request({ method: 'eth_requestAccounts' });
         
-        const contractAddress = "0x34058be1ec2F67eFD9Fa351dAaDe5bA81f397cD3";
+        const contractAddress = "0x04414c2006B22526872f04ac245dCD71959e753b";
         const contractABI = abi;
         
         const utils = new Athl3teContractUtils(contractAddress, contractABI, web3);
