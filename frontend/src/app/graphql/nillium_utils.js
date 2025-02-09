@@ -9,16 +9,54 @@ import { uploadToNillion as userPost, fetchFromNillion as userFetch } from "../.
 export class NilliumUtils {
 
   static async addUserMetadata(userMetadata) {
-    console.log(userMetadata);
-    return userPost(userMetadata);
+    try {
+      const response = await fetch('/api/nillion/user', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ data: userMetadata }),
+      });
+      if (!response.ok) {
+        throw new Error(`Failed to upload: ${response.statusText}`);
+      }
+      return await response.json();
+    } catch (error) {
+      console.error('Error in addUserMetadata:', error);
+      return { success: false, error: error.message };
+    }
   }
 
   static async addActivity(activityData) {
-    return activityPost(activityData);
+    try {
+      const response = await fetch('/api/nillion/activity', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ data: activityData }),
+      });
+      if (!response.ok) {
+        throw new Error(`Failed to upload: ${response.statusText}`);
+      }
+      return await response.json();
+    } catch (error) {
+      console.error('Error in addActivity:', error);
+      return { success: false, error: error.message };
+    }
   }
 
   static async addMessage(messageData) {
-    return messagePost(messageData);
+    try {
+      const response = await fetch('/api/nillion/message', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ data: messageData }),
+      });
+      if (!response.ok) {
+        throw new Error(`Failed to upload: ${response.statusText}`);
+      }
+      return await response.json();
+    } catch (error) {
+      console.error('Error in addActivity:', error);
+      return { success: false, error: error.message };
+    }
   }
 
   //add sports goal
