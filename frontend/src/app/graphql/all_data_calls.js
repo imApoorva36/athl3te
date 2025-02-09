@@ -197,7 +197,7 @@ export class GetDataUtils {
 
   async registerUser(metadata) {
     const id = await NilliumUtils.addUserMetadata([metadata]);
-    console.log(id);
+    console.log(id[0]);
     return await this.contractUtils.registerUser(id[0]);
   }
 

@@ -33,7 +33,7 @@ export async function POST(req) {
         const dataWritten = await collection.writeToNodes(formattedData);
         const newIds = [...new Set(dataWritten.flatMap(item => item.result.data.created))];
 
-        return Response.json({ success: true, ids: newIds });
+        return Response.json(newIds);
     } catch (error) {
         console.error('❌ Upload error:', error.message);
         return Response.json({ success: false, error: error.message }, { status: 500 });
