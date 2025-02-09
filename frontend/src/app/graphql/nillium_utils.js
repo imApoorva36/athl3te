@@ -1,50 +1,69 @@
+import { uploadToNillion as activityPost, fetchFromNillion as activityFetch } from "../../../nillion/utils/activity";
+import { uploadToNillion as messagePost, fetchFromNillion as messageFetch } from "../../../nillion/utils/message";
+import { uploadToNillion as nutriMatricPost, fetchFromNillion as nutriMatricFetch } from "../../../nillion/utils/nutrition_metric";
+import { uploadToNillion as nutriGoalPost, fetchFromNillion as nutriGoalFetch } from "../../../nillion/utils/nutritional_goal";
+import { uploadToNillion as sportGoalPost, fetchFromNillion as sportGoalFetch } from "../../../nillion/utils/sport_goal";
+import { uploadToNillion as sportMetricPost, fetchFromNillion as sportMetricFetch } from "../../../nillion/utils/sport_metric";
+import { uploadToNillion as userPost, fetchFromNillion as userFetch } from "../../../nillion/utils/user";
+
 export class NilliumUtils {
 
-    static async storeUserMetadata(userMetadata) { //
-      // Implement the logic to store user metadata on Nillium
-      // Example: await fetch('https://nillium-api.com/store', { method: 'POST', body: JSON.stringify({ metadata }) });
-
-    }
-  
-    static async addActivity(activityData) {
-      // Implement the logic to store activity details on Nillium
-      // Example: await fetch('https://nillium-api.com/store', { method: 'POST', body: JSON.stringify({ activityId }) });
-    }
-
-    //add sports goal
-    static async addSportsGoal(sportsGoalData) {
-      // Implement the logic to store goal details on Nillium
-      // Example: await fetch('https://nillium-api.com/store', { method: 'POST', body: JSON.stringify({ goalId, goalType }) });
-    }
-
-    //add nutrition goal
-    static async addNutritionGoal(sportsGoalData) {
-      // Implement the logic to store goal details on Nillium
-      // Example: await fetch('https://nillium-api.com/store', { method: 'POST', body: JSON.stringify({ goalId, goalType }) });
-    }
-  
-    static async storeCommunityGoalDetails(communityName, goalId) {
-      // Implement the logic to store community goal details on Nillium
-      // Example: await fetch('https://nillium-api.com/store', { method: 'POST', body: JSON.stringify({ communityName, goalId }) });
-    }
-  
-    static async storeBotPurchaseDetails(botName, account) {
-      // Implement the logic to store bot purchase details on Nillium
-      // Example: await fetch('https://nillium-api.com/store', { method: 'POST', body: JSON.stringify({ botName, account }) });
-    }
-  
-    static async storeInjuryUpdateDetails(injuryId) {
-      // Implement the logic to store injury update details on Nillium
-      // Example: await fetch('https://nillium-api.com/store', { method: 'POST', body: JSON.stringify({ injuryId }) });
-    }
-  
-    static async storeCommunityRoomDetails(communityName, botName) {
-      // Implement the logic to store community room creation details on Nillium
-      // Example: await fetch('https://nillium-api.com/store', { method: 'POST', body: JSON.stringify({ communityName, botName }) });
-    }
-  
-    static async storeCommunityRoomJoinDetails(communityName, account) {
-      // Implement the logic to store community room join details on Nillium
-      // Example: await fetch('https://nillium-api.com/store', { method: 'POST', body: JSON.stringify({ communityName, account }) });
-    }
+  static async addUserMetadata(userMetadata) {
+    return userPost(userMetadata);
   }
+
+  static async addActivity(activityData) {
+    return activityPost(activityData);
+  }
+
+  static async addMessage(messageData) {
+    return messagePost(messageData);
+  }
+
+  //add sports goal
+  static async addSportsGoal(sportsGoalData) {
+    return sportGoalPost(sportsGoalData);
+  }
+
+  //add nutrition goal
+  static async addNutritionGoal(sportsGoalData) {
+    return nutriGoalPost(sportsGoalData);
+  }
+
+  static async addCommunityGoalDetails(communityName, goalId) {
+    // Implement the logic to add community goal details on Nillium
+    // Example: await fetch('https://nillium-api.com/add', { method: 'POST', body: JSON.stringify({ communityName, goalId }) });
+  }
+
+  static async addBotPurchaseDetails(botName, account) {
+    // Implement the logic to add bot purchase details on Nillium
+    // Example: await fetch('https://nillium-api.com/add', { method: 'POST', body: JSON.stringify({ botName, account }) });
+  }
+
+  static async addInjuryUpdateDetails(injuryId) {
+    // Implement the logic to add injury update details on Nillium
+    // Example: await fetch('https://nillium-api.com/add', { method: 'POST', body: JSON.stringify({ injuryId }) });
+  }
+
+  static async addCommunityRoomDetails(communityName, botName) {
+    // Implement the logic to add community room creation details on Nillium
+    // Example: await fetch('https://nillium-api.com/add', { method: 'POST', body: JSON.stringify({ communityName, botName }) });
+  }
+
+  static async addCommunityRoomJoinDetails(communityName, account) {
+    // Implement the logic to add community room join details on Nillium
+    // Example: await fetch('https://nillium-api.com/add', { method: 'POST', body: JSON.stringify({ communityName, account }) });
+  }
+
+  static async getUserMetadata(userId) {
+    return userFetch(userId);
+  }
+
+  static async getActivity(activityId) {
+    return activityFetch(activityId);
+  }
+
+  static async getMessage(messageId) {
+    return messageFetch(messageId);
+  }
+}

@@ -20,15 +20,14 @@ export async function uploadToNillion(data) {
             name: { $allot: item.name },
             weight: { $allot: item.weight },
             height: { $allot: item.height },
-            injuryDescription: { $allot: item.injuryDescription },
+            injuryDescription: { $allot: "" },
         }));
 
         const dataWritten = await collection.writeToNodes(formattedData);
         const newIds = [...new Set(dataWritten.map((item) => item.result.data.created).flat())];
 
-        return { success: true, ids: newIds };
+        return { newIds };
     } catch (error) {
-        console.error('❌ Upload error:', error.message);
         return { success: false, error: error.message };
     }
 }

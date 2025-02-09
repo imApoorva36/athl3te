@@ -32,7 +32,7 @@ export async function uploadToNillion(data) {
     }
 }
 
-export async function fetchFromNillion() {
+export async function fetchFromNillion(data) {
     try {
         const collection = new SecretVaultWrapper(
             orgConfig.nodes,
@@ -41,7 +41,7 @@ export async function fetchFromNillion() {
         );
         await collection.init();
 
-        const decryptedCollectionData = await collection.readFromNodes({});
+        const decryptedCollectionData = await collection.readFromNodes({ chat_id: data });
         return { success: true, data: decryptedCollectionData };
     } catch (error) {
         console.error('❌ Fetch error:', error.message);
