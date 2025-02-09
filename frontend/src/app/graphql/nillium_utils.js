@@ -1,7 +1,7 @@
 import { uploadToNillion as activityPost, fetchFromNillion as activityFetch } from "../../../nillion/utils/activity";
 import { uploadToNillion as messagePost, fetchFromNillion as messageFetch } from "../../../nillion/utils/message";
 import { uploadToNillion as nutriMatricPost, fetchFromNillion as nutriMatricFetch } from "../../../nillion/utils/nutrition_metric";
-import { uploadToNillion as nutriGoalPost, fetchFromNillion as nutriGoalFetch } from "../../../nillion/utils/nutritional_goal";
+import { uploadToNillion as nutriGoalPost, fetchFromNillion as nutriGoalFetch } from "../../../nillion/utils/nutrition_goal";
 import { uploadToNillion as sportGoalPost, fetchFromNillion as sportGoalFetch } from "../../../nillion/utils/sport_goal";
 import { uploadToNillion as sportMetricPost, fetchFromNillion as sportMetricFetch } from "../../../nillion/utils/sport_metric";
 import { uploadToNillion as userPost, fetchFromNillion as userFetch } from "../../../nillion/utils/user";
