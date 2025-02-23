@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "https://autonome.alt.technology/agentmux-thkoer/query"; 
+const API_URL = "https://autonome.alt.technology/agentmux-thkoer/query";
 
 /**
  * Sends an API request with basic authentication.
@@ -19,15 +19,35 @@ async function sendApiRequest({ agent_name, action, params, input_text }) {
 
   console.log(agent_name, action, params, input_text);
 
+  await new Promise(resolve => setTimeout(resolve, 3000));
 
-  if (!username || !password) {
+  return {
+    "Running": {
+        "calories": null,
+        "distance": 5,
+        "duration": 27.5,
+        "frequency": 3,
+        "speed": 5.5
+    }
+  }
+
+
+  if(!username || !password) {
     throw new Error("Basic Auth credentials are missing in the .env file");
   }
 
   const authHeader = `Basic ${Buffer.from(`${username}:${password}`).toString("base64")}`;
 
+  //print in separtelines
+  console.log("agent_name: ", agent_name);
+  console.log("action: ", action);
+  console.log("params: ", params);
+  console.log("input_text: ", input_text);
+
+  console.log("gegfvadshgfvashfvjsdvfjgs")
+
   try {
-    const response = await axios.post(API_URL, 
+    const response = await axios.post(API_URL,
       { agent_name, action, params, input_text },
       { headers: { Authorization: authHeader, "Content-Type": "application/json" } }
     );

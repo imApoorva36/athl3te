@@ -59,10 +59,10 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen w-full overflow-y-scroll">
+    <div className="min-h-screen w-full">
       {step === 1 ? (
         <div className="flex min-h-screen flex-col px-6 py-12">
-          <div className="flex flex-row justify-center items-center mb-10">
+          <div className="flex flex-row justify-center items-center mb-4">
             <Image src="/logo/athlete_logo.png" width={50} height={50} alt="logo" />
             <h1 className="text-3xl font-bold mt-2 text-primary">ATHL3TE</h1>
           </div>

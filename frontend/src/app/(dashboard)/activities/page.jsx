@@ -5,6 +5,7 @@ import LayeredCard from "@/components/LayeredCard";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import ActivityCard from "@/components/ActivityCard";
 
 export default function MyActivities() {
     const [activities, setActivities] = useState([]);
@@ -15,6 +16,7 @@ export default function MyActivities() {
             try {
                 const response = await fetch("/api/strava/activities"); // Calls the API route
                 const data = await response.json();
+                console.log(data);
 
                 if (!response.ok) throw new Error(data.error || "Failed to fetch activities");
                 const formattedActivities = data.map(activity => ({
@@ -80,6 +82,7 @@ export default function MyActivities() {
                 {/* Activities */}
                 <div className="space-y-4 p-2 w-full">
                     {activities.map((activity, index) => (
+                        // <ActivityCard key={index} activity={activity} />
                         <LayeredCard
                             key={index}
                             mainColor="bg-accent"

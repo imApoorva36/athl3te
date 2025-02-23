@@ -44,10 +44,12 @@ export default function Home() {
     }, []);
 
     const fetchActivities = async () => {
+        console.log("fetchActivities")
         if (!authData) return;
 
         const res = await fetch(`/api/strava/activities?access_token = ${authData.access_token}`);
         const data = await res.json();
+
         console.log('Activities Response:', data);
         setActivities(data.slice(0, 12)); // Limit to 12 activities
 

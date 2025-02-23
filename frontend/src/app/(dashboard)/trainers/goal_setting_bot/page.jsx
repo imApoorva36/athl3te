@@ -50,7 +50,7 @@ export default function GoalSettingAgentChat() {
 
             const botMessage = {
                 id: messages.length + 2,
-                text: response.response,
+                text: response,
                 sender: agent,
                 time: new Date().toLocaleTimeString(),
                 isUser: false,
@@ -111,7 +111,7 @@ export default function GoalSettingAgentChat() {
                             bgColor={message.isUser ? "bg-accent" : "bg-primary"}
                             borderWidth="border-[2px]"
                             topOffset="top-[18px]"
-                            leftOffset="left-[18px]"
+                            leftOffset="left-[20px]"
                             roundedness="rounded-xl"
                             textColor={message.isUser ? "text-white" : "text-black"}
                         >
@@ -124,6 +124,7 @@ export default function GoalSettingAgentChat() {
                                             Object.entries(message.text)
                                                 .filter(([key, value]) => value !== null && key !== 'nutrition') // Ignore null values & nutrition
                                                 .map(([activity, metrics]) => (
+                                                    console.log("suiiiii"),
                                                     console.log(activity, metrics),
                                                     <GoalCard key={activity} type={activity} data={metrics} isNew={true} color="bg-blue-500" />
                                                 ))
@@ -135,7 +136,7 @@ export default function GoalSettingAgentChat() {
                             </div>
 
                         </LayeredCard>
-                        <span className="text-xs text-gray-500 mt-2">{message.sender} @ {message.time}</span>
+                        <span className="text-xs text-gray-500 mt-4">{message.sender} @ {message.time}</span>
                     </div>
                 ))}
             </div>

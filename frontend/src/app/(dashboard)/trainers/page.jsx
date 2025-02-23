@@ -2,35 +2,32 @@ import { Button } from "@/components/ui/button"
 import LayeredCard from "@/components/LayeredCard";
 import Image from "next/image";
 import Link from "next/link";
+import { getAgentDescription } from "@/utils/utils";
 
 export const agentData = [
     {
         logo: "/agents/personal_ai_agent.png",
         name: "Personal Trainer Agent",
         agent_name: "personal_bot",
-        description:
-            "Personal Trainer Agent provides personalized plans and suggestions to help you reach your fitness goals."
+        description: getAgentDescription("personal_trainer_agent")
     },
     {
         logo: "/agents/sports_goal_creation_agent.png",
         name: "Goal Setting Agent",
         agent_name: "goal_setting_bot",
-        description:
-            "Goal Setting Agent helps you set fitness goals, providing personalized plans and progress tracking to help you achieve your targets."
+        description: getAgentDescription("sports_goal_creation_agent")
     },
     {
         logo: "/agents/recovery_coach_agent.png",
         name: "Injury Agent",
         agent_name: "injury_bot",
-        description:
-            "Injury Agent helps you prevent from common sports injuries, providing advice, and recovery plans to keep you healthy and active."
+        description: getAgentDescription("recover_coach_agent")
     },
     {
         logo: "/agents/nutrition_agent.png",
         name: "Nutrition Agent",
         agent_name: "nutrition_bot",
-        description:
-            "Nutrition Agent helps you track and improve your diet, providing calorie tracking, and nutritional advice to help you reach your health goals."
+        description: getAgentDescription("nutrition_agent")
     }
 ];
 
